@@ -41,21 +41,23 @@ export default function Index() {
                 let args = { _year: year, ...mapViewport };
                 console.log("args:", args)
                 let { data, error } = await supabase.rpc('districts_in_view', args);
-                console.log(data, error)
+                console.log("supabase fetch response:", data, error)
 
-                setLayerData({
-                    type: "FeatureCollection",
-                    features: data.map((f) => ({
-                        type: "Feature",
-                        properties: {
-                            district: f.district_name,
-                            city: f.city_name,
-                            year: f.year
-                        },
-                        geometry: JSON.parse(f.geom)
-                    }))
-                });
-                console.log(layerData)
+                if (data) {
+                    setLayerData({
+                        type: "FeatureCollection",
+                        features: data.map((f) => ({
+                            type: "Feature",
+                            properties: {
+                                district: f.district_name,
+                                city: f.city_name,
+                                year: f.year
+                            },
+                            geometry: JSON.parse(f.geom)
+                        }))
+                    });
+                    console.log(layerData)
+                }
             }
         }
         fetchData();

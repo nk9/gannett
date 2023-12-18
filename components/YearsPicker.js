@@ -14,7 +14,6 @@ export default function YearsPicker({ year, setYear }) {
     const searchParams = useSearchParams();
     const [isPending, startTransition] = useTransition(); 
 
-    console.log("year:", year);
     const handleChangeTab = (e, tab) => {
         setYear(tab);
         const updatedSearchParams = new URLSearchParams(searchParams);
@@ -30,28 +29,16 @@ export default function YearsPicker({ year, setYear }) {
         });
     };
 
+    let years = { "1880": true, "1900": false, "1910": false, "1920": false, "1930": false, "1940": false }
+    let yearTabs = Object.entries(years).map(
+        ([y, d]) => <Tab key={y} value={y} disabled={d}>{y}</Tab>
+    )
+
     return (
         <div className={styles["years-container"]}>
-            <Tabs className={styles["years"]} value={year} onChange={handleChangeTab}>
+            <Tabs className={styles["years"]} value={(year || "")} onChange={handleChangeTab}>
                 <TabsList>
-                    <Tab value="1880" disabled>
-                        1880
-                    </Tab>
-                    <Tab value="1900">
-                        1900
-                    </Tab>
-                    <Tab value="1910">
-                        1910
-                    </Tab>
-                    <Tab value="1920">
-                        1920
-                    </Tab>
-                    <Tab value="1930">
-                        1930
-                    </Tab>
-                    <Tab value="1940">
-                        1940
-                    </Tab>
+                    {yearTabs}
                 </TabsList>
             </Tabs>
         </div>
