@@ -5,13 +5,22 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 
 export default function EDMap({ layerData, setMapViewport }) {
     const layers = {
-        eds: {
+        ed_boundaries: {
             style: {
-                'id': 'eds',
-                'type': 'fill',
+                'id': 'ed_boundaries',
+                'type': 'line',
                 'paint': {
-                    'fill-color': '#009',
-                    'fill-opacity': 0.2
+                    'line-color': "#009",
+                    'line-opacity': 0.7
+                }
+            }
+        },
+        ed_names: {
+            style: {
+                'id': 'ed_names',
+                'type': 'symbol',
+                'layout': {
+                    'text-field': ["get", "district"]
                 }
             }
         }
@@ -19,7 +28,8 @@ export default function EDMap({ layerData, setMapViewport }) {
 
     const edSource = (
         <Source key="hi" type="geojson" data={layerData}>
-            <Layer {...layers.eds.style} />
+            <Layer {...layers.ed_boundaries.style} />
+            <Layer {...layers.ed_names.style} />
         </Source>
     );
     console.log("edSource:", layerData, edSource)
@@ -32,7 +42,7 @@ export default function EDMap({ layerData, setMapViewport }) {
                 zoom: 15.5
             }}
             style={{ width: "100%", height: 600 }}
-            mapStyle="mapbox://styles/mapbox/light-v9"
+            mapStyle={process.env.NEXT_PUBLIC_MAPBOX_STYLE_URL}
             styleDiffing
             mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
         >

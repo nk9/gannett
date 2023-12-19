@@ -29,8 +29,8 @@ export default function Index() {
 
     var [layerData, setLayerData] = useState({});
     var [mapViewport, setMapViewport] = useState({
-        min_lat: 40.44839,
-        min_long: -79.94880,
+        min_lat: 40.34839,
+        min_long: -79.99880,
         max_lat: 40.47536,
         max_long: -79.90963
     })
