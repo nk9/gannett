@@ -72,6 +72,16 @@ export default function EDMap({ layerData, setMapViewport }) {
         })
     };
 
+    const onViewportChange = (event) => {
+        const bounds = mapRef.current.getBounds();
+        setMapViewport({
+            min_lat: bounds._ne.lat,
+            min_long: bounds._ne.lng,
+            max_lat: bounds._sw.lat,
+            max_long: bounds._sw.lng
+        });
+    }
+
     const mapRef = useRef();
     const [cursor, setCursor] = useState('auto');
     const onMouseEnter = useCallback(() => setCursor('pointer'), []);
@@ -86,7 +96,7 @@ export default function EDMap({ layerData, setMapViewport }) {
     const [markerCoords, setMarkerCoords] = useState({
         longitude: initialViewState.longitude,
         latitude: initialViewState.latitude
-    })
+    });
 
     return (
         <Map
@@ -100,6 +110,8 @@ export default function EDMap({ layerData, setMapViewport }) {
             onClick={onClick}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
+            onDragEnd={onViewportChange}
+            onZoomEnd={onViewportChange}
             cursor={cursor}
         >
             <Source key="hi" type="geojson" data={layerData}>
