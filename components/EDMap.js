@@ -105,11 +105,13 @@ export default function EDMap({ layerData, setMapViewport }) {
             <Source key="hi" type="geojson" data={layerData}>
                 {layerData && edLayers}
             </Source>
-            
+
             <Marker
                 longitude={markerCoords.longitude}
                 latitude={markerCoords.latitude}
-                anchor="center" />
+                anchor="bottom"
+                offset={[0, 0]}
+            />
 
             <ScaleControl />
         </Map>
