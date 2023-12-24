@@ -27,7 +27,8 @@ export default function Index() {
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
     );
 
-    var [layerData, setLayerData] = useState({});
+    var [districts, setDistricts] = useState({});
+    var [roads, setRoads] = useState({});
     var [mapViewport, setMapViewport] = useState({
         min_lat: 40.34839,
         min_long: -79.99880,
@@ -38,26 +39,52 @@ export default function Index() {
     useEffect(() => {
         async function fetchData() {
             if (year) {
-                let args = { _year: year, ...mapViewport };
-                console.log("args:", args)
-                let { data, error } = await supabase.rpc('districts_in_view', args);
-                console.log("supabase fetch response:", data, error)
+                let args = { _year: parseInt(year), ...mapViewport };
 
-                if (data) {
-                    setLayerData({
-                        type: "FeatureCollection",
-                        features: data.map((f) => ({
-                            type: "Feature",
-                            properties: {
-                                district: f.district_name,
-                                city: f.city_name,
-                                year: f.year
-                            },
-                            geometry: JSON.parse(f.geom)
-                        }))
-                    });
-                    console.log(layerData)
-                }
+                var tasks = [
+                    async () => {
+                        console.log("calling districts_ with args", args)
+                        let { data: district_data, error } = await supabase.rpc('districts_in_view', args);
+                        console.log("districts_in_view response:", district_data, error)
+
+                        if (district_data) {
+                            setDistricts({
+                                type: "FeatureCollection",
+                                features: district_data.map((f) => ({
+                                    type: "Feature",
+                                    properties: {
+                                        district: f.district_name,
+                                        city: f.city_name,
+                                        year: f.year
+                                    },
+                                    geometry: JSON.parse(f.geom)
+                                }))
+                            });
+                            console.log(districts)
+                        }
+                    },
+                    async () => {
+                        let { data: roads_data, error } = await supabase.rpc('roads_in_view', args);
+                        console.log("roads_in_view response:", roads_data, error)
+
+                        if (roads_data) {
+                            setRoads({
+                                type: "FeatureCollection",
+                                features: roads_data.map((f) => ({
+                                    type: "Feature",
+                                    properties: {
+                                        name: f.name,
+                                        city: f.city,
+                                        year: f.year
+                                    },
+                                    geometry: JSON.parse(f.geom)
+                                }))
+                            });
+                            console.log(roads)
+                        }
+                    }
+                ]
+                await Promise.all(tasks.map(p => p()))
             }
         }
         fetchData();
@@ -67,7 +94,7 @@ export default function Index() {
         <Container maxWidth="lg">
             <Box sx={{ my: 12 }}>
                 <YearsPicker year={year} setYear={setYear} />
-                <EDMap layerData={layerData} setMapViewport={setMapViewport} />
+                <EDMap districts={districts} roads={roads} setMapViewport={setMapViewport} />
             </Box>
         </Container>
     );

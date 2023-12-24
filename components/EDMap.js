@@ -4,50 +4,99 @@ import Map, { Popup, Source, Layer, ScaleControl, Marker } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import bbox from '@turf/bbox';
 
-export default function EDMap({ layerData, setMapViewport }) {
-    const layers = {
-        ed_interactive: {
-            interactive: true,
-            style: {
-                'id': 'ed_interactive',
-                'type': 'fill',
-                'paint': {
-                    'fill-opacity': 0
-                }
-            }
-        },
-        ed_boundaries: {
-            interactive: false,
-            style: {
-                'id': 'ed_boundaries',
-                'type': 'line',
-                'paint': {
-                    'line-color': "#009",
-                    'line-opacity': 0.7
-                }
-            }
-        },
-        ed_names: {
-            interactive: false,
-            style: {
-                'id': 'ed_names',
-                'type': 'symbol',
-                'layout': {
-                    'text-field': ["get", "district"]
-                }
-            }
-        }
-    }
+export default function EDMap({ districts, roads, setMapViewport }) {
+    const ed_color = "#009";
+    const road_color = "#f00";
 
-    var edLayers = [];
-    var interactiveLayerIds = [];
-    for (const [layerID, { layer, interactive, style }] of Object.entries(layers)) {
-        edLayers.push(
-            <Layer key={layerID} {...style} />
-        )
-        if (interactive) {
-            interactiveLayerIds.push(layerID);
+    const layers = [
+        {
+            id: 'roads',
+            data: roads,
+            source_layers: [
+                {
+                    interactive: false,
+                    style: {
+                        id: 'roads',
+                        type: 'line',
+                        paint: {
+                            'line-color': road_color,
+                            'line-opacity': 1
+                        }
+                    }
+                },
+                // {
+                //     interactive: false,
+                //     style: {
+                //         id: 'road_names',
+                //         type: 'symbol',
+                //         layout: {
+                //             'text-field': ["get", "name"],
+                //             'symbole-placement': "line"
+                //         }
+                //     }
+                // }
+            ]
+        },
+        {
+            id: 'districts',
+            data: districts,
+            source_layers: [
+                {
+                    interactive: true,
+                    style: {
+                        id: 'ed_interactive',
+                        type: 'fill',
+                        paint: {
+                            'fill-opacity': 0
+                        }
+                    }
+                },
+                {
+                    interactive: false,
+                    style: {
+                        id: 'ed_boundaries',
+                        type: 'line',
+                        paint: {
+                            'line-color': ed_color,
+                            'line-opacity': 0.7,
+                            'line-dasharray': [5, 5]
+                        }
+                    }
+                },
+                {
+                    interactive: false,
+                    style: {
+                        id: 'ed_names',
+                        type: 'symbol',
+                        layout: {
+                            'text-field': ["get", "district"]
+                        },
+                        paint: {
+                            'text-color': ed_color
+                        }
+                    }
+                },
+            ]
         }
+    ]
+
+    var sources = [];
+    var interactiveLayerIds = [];
+    for (const { id: source_id, data, source_layers } of layers) {
+        var children = [];
+        for (const { interactive, style } of source_layers) {
+            children.push(
+                <Layer key={style.id} {...style} />
+            )
+            if (interactive) {
+                interactiveLayerIds.push(style.id);
+            }
+        }
+        sources.push(
+            <Source key={source_id} type="geojson" data={data}>
+                {children}
+            </Source>
+        )
     }
 
     const onClick = (event) => {
@@ -114,10 +163,8 @@ export default function EDMap({ layerData, setMapViewport }) {
             onZoomEnd={onViewportChange}
             cursor={cursor}
         >
-            <Source key="hi" type="geojson" data={layerData}>
-                {layerData && edLayers}
-            </Source>
-
+            {sources}
+            
             <Marker
                 longitude={markerCoords.longitude}
                 latitude={markerCoords.latitude}
