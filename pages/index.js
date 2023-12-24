@@ -10,6 +10,8 @@ import { createClient } from '@supabase/supabase-js'
 
 import EDMap from 'components/EDMap';
 import YearsPicker from 'components/YearsPicker';
+import InfoPanel from 'components/InfoPanel';
+import District from '@/District';
 
 export default function Index() {
     // On first render, router.query is empty.
@@ -20,8 +22,6 @@ export default function Index() {
     useEffect(() => {
         router.isReady && setYear(queryYear || "1940");
     }, [queryYear, router.isReady]);
-
-    console.log(router.query)
 
     const supabase = createClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL,
@@ -38,8 +38,8 @@ export default function Index() {
     })
     
     const [districtName, setDistrictName] = useState("Select a point")
-    const [selectedDistrict, setSelectedDistrict] = useState()
-
+    const [selectedDistrict, setSelectedDistrict] = useState(new District())
+    
     useEffect(() => {
         async function fetchData() {
             if (year) {
@@ -84,7 +84,6 @@ export default function Index() {
                                     geometry: JSON.parse(f.geom)
                                 }))
                             });
-                            console.log(roads)
                         }
                     }
                 ]
@@ -98,7 +97,7 @@ export default function Index() {
         <Container maxWidth="lg">
             <Grid container>
                 <Grid xs={2}>
-                    <Typography>{selectedDistrict}</Typography>
+                    <InfoPanel district={selectedDistrict} />
                 </Grid>
                 <Grid xs={10}>
                     <YearsPicker year={year} setYear={setYear} />

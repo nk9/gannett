@@ -2,7 +2,10 @@ import { useState, useCallback, useRef, useEffect } from "react";
 
 import Map, { Popup, Source, Layer, ScaleControl, Marker } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import bbox from '@turf/bbox';
+import booleanPointInPolygon from "@turf/boolean-point-in-polygon";
+import { point, multiPolygon } from "@turf/helpers"
+import District from '/src/District';
+
 
 export default function EDMap({ districts, roads, setMapViewport, setSelectedDistrict }) {
     const ed_color = "#009";
@@ -149,9 +152,21 @@ export default function EDMap({ districts, roads, setMapViewport, setSelectedDis
     });
 
     useEffect(() => {
-        console.log("useEffect")
-        setSelectedDistrict(`${markerCoords.latitude}, ${markerCoords.longitude}`)
-    }, [markerCoords])
+        if (districts?.features) {
+            const markerPoint = point([markerCoords.longitude, markerCoords.latitude])
+            
+            for (const feat of districts.features) {
+                if (booleanPointInPolygon(markerPoint, feat.geometry)) {
+                    setSelectedDistrict(
+                        new District(feat.properties,
+                            [markerCoords.latitude, markerCoords.longitude])
+                    )
+                }
+            }
+        }
+
+        
+    }, [markerCoords, districts])
 
 
     return (
