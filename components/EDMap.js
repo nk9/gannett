@@ -1,10 +1,10 @@
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 
 import Map, { Popup, Source, Layer, ScaleControl, Marker } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import bbox from '@turf/bbox';
 
-export default function EDMap({ districts, roads, setMapViewport }) {
+export default function EDMap({ districts, roads, setMapViewport, setSelectedDistrict }) {
     const ed_color = "#009";
     const road_color = "#f00";
 
@@ -103,6 +103,7 @@ export default function EDMap({ districts, roads, setMapViewport }) {
         console.log("event", event)
         const feature = event.features[0];
         if (feature) {
+
             // calculate the bounding box of the feature
             // const [minLng, minLat, maxLng, maxLat] = bbox(feature);
 
@@ -146,6 +147,12 @@ export default function EDMap({ districts, roads, setMapViewport }) {
         longitude: initialViewState.longitude,
         latitude: initialViewState.latitude
     });
+
+    useEffect(() => {
+        console.log("useEffect")
+        setSelectedDistrict(`${markerCoords.latitude}, ${markerCoords.longitude}`)
+    }, [markerCoords])
+
 
     return (
         <Map

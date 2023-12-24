@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 
 import { createClient } from '@supabase/supabase-js'
 
@@ -35,6 +36,9 @@ export default function Index() {
         max_lat: 40.47536,
         max_long: -79.90963
     })
+    
+    const [districtName, setDistrictName] = useState("Select a point")
+    const [selectedDistrict, setSelectedDistrict] = useState()
 
     useEffect(() => {
         async function fetchData() {
@@ -92,10 +96,19 @@ export default function Index() {
  
     return (
         <Container maxWidth="lg">
-            <Box sx={{ my: 12 }}>
-                <YearsPicker year={year} setYear={setYear} />
-                <EDMap districts={districts} roads={roads} setMapViewport={setMapViewport} />
-            </Box>
+            <Grid container>
+                <Grid xs={2}>
+                    <Typography>{selectedDistrict}</Typography>
+                </Grid>
+                <Grid xs={10}>
+                    <YearsPicker year={year} setYear={setYear} />
+                    <EDMap
+                        districts={districts}
+                        roads={roads}
+                        setMapViewport={setMapViewport}
+                        setSelectedDistrict={setSelectedDistrict} />
+                </Grid>
+            </Grid>
         </Container>
     );
 }
