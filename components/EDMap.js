@@ -4,42 +4,44 @@ import Map, { Popup, Source, Layer, ScaleControl, Marker } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import booleanPointInPolygon from "@turf/boolean-point-in-polygon";
 import { point, multiPolygon } from "@turf/helpers"
-import District from '/src/District';
+import { zoomThreshold } from "@/constants";
 
 
-export default function EDMap({ districts, roads, setMapViewport, setSelectedDistrict }) {
+export default function EDMap({ metros, districts, roads, setMapViewport, setSelectedDistrict, setZoom }) {
     const ed_color = "#009";
     const road_color = "#f00";
 
     const layers = [
-        {
-            id: 'roads',
-            data: roads,
-            source_layers: [
-                {
-                    interactive: false,
-                    style: {
-                        id: 'roads',
-                        type: 'line',
-                        paint: {
-                            'line-color': road_color,
-                            'line-opacity': 1
-                        }
-                    }
-                },
-                // {
-                //     interactive: false,
-                //     style: {
-                //         id: 'road_names',
-                //         type: 'symbol',
-                //         layout: {
-                //             'text-field': ["get", "name"],
-                //             'symbole-placement': "line"
-                //         }
-                //     }
-                // }
-            ]
-        },
+        // {
+        //     id: 'roads',
+        //     data: roads,
+        //     source_layers: [
+        //         {
+        //             interactive: false,
+        //             style: {
+        //                 id: 'roads',
+        //                 type: 'line',
+        //                 minzoom: zoomThreshold,
+        //                 paint: {
+        //                     'line-color': road_color,
+        //                     'line-opacity': 1
+        //                 }
+        //             }
+        //         },
+        //         // {
+        //         //     interactive: false,
+        //         //     style: {
+        //         //         id: 'road_names',
+        //         //         type: 'symbol',
+        //         //         minzoom: zoomThreshold,
+        //         //         layout: {
+        //         //             'text-field': ["get", "name"],
+        //         //             'symbole-placement': "line"
+        //         //         }
+        //         //     }
+        //         // }
+        //     ]
+        // },
         {
             id: 'districts',
             data: districts,
@@ -49,6 +51,7 @@ export default function EDMap({ districts, roads, setMapViewport, setSelectedDis
                     style: {
                         id: 'ed_interactive',
                         type: 'fill',
+                        minzoom: zoomThreshold,
                         paint: {
                             'fill-opacity': 0
                         }
@@ -59,6 +62,7 @@ export default function EDMap({ districts, roads, setMapViewport, setSelectedDis
                     style: {
                         id: 'ed_boundaries',
                         type: 'line',
+                        minzoom: zoomThreshold,
                         paint: {
                             'line-color': ed_color,
                             'line-opacity': 0.7,
@@ -71,6 +75,7 @@ export default function EDMap({ districts, roads, setMapViewport, setSelectedDis
                     style: {
                         id: 'ed_names',
                         type: 'symbol',
+                        minzoom: zoomThreshold,
                         layout: {
                             'text-field': ["get", "district"]
                         },
@@ -80,45 +85,65 @@ export default function EDMap({ districts, roads, setMapViewport, setSelectedDis
                     }
                 },
             ]
+        },
+        {
+            id: 'metros',
+            data: metros,
+            source_layers: [
+                {
+                    interactive: false,
+                    style: {
+                        id: 'metros',
+                        type: 'circle',
+                        maxzoom: zoomThreshold,
+                        paint: {
+                            'circle-radius': 60,
+                            'circle-color': 'rgba(55,148,179,1)'
+                        },
+                    }
+                },
+                {
+                    interactive: false,
+                    style: {
+                        id: 'metro_names',
+                        type: 'symbol',
+                        maxzoom: zoomThreshold,
+                        layout: {
+                            'text-field': ["get", "metro"]
+                        },
+                        paint: {
+                            'text-color': 'orange'
+                        }
+                    }
+
+                }
+            ]
         }
     ]
 
     var sources = [];
     var interactiveLayerIds = [];
     for (const { id: source_id, data, source_layers } of layers) {
-        var children = [];
-        for (const { interactive, style } of source_layers) {
-            children.push(
-                <Layer key={style.id} {...style} />
-            )
-            if (interactive) {
-                interactiveLayerIds.push(style.id);
+        if (data && (Object.keys(data).length >= 1)) {
+            var children = [];
+            for (const { interactive, style } of source_layers) {
+                children.push(
+                    <Layer key={style.id} {...style} />
+                )
+                if (interactive) {
+                    interactiveLayerIds.push(style.id);
+                }
             }
+            console.log(source_id, data)
+            sources.push(
+                <Source key={source_id} type="geojson" data={data}>
+                    {children}
+                </Source>
+            )
         }
-        sources.push(
-            <Source key={source_id} type="geojson" data={data}>
-                {children}
-            </Source>
-        )
     }
 
     const onClick = (event) => {
-        console.log("event", event)
-        const feature = event.features[0];
-        if (feature) {
-
-            // calculate the bounding box of the feature
-            // const [minLng, minLat, maxLng, maxLat] = bbox(feature);
-
-            // mapRef.current.fitBounds(
-            //     [
-            //         [minLng, minLat],
-            //         [maxLng, maxLat]
-            //     ],
-            //     { padding: 40, duration: 1000 }
-            // );
-        }
-
         setMarkerCoords({
             longitude: event.lngLat.lng,
             latitude: event.lngLat.lat
@@ -126,6 +151,7 @@ export default function EDMap({ districts, roads, setMapViewport, setSelectedDis
     };
 
     const onViewportChange = (event) => {
+        console.log("onViewportChange")
         const bounds = mapRef.current.getBounds();
         setMapViewport({
             min_lat: bounds._ne.lat,
@@ -133,6 +159,7 @@ export default function EDMap({ districts, roads, setMapViewport, setSelectedDis
             max_lat: bounds._sw.lat,
             max_long: bounds._sw.lng
         });
+        setZoom(event.viewState.zoom);
     }
 
     const mapRef = useRef();
@@ -157,15 +184,14 @@ export default function EDMap({ districts, roads, setMapViewport, setSelectedDis
             
             for (const feat of districts.features) {
                 if (booleanPointInPolygon(markerPoint, feat.geometry)) {
-                    setSelectedDistrict(
-                        new District(feat.properties,
-                            [markerCoords.latitude, markerCoords.longitude])
+                    setSelectedDistrict({
+                        props: feat.properties,
+                        coordinates: [markerCoords.latitude, markerCoords.longitude]
+                    }
                     )
                 }
             }
         }
-
-        
     }, [markerCoords, districts])
 
 

@@ -1,5 +1,9 @@
-export default function InfoPanel({ district }) {
+import District from '/src/District';
+
+
+export default function InfoPanel({ districtDict }) {
+    let dist = new District(districtDict)
     return (
-        <div>{district.name}</div>
+        <div>{dist.name}</div>
     )
 }

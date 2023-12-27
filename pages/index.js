@@ -11,7 +11,7 @@ import { createClient } from '@supabase/supabase-js'
 import EDMap from 'components/EDMap';
 import YearsPicker from 'components/YearsPicker';
 import InfoPanel from 'components/InfoPanel';
-import District from '@/District';
+import { zoomThreshold } from "@/constants";
 
 const all_years = [1880, 1900, 1910, 1920, 1930, 1940]
 
@@ -20,6 +20,7 @@ export default function Index() {
     const router = useRouter();
     const { year: queryYear } = router.query;
     var [year, setYear] = useState();
+    var [zoom, setZoom] = useState();
     var [allYears, setAllYears] = useState({});
 
     useEffect(() => {
@@ -31,6 +32,7 @@ export default function Index() {
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
     );
 
+    var [metros, setMetros] = useState({});
     var [districts, setDistricts] = useState({});
     var [roads, setRoads] = useState({});
     var [mapViewport, setMapViewport] = useState({
@@ -41,12 +43,13 @@ export default function Index() {
     })
     
     const [districtName, setDistrictName] = useState("Select a point")
-    const [selectedDistrict, setSelectedDistrict] = useState(new District())
+    const [selectedDistrict, setSelectedDistrict] = useState({})
     
     useEffect(() => {
         async function fetchData() {
             var tasks = [
                 async () => {
+                    console.log("calling years_in_view")
                     let { data: year_data, error } = await supabase.rpc('years_in_view', mapViewport)
                     console.log("years_in_view response:", year_data, error)
 
@@ -60,7 +63,7 @@ export default function Index() {
                     }
                 }]
 
-            if (year) {
+            if (year && zoom >= zoomThreshold) {
                 let args = { _year: parseInt(year), ...mapViewport };
 
                 tasks.push(
@@ -103,28 +106,62 @@ export default function Index() {
                     //             }))
                     //         });
                     //     }
-                    // }
+                    // },
                 )
-                await Promise.all(tasks.map(p => p()))
+            }
+            await Promise.all(tasks.map(p => p()))
+        }
+        console.log("fetch viewport data")
+        fetchData();
+    }, [mapViewport, year, queryYear, zoom]);
+
+    // Only load when the year changes
+    useEffect(() => {
+        async function fetchMetroData() {
+            const parsedYear = parseInt(year)
+
+            if (parsedYear) {
+                let args = { _year: parsedYear };
+                console.log("calling metros_for_year", args)
+                let { data: metros_data, error } = await supabase.rpc('metros_for_year', args);
+                console.log("metros_for_year response:", metros_data, error)
+
+                if (metros_data) {
+                    const metros_for_year = {
+                        type: "FeatureCollection",
+                        features: metros_data.map((f) => ({
+                            type: "Feature",
+                            properties: {
+                                metro: f.metro_name,
+                                state: f.state,
+                            },
+                            geometry: JSON.parse(f.geom)
+                        }))
+                    }
+                    console.log(metros_for_year)
+                    setMetros(metros_for_year);
+                }
             }
         }
-        fetchData();
-    }, [mapViewport, year, queryYear]);
+        fetchMetroData();
+    }, [year])
 
  
     return (
         <Container maxWidth="lg">
             <Grid container>
                 <Grid xs={2}>
-                    <InfoPanel district={selectedDistrict} />
+                    <InfoPanel districtDict={selectedDistrict} />
                 </Grid>
                 <Grid xs={10}>
                     <YearsPicker allYears={allYears} year={year} setYear={setYear} />
                     <EDMap
+                        metros={metros}
                         districts={districts}
                         roads={roads}
                         setMapViewport={setMapViewport}
-                        setSelectedDistrict={setSelectedDistrict} />
+                        setSelectedDistrict={setSelectedDistrict}
+                        setZoom={setZoom} />
                 </Grid>
             </Grid>
         </Container>
