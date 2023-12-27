@@ -13,11 +13,14 @@ import YearsPicker from 'components/YearsPicker';
 import InfoPanel from 'components/InfoPanel';
 import District from '@/District';
 
+const all_years = [1880, 1900, 1910, 1920, 1930, 1940]
+
 export default function Index() {
     // On first render, router.query is empty.
     const router = useRouter();
     const { year: queryYear } = router.query;
     var [year, setYear] = useState();
+    var [allYears, setAllYears] = useState({});
 
     useEffect(() => {
         router.isReady && setYear(queryYear || "1940");
@@ -42,10 +45,25 @@ export default function Index() {
     
     useEffect(() => {
         async function fetchData() {
+            var tasks = [
+                async () => {
+                    let { data: year_data, error } = await supabase.rpc('years_in_view', mapViewport)
+                    console.log("years_in_view response:", year_data, error)
+
+                    if (year_data) {
+                        const available_years = new Set(year_data.map(item => item.year));
+                        setAllYears(all_years.reduce((result, year) => {
+                            result[year] = available_years.has(year)
+                            return result
+                        }, {}))
+                        console.log("allYears:", allYears)
+                    }
+                }]
+
             if (year) {
                 let args = { _year: parseInt(year), ...mapViewport };
 
-                var tasks = [
+                tasks.push(
                     async () => {
                         console.log("calling districts_ with args", args)
                         let { data: district_data, error } = await supabase.rpc('districts_in_view', args);
@@ -67,31 +85,32 @@ export default function Index() {
                             console.log(districts)
                         }
                     },
-                    async () => {
-                        let { data: roads_data, error } = await supabase.rpc('roads_in_view', args);
-                        console.log("roads_in_view response:", roads_data, error)
+                    // async () => {
+                    //     let { data: roads_data, error } = await supabase.rpc('roads_in_view', args);
+                    //     console.log("roads_in_view response:", roads_data, error)
 
-                        if (roads_data) {
-                            setRoads({
-                                type: "FeatureCollection",
-                                features: roads_data.map((f) => ({
-                                    type: "Feature",
-                                    properties: {
-                                        name: f.name,
-                                        city: f.city,
-                                        year: f.year
-                                    },
-                                    geometry: JSON.parse(f.geom)
-                                }))
-                            });
-                        }
-                    }
-                ]
+                    //     if (roads_data) {
+                    //         setRoads({
+                    //             type: "FeatureCollection",
+                    //             features: roads_data.map((f) => ({
+                    //                 type: "Feature",
+                    //                 properties: {
+                    //                     name: f.name,
+                    //                     city: f.city,
+                    //                     year: f.year
+                    //                 },
+                    //                 geometry: JSON.parse(f.geom)
+                    //             }))
+                    //         });
+                    //     }
+                    // }
+                )
                 await Promise.all(tasks.map(p => p()))
             }
         }
         fetchData();
     }, [mapViewport, year, queryYear]);
+
  
     return (
         <Container maxWidth="lg">
@@ -100,7 +119,7 @@ export default function Index() {
                     <InfoPanel district={selectedDistrict} />
                 </Grid>
                 <Grid xs={10}>
-                    <YearsPicker year={year} setYear={setYear} />
+                    <YearsPicker allYears={allYears} year={year} setYear={setYear} />
                     <EDMap
                         districts={districts}
                         roads={roads}

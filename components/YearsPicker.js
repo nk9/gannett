@@ -8,7 +8,7 @@ import { TabsList as BaseTabsList } from '@mui/base/TabsList';
 import { styled } from '@mui/system';
 import styles from "./YearsPicker.module.scss";
 
-export default function YearsPicker({ year, setYear }) {
+export default function YearsPicker({ allYears, year, setYear }) {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -29,9 +29,8 @@ export default function YearsPicker({ year, setYear }) {
         });
     };
 
-    let years = { "1880": true, "1900": false, "1910": false, "1920": false, "1930": false, "1940": false }
-    let yearTabs = Object.entries(years).map(
-        ([y, d]) => <Tab key={y} value={y} disabled={d}>{y}</Tab>
+    let yearTabs = Object.entries(allYears).map(
+        ([y, d]) => <Tab key={y} value={y} disabled={!d}>{y}</Tab>
     )
 
     return (
