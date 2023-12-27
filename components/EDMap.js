@@ -97,8 +97,8 @@ export default function EDMap({ metros, districts, roads, setMapViewport, setSel
                         type: 'circle',
                         maxzoom: zoomThreshold,
                         paint: {
-                            'circle-radius': 60,
-                            'circle-color': 'rgba(55,148,179,1)'
+                            'circle-radius': 8,
+                            'circle-color': 'rgba(227, 6, 19, 1.0)'
                         },
                     }
                 },
@@ -109,10 +109,11 @@ export default function EDMap({ metros, districts, roads, setMapViewport, setSel
                         type: 'symbol',
                         maxzoom: zoomThreshold,
                         layout: {
-                            'text-field': ["get", "metro"]
+                            'text-field': ["get", "metro"],
+                            'text-offset': [0, 1]
                         },
                         paint: {
-                            'text-color': 'orange'
+                            'text-color': 'black'
                         }
                     }
 
