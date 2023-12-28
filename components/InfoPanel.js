@@ -24,13 +24,14 @@ export default function InfoPanel({ metroInfo, districtDict }) {
         ancestry_census.search = query
 
         return (<>
-            <h2>{dist.name}</h2>
+            <h2>ED Finder</h2>
+            <p>{dist.name}</p>
             <h3>Census pages</h3>
             <ul>
                 <li><a href={fs_census} target="_blank">Family Search</a></li>
                 <li><a href={ancestry_census} target="_blank">Ancestry ($)</a></li>
             </ul>
-            <h3>Enumeration District maps</h3>
+            <h3>Maps</h3>
             <ul>
                 {nara_ed_maps_link && <li><a href={nara_ed_maps_link} target="_blank">NARA</a></li>}
                 {ancestry_ed_maps_link && <li><a href={ancestry_ed_maps_link} target="_blank">Ancestry ($)</a></li>}
@@ -38,6 +39,9 @@ export default function InfoPanel({ metroInfo, districtDict }) {
         </>
         )
     } else {
-        return <></>
+        return <>
+            <h2>ED Finder</h2>
+            <p>Click a city to zoom in.</p>
+        </>
     }
 }
