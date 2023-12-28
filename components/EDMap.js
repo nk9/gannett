@@ -178,9 +178,9 @@ export default function EDMap({ metros, districts, roads, setMapViewport, setSel
     const onMouseLeave = useCallback(() => setCursor('auto'), []);
 
     const initialViewState = {
-        longitude: -79.94880,
-        latitude: 40.44839,
-        zoom: 15.5
+        longitude: -98,
+        latitude: 38,
+        zoom: 3.7
     }
 
     const [markerCoords, setMarkerCoords] = useState({
