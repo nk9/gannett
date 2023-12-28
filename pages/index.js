@@ -50,9 +50,8 @@ export default function Index() {
         async function fetchData() {
             var tasks = [
                 async () => {
-                    console.log("calling years_in_view")
                     let { data: year_data, error } = await supabase.rpc('years_in_view', mapViewport)
-                    console.log("years_in_view response:", year_data, error)
+                    // console.log("years_in_view response:", year_data, error)
 
                     if (year_data) {
                         const available_years = new Set(year_data.map(item => item.year));
@@ -69,9 +68,8 @@ export default function Index() {
 
                 tasks.push(
                     async () => {
-                        console.log("calling districts_ with args", args)
                         let { data: district_data, error } = await supabase.rpc('districts_in_view', args);
-                        console.log("districts_in_view response:", district_data, error)
+                        // console.log("districts_in_view response:", district_data, error)
 
                         if (district_data) {
                             setDistricts({
@@ -114,7 +112,6 @@ export default function Index() {
             }
             await Promise.all(tasks.map(p => p()))
         }
-        console.log("fetch viewport data")
         fetchData();
     }, [mapViewport, year, queryYear, zoom]);
 
