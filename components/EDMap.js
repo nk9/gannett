@@ -91,7 +91,7 @@ export default function EDMap({ metros, districts, roads, setMapViewport, setSel
             data: metros,
             source_layers: [
                 {
-                    interactive: false,
+                    interactive: true,
                     style: {
                         id: 'metros',
                         type: 'circle',
@@ -144,11 +144,20 @@ export default function EDMap({ metros, districts, roads, setMapViewport, setSel
         }
     }
 
-    const onClick = (event) => {
-        setMarkerCoords({
-            longitude: event.lngLat.lng,
-            latitude: event.lngLat.lat
-        })
+    const onClick = (e) => {
+        console.log(e)
+        if (e.features && e.features.length && e.features[0].layer.id == 'metros') {
+            mapRef.current?.flyTo({
+                center: [e.lngLat.lng, e.lngLat.lat],
+                duration: 1300,
+                zoom: zoomThreshold
+            })
+        } else {
+            setMarkerCoords({
+                longitude: e.lngLat.lng,
+                latitude: e.lngLat.lat
+            })
+        }
     };
 
     const onViewportChange = (event) => {
