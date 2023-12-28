@@ -145,10 +145,10 @@ export default function EDMap({ metros, districts, roads, setMapViewport, setSel
     }
 
     const onClick = (e) => {
-        console.log(e)
         if (e.features && e.features.length && e.features[0].layer.id == 'metros') {
+            var coords = e.features[0].geometry.coordinates;
             mapRef.current?.flyTo({
-                center: [e.lngLat.lng, e.lngLat.lat],
+                center: [coords[0], coords[1]],
                 duration: 1300,
                 zoom: zoomThreshold
             })
