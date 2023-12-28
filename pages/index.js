@@ -33,6 +33,7 @@ export default function Index() {
     );
 
     var [metros, setMetros] = useState({});
+    var [metroInfo, setMetroInfo] = useState({});
     var [districts, setDistricts] = useState({});
     var [roads, setRoads] = useState({});
     var [mapViewport, setMapViewport] = useState({
@@ -78,8 +79,10 @@ export default function Index() {
                                 features: district_data.map((f) => ({
                                     type: "Feature",
                                     properties: {
+                                        metro_id: f.metro_id,
                                         district: f.district_name,
-                                        city: f.city_name,
+                                        metro_code: f.metro_code,
+                                        metro: f.metro_name,
                                         year: f.year
                                     },
                                     geometry: JSON.parse(f.geom)
@@ -140,6 +143,19 @@ export default function Index() {
                     }
                     console.log(metros_for_year)
                     setMetros(metros_for_year);
+
+                    var metro_info = metros_data.reduce((result, dict) => {
+                        console.log(dict)
+
+                        result[dict.metro_id] = {
+                            nara_ed_maps_link: dict.nara_ed_maps_link,
+                            ancestry_ed_maps_link: dict.ancestry_ed_maps_link,
+                            state: dict.state,
+                            county: dict.county
+                        }
+                        return result
+                    }, {})
+                    setMetroInfo(metro_info);
                 }
             }
         }
@@ -151,7 +167,7 @@ export default function Index() {
         <Container maxWidth="lg">
             <Grid container>
                 <Grid xs={2}>
-                    <InfoPanel districtDict={selectedDistrict} />
+                    <InfoPanel metroInfo={metroInfo} districtDict={selectedDistrict} />
                 </Grid>
                 <Grid xs={10}>
                     <YearsPicker allYears={allYears} year={year} setYear={setYear} />
