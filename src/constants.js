@@ -1,4 +1,11 @@
 export const zoomThreshold = 12;
+export const zoomDuration = 1200;
+export const initialViewState = {
+    longitude: -98,
+    latitude: 38,
+    zoom: 3.7
+}
+
 
 export const USStates = {
     'AL': 'Alabama',

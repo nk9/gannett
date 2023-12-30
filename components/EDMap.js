@@ -4,13 +4,12 @@ import Map, { Popup, Source, Layer, ScaleControl, Marker } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import booleanPointInPolygon from "@turf/boolean-point-in-polygon";
 import { point, multiPolygon } from "@turf/helpers"
-import { zoomThreshold } from "@/constants";
+import { zoomThreshold, initialViewState, zoomDuration } from "@/constants";
 import useMapStore from '/stores/mapStore';
 
 export default function EDMap({ metros, districts, roads, setMapViewport, setSelectedDistrict, setZoom }) {
     const setMapRef = useMapStore((state) => state.setMapRef);
     const initialMapRef = useRef();
-    const doSomethingInMap = useMapStore((state) => state.doSomethingInMap);
     const mapRef = useMapStore((state) => state.mapRef);
 
     useEffect(() => {
@@ -159,7 +158,7 @@ export default function EDMap({ metros, districts, roads, setMapViewport, setSel
             var coords = e.features[0].geometry.coordinates;
             mapRef?.flyTo({
                 center: [coords[0], coords[1]],
-                duration: 1300,
+                duration: zoomDuration,
                 zoom: zoomThreshold
             })
         }
@@ -184,16 +183,9 @@ export default function EDMap({ metros, districts, roads, setMapViewport, setSel
         }
     }
 
-    // const mapRef = useRef();
     const [cursor, setCursor] = useState('auto');
     const onMouseEnter = useCallback(() => setCursor('pointer'), []);
     const onMouseLeave = useCallback(() => setCursor('auto'), []);
-
-    const initialViewState = {
-        longitude: -98,
-        latitude: 38,
-        zoom: 3.7
-    }
 
     const [markerCoords, setMarkerCoords] = useState({
         longitude: initialViewState.longitude,

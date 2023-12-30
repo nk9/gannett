@@ -5,6 +5,7 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
+import { Button } from '@mui/material';
 
 import { createClient } from '@supabase/supabase-js'
 
@@ -12,6 +13,7 @@ import EDMap from 'components/EDMap';
 import YearsPicker from 'components/YearsPicker';
 import InfoPanel from 'components/InfoPanel';
 import { zoomThreshold } from "@/constants";
+import useMapStore from '/stores/mapStore';
 
 const all_years = [1880, 1900, 1910, 1920, 1930, 1940]
 
@@ -32,6 +34,12 @@ export default function Index() {
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
     );
 
+    // Map state
+    const resetMap = useMapStore((state) => state.resetMap);
+    const isInInitialViewState = useMapStore((state) => state.isInInitialViewState);
+    const mapRef = useMapStore((state) => state.mapRef);
+
+
     var [metros, setMetros] = useState({});
     var [metroInfo, setMetroInfo] = useState({});
     var [districts, setDistricts] = useState({});
@@ -42,6 +50,12 @@ export default function Index() {
         max_lat: 40.47536,
         max_long: -79.90963
     })
+
+    const [resetButtonDisabled, setResetButtonDisabled] = useState(false)
+    useEffect(() => {
+        setResetButtonDisabled(isInInitialViewState())
+    }, [mapViewport, mapRef])
+
     
     const [districtName, setDistrictName] = useState("Select a point")
     const [selectedDistrict, setSelectedDistrict] = useState({})
@@ -86,7 +100,7 @@ export default function Index() {
                                     geometry: JSON.parse(f.geom)
                                 }))
                             });
-                            console.log(districts)
+                            // console.log(districts)
                         }
                     },
                     // async () => {
@@ -142,8 +156,6 @@ export default function Index() {
                     setMetros(metros_for_year);
 
                     var metro_info = metros_data.reduce((result, dict) => {
-                        console.log(dict)
-
                         result[dict.metro_id] = {
                             nara_ed_maps_link: dict.nara_ed_maps_link,
                             ancestry_ed_maps_link: dict.ancestry_ed_maps_link,
@@ -159,7 +171,7 @@ export default function Index() {
         fetchMetroData();
     }, [year])
 
- 
+
     return (
         <Container maxWidth="lg">
             <Grid container>
@@ -167,7 +179,15 @@ export default function Index() {
                     <InfoPanel metroInfo={metroInfo} districtDict={selectedDistrict} />
                 </Grid>
                 <Grid xs={10}>
-                    <YearsPicker allYears={allYears} year={year} setYear={setYear} />
+                    <div style={{ position: "sticky" }}>
+                        <YearsPicker allYears={allYears} year={year} setYear={setYear} />
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            style={{ position: "absolute", bottom: 18 }}
+                            onClick={resetMap}
+                            disabled={resetButtonDisabled}>Reset</Button>
+                    </div>
                     <EDMap
                         metros={metros}
                         districts={districts}
