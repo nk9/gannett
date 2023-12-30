@@ -75,7 +75,7 @@ export default function Index() {
                             result[year] = available_years.has(year)
                             return result
                         }, {}))
-                        console.log("allYears:", allYears)
+                        // console.log("allYears:", allYears)
                     }
                 }]
 
@@ -138,9 +138,9 @@ export default function Index() {
 
             if (parsedYear) {
                 let args = { _year: parsedYear };
-                console.log("calling metros_for_year", args)
+                // console.log("calling metros_for_year", args)
                 let { data: metros_data, error } = await supabase.rpc('metros_for_year', args);
-                console.log("metros_for_year response:", metros_data, error)
+                // console.log("metros_for_year response:", metros_data, error)
 
                 if (metros_data) {
                     const metros_for_year = {

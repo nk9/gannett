@@ -46,7 +46,6 @@ export default function InfoPanel({ metroInfo, districtDict }) {
             <p>Click within an Electoral District to learn more about it.</p>
         </>
     } else {
-        console.log("zoom=", zoom())
         return <>
             <h2>ED Finder</h2>
             <p>Click a city to zoom in.</p>
