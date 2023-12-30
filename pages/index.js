@@ -38,6 +38,7 @@ export default function Index() {
     const resetMap = useMapStore((state) => state.resetMap);
     const isInInitialViewState = useMapStore((state) => state.isInInitialViewState);
     const mapRef = useMapStore((state) => state.mapRef);
+    const setMarkerCoords = useMapStore((state) => state.setMarkerCoords)
 
 
     var [metros, setMetros] = useState({});
@@ -171,6 +172,11 @@ export default function Index() {
         fetchMetroData();
     }, [year])
 
+    const clickResetMap = () => {
+        resetMap();
+        setMarkerCoords(null);
+        setSelectedDistrict({});
+    }
 
     return (
         <Container maxWidth="lg">
@@ -185,7 +191,7 @@ export default function Index() {
                             variant="contained"
                             color="primary"
                             style={{ position: "absolute", bottom: 18 }}
-                            onClick={resetMap}
+                            onClick={clickResetMap}
                             disabled={resetButtonDisabled}>Reset</Button>
                     </div>
                     <EDMap

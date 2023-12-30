@@ -11,6 +11,8 @@ export default function EDMap({ metros, districts, roads, setMapViewport, setSel
     const setMapRef = useMapStore((state) => state.setMapRef);
     const initialMapRef = useRef();
     const mapRef = useMapStore((state) => state.mapRef);
+    const markerCoords = useMapStore((state) => state.markerCoords)
+    const setMarkerCoords = useMapStore((state) => state.setMarkerCoords)
 
     useEffect(() => {
         // Set the initial map reference to the store when the component mounts
@@ -187,13 +189,8 @@ export default function EDMap({ metros, districts, roads, setMapViewport, setSel
     const onMouseEnter = useCallback(() => setCursor('pointer'), []);
     const onMouseLeave = useCallback(() => setCursor('auto'), []);
 
-    const [markerCoords, setMarkerCoords] = useState({
-        longitude: initialViewState.longitude,
-        latitude: initialViewState.latitude
-    });
-
     useEffect(() => {
-        if (districts?.features) {
+        if (districts?.features && markerCoords) {
             const markerPoint = point([markerCoords.longitude, markerCoords.latitude])
             
             var newDistrict = {};
@@ -207,7 +204,6 @@ export default function EDMap({ metros, districts, roads, setMapViewport, setSel
                 }
             }            
             setSelectedDistrict(newDistrict)
-
         }
     }, [markerCoords, districts])
 
@@ -230,12 +226,12 @@ export default function EDMap({ metros, districts, roads, setMapViewport, setSel
         >
             {sources}
             
-            <Marker
+            {markerCoords && <Marker
                 longitude={markerCoords.longitude}
                 latitude={markerCoords.latitude}
                 anchor="bottom"
                 offset={[0, 0]}
-            />
+            />}
 
             <ScaleControl />
         </Map>

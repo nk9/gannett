@@ -28,6 +28,11 @@ const useMapStore = create((set, get) => ({
 
         }
         return false
+    },
+    markerCoords: null,
+    setMarkerCoords: (coords) => {
+        console.log("setting to: ", coords)
+        set({ markerCoords: coords })
     }
 }));
 
