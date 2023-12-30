@@ -5,9 +5,19 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import booleanPointInPolygon from "@turf/boolean-point-in-polygon";
 import { point, multiPolygon } from "@turf/helpers"
 import { zoomThreshold } from "@/constants";
-
+import useMapStore from '/stores/mapStore';
 
 export default function EDMap({ metros, districts, roads, setMapViewport, setSelectedDistrict, setZoom }) {
+    const setMapRef = useMapStore((state) => state.setMapRef);
+    const initialMapRef = useRef();
+    const doSomethingInMap = useMapStore((state) => state.doSomethingInMap);
+    const mapRef = useMapStore((state) => state.mapRef);
+
+    useEffect(() => {
+        // Set the initial map reference to the store when the component mounts
+        setMapRef(initialMapRef.current);
+    }, [setMapRef, initialMapRef.current]);
+
     const ed_color = "#009";
     const road_color = "#f00";
 
@@ -147,7 +157,7 @@ export default function EDMap({ metros, districts, roads, setMapViewport, setSel
         // Zoom into a city if we click on one
         if (e.features && e.features.length && e.features[0].layer.id == 'metros') {
             var coords = e.features[0].geometry.coordinates;
-            mapRef.current?.flyTo({
+            mapRef?.flyTo({
                 center: [coords[0], coords[1]],
                 duration: 1300,
                 zoom: zoomThreshold
@@ -162,18 +172,19 @@ export default function EDMap({ metros, districts, roads, setMapViewport, setSel
     };
 
     const onViewportChange = (event) => {
-        console.log("onViewportChange")
-        const bounds = mapRef.current.getBounds();
-        setMapViewport({
-            min_lat: bounds._ne.lat,
-            min_long: bounds._ne.lng,
-            max_lat: bounds._sw.lat,
-            max_long: bounds._sw.lng
-        });
-        setZoom(event.viewState.zoom);
+        if (mapRef) {
+            const bounds = mapRef.getBounds();
+            setMapViewport({
+                min_lat: bounds._ne.lat,
+                min_long: bounds._ne.lng,
+                max_lat: bounds._sw.lat,
+                max_long: bounds._sw.lng
+            });
+            setZoom(event.viewState.zoom);
+        }
     }
 
-    const mapRef = useRef();
+    // const mapRef = useRef();
     const [cursor, setCursor] = useState('auto');
     const onMouseEnter = useCallback(() => setCursor('pointer'), []);
     const onMouseLeave = useCallback(() => setCursor('auto'), []);
@@ -211,7 +222,7 @@ export default function EDMap({ metros, districts, roads, setMapViewport, setSel
 
     return (
         <Map
-            ref={mapRef}
+            ref={initialMapRef}
             initialViewState={initialViewState}
             style={{ width: "100%", height: 600 }}
             mapStyle={process.env.NEXT_PUBLIC_MAPBOX_STYLE_URL}
@@ -238,3 +249,10 @@ export default function EDMap({ metros, districts, roads, setMapViewport, setSel
         </Map>
     )
 }
+
+ 
+	
+	
+ 
+ 
+ 
