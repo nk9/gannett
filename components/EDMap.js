@@ -135,7 +135,6 @@ export default function EDMap({ metros, districts, roads, setMapViewport, setSel
                     interactiveLayerIds.push(style.id);
                 }
             }
-            console.log(source_id, data)
             sources.push(
                 <Source key={source_id} type="geojson" data={data}>
                     {children}
@@ -145,6 +144,7 @@ export default function EDMap({ metros, districts, roads, setMapViewport, setSel
     }
 
     const onClick = (e) => {
+        // Zoom into a city if we click on one
         if (e.features && e.features.length && e.features[0].layer.id == 'metros') {
             var coords = e.features[0].geometry.coordinates;
             mapRef.current?.flyTo({
@@ -152,7 +152,8 @@ export default function EDMap({ metros, districts, roads, setMapViewport, setSel
                 duration: 1300,
                 zoom: zoomThreshold
             })
-        } else {
+        }
+        else {
             setMarkerCoords({
                 longitude: e.lngLat.lng,
                 latitude: e.lngLat.lat
@@ -192,15 +193,18 @@ export default function EDMap({ metros, districts, roads, setMapViewport, setSel
         if (districts?.features) {
             const markerPoint = point([markerCoords.longitude, markerCoords.latitude])
             
+            var newDistrict = {};
             for (const feat of districts.features) {
                 if (booleanPointInPolygon(markerPoint, feat.geometry)) {
-                    setSelectedDistrict({
+                    newDistrict = {
                         props: feat.properties,
                         coordinates: [markerCoords.latitude, markerCoords.longitude]
                     }
-                    )
+                    break;
                 }
-            }
+            }            
+            setSelectedDistrict(newDistrict)
+
         }
     }, [markerCoords, districts])
 
