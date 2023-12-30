@@ -1,10 +1,12 @@
 import District from '/src/District';
-import { USStates } from "@/constants";
+import { USStates, zoomThreshold } from "@/constants";
+import useMapStore from '/stores/mapStore';
 
 
 export default function InfoPanel({ metroInfo, districtDict }) {
     console.log(metroInfo, districtDict)
     let dist = new District(districtDict)
+    const zoom = useMapStore((state) => state.zoom)
 
     if (Object.keys(metroInfo).length > 1 && Object.keys(districtDict).length > 1) {
         const { nara_ed_maps_link, ancestry_ed_maps_link, state, county } = metroInfo[dist.metro_id]
@@ -38,7 +40,13 @@ export default function InfoPanel({ metroInfo, districtDict }) {
             </ul>
         </>
         )
+    } else if (zoom() >= zoomThreshold) {
+        return <>
+            <h2>ED Finder</h2>
+            <p>Click within an Electoral District to learn more about it.</p>
+        </>
     } else {
+        console.log("zoom=", zoom())
         return <>
             <h2>ED Finder</h2>
             <p>Click a city to zoom in.</p>
