@@ -30,10 +30,16 @@ const useMapStore = create((set, get) => ({
         return false
     },
     markerCoords: null,
-    setMarkerCoords: (coords) => {
-        console.log("setting to: ", coords)
-        set({ markerCoords: coords })
-    }
+    setMarkerCoords: (coords) => set({ markerCoords: coords }),
+    zoom: () => {
+        const mapRef = get().mapRef;
+        if (mapRef) {
+            return mapRef.getZoom();
+        }
+        return null
+    },
+    selectedDistrict: {},
+    setSelectedDistrict: (newDistrict) => set({ selectedDistrict: newDistrict })
 }));
 
 export default useMapStore;

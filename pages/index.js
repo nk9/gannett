@@ -39,6 +39,8 @@ export default function Index() {
     const isInInitialViewState = useMapStore((state) => state.isInInitialViewState);
     const mapRef = useMapStore((state) => state.mapRef);
     const setMarkerCoords = useMapStore((state) => state.setMarkerCoords)
+    const selectedDistrict = useMapStore((state) => state.selectedDistrict)
+    const setSelectedDistrict = useMapStore((state) => state.setSelectedDistrict)
 
 
     var [metros, setMetros] = useState({});
@@ -59,7 +61,6 @@ export default function Index() {
 
     
     const [districtName, setDistrictName] = useState("Select a point")
-    const [selectedDistrict, setSelectedDistrict] = useState({})
     
     useEffect(() => {
         async function fetchData() {
@@ -173,9 +174,9 @@ export default function Index() {
     }, [year])
 
     const clickResetMap = () => {
-        resetMap();
         setMarkerCoords(null);
         setSelectedDistrict({});
+        resetMap();
     }
 
     return (
@@ -199,7 +200,6 @@ export default function Index() {
                         districts={districts}
                         roads={roads}
                         setMapViewport={setMapViewport}
-                        setSelectedDistrict={setSelectedDistrict}
                         setZoom={setZoom} />
                 </Grid>
             </Grid>

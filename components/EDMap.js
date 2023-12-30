@@ -7,12 +7,14 @@ import { point, multiPolygon } from "@turf/helpers"
 import { zoomThreshold, initialViewState, zoomDuration } from "@/constants";
 import useMapStore from '/stores/mapStore';
 
-export default function EDMap({ metros, districts, roads, setMapViewport, setSelectedDistrict, setZoom }) {
-    const setMapRef = useMapStore((state) => state.setMapRef);
+export default function EDMap({ metros, districts, roads, setMapViewport, setZoom }) {
     const initialMapRef = useRef();
+    const setMapRef = useMapStore((state) => state.setMapRef);
     const mapRef = useMapStore((state) => state.mapRef);
     const markerCoords = useMapStore((state) => state.markerCoords)
     const setMarkerCoords = useMapStore((state) => state.setMarkerCoords)
+    const selectedDistrict = useMapStore((state) => state.selectedDistrict)
+    const setSelectedDistrict = useMapStore((state) => state.setSelectedDistrict)
 
     useEffect(() => {
         // Set the initial map reference to the store when the component mounts
@@ -64,7 +66,12 @@ export default function EDMap({ metros, districts, roads, setMapViewport, setSel
                         type: 'fill',
                         minzoom: zoomThreshold,
                         paint: {
-                            'fill-opacity': 0
+                            'fill-color': '#009',
+                            'fill-opacity': [
+                                'case',
+                                ['==', ['get', 'district'], selectedDistrict?.props?.district ?? "NO_ED_NAME"], // if case
+                                0.2, // then do this
+                                0] // else
                         }
                     }
                 },
@@ -94,7 +101,7 @@ export default function EDMap({ metros, districts, roads, setMapViewport, setSel
                             'text-color': ed_color
                         }
                     }
-                },
+                }
             ]
         },
         {
