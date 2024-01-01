@@ -66,10 +66,13 @@ export default function SearchField({}) {
             var results = await fetch('/api/search?' + new URLSearchParams({
                 q: inputValue
             }))
-
-            if (results) {
-                setOptions(results)
-            }
+                .then((res) => res.json())
+                .then((data) => {
+                    if (data) {
+                        console.log("results:", data.results)
+                        setOptions(data.results)
+                    }
+                });
 
 
             return () => {
@@ -106,14 +109,17 @@ export default function SearchField({}) {
                 <TextField {...params} label="Search" fullWidth />
             )}
             renderOption={(props, option) => {
+                console.log("option:", option)
                 const matches =
                     option.structured_formatting.main_text_matched_substrings || [];
 
+                console.log("matches:", matches)
                 const parts = parse(
                     option.structured_formatting.main_text,
                     matches.map((match) => [match.offset, match.offset + match.length]),
                 );
 
+                console.log("parts:", parts)
                 return (
                     <li {...props}>
                         <Grid container alignItems="center">

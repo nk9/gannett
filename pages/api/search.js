@@ -5,17 +5,19 @@ async function runSearch(query) {
     return {
         "results": [
             {
+                "description": "Test1",
                 "structured_formatting": {
                     "main_text": "Hoboken",
-                    "main_text_matched_substrings": "Ho",
-                    "secondary": "New Jersey"
+                    "main_text_matched_substrings": [{ offset: 0, length: 2 }],
+                    "secondary_text": "New Jersey"
                 }
             },
             {
+                "description": "Test2",
                 "structured_formatting": {
                     "main_text": "Holland Park",
-                    "main_text_matched_substrings": "Ho",
-                    "secondary": "London, UK"
+                    "main_text_matched_substrings": [{ offset: 0, length: 2 }],
+                    "secondary_text": "London, UK"
                 }
             }]
     }
