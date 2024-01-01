@@ -115,7 +115,9 @@ export default function EDMap({ metros, districts, roads, setMapViewport, setZoo
                         type: 'circle',
                         maxzoom: zoomThreshold,
                         paint: {
-                            'circle-radius': 8,
+                            'circle-radius': 7,
+                            'circle-stroke-width': 2,
+                            'circle-stroke-color': "#fff",
                             'circle-color': 'rgba(227, 6, 19, 1.0)'
                         },
                     }
