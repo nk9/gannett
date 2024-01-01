@@ -7,13 +7,12 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 import { Button } from '@mui/material';
 
-import { createClient } from '@supabase/supabase-js'
-
 import EDMap from 'components/EDMap';
 import YearsPicker from 'components/YearsPicker';
 import InfoPanel from 'components/InfoPanel';
 import { zoomThreshold } from "@/constants";
 import useMapStore from '/stores/mapStore';
+import { supabase } from '@/supabase';
 
 const all_years = [1880, 1900, 1910, 1920, 1930, 1940]
 
@@ -28,11 +27,6 @@ export default function Index() {
     useEffect(() => {
         router.isReady && setYear(queryYear || "1940");
     }, [queryYear, router.isReady]);
-
-    const supabase = createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-    );
 
     // Map state
     const resetMap = useMapStore((state) => state.resetMap);

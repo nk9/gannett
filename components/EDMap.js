@@ -6,6 +6,8 @@ import booleanPointInPolygon from "@turf/boolean-point-in-polygon";
 import { point, multiPolygon } from "@turf/helpers"
 import { zoomThreshold, initialViewState, zoomDuration } from "@/constants";
 import useMapStore from '/stores/mapStore';
+import SearchField from 'components/SearchField';
+
 
 export default function EDMap({ metros, districts, roads, setMapViewport, setZoom }) {
     const initialMapRef = useRef();
@@ -243,6 +245,7 @@ export default function EDMap({ metros, districts, roads, setMapViewport, setZoo
             />}
 
             <ScaleControl />
+            <SearchField />
         </Map>
     )
 }
