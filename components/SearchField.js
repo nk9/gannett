@@ -106,7 +106,10 @@ export default function SearchField({}) {
             }}
             noOptionsText="No results"
             renderInput={(params) => (
-                <TextField {...params} label="Search" fullWidth />
+                <TextField {...params}
+                    label={inputValue ? "" : "Search"}
+                    InputLabelProps={{ shrink: false }}
+                    fullWidth />
             )}
             renderOption={(props, option) => {
                 console.log("option:", option)
