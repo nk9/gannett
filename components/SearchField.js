@@ -17,16 +17,16 @@ export default function SearchField({}) {
     const [inputValue, setInputValue] = useState('');
     const [options, setOptions] = useState([]);
 
-    // const fetch = useMemo(
-    //     () =>
-    //         debounce((request, callback) => {
-    //             // autocompleteService.current.getPlacePredictions(request, callback);
-    //             fetch('/api/search?'+new URLSearchParams({
-    //                 q: 
-    //             }))
-    //         }, 400),
-    //     [],
-    // );
+    const doSearch = useMemo(
+        () =>
+            debounce((request) => {
+                // autocompleteService.current.getPlacePredictions(request, callback);
+                fetch('/api/search?' + new URLSearchParams({
+                    q: request.input
+                }))
+            }, 400),
+        [],
+    );
 
     useEffect(() => {
         async function fetchData() {
@@ -61,6 +61,11 @@ export default function SearchField({}) {
             //         setOptions(newOptions);
             //     }
             // });
+            doSearch({ input: inputValue }, (results) => {
+                if (active) {
+                    setOptions(results)
+                }
+            })
             console.log("call fetch API route")
 
             var results = await fetch('/api/search?' + new URLSearchParams({
@@ -112,16 +117,13 @@ export default function SearchField({}) {
                     fullWidth />
             )}
             renderOption={(props, option) => {
-                console.log("option:", option)
                 const matches =
                     option.structured_formatting.main_text_matched_substrings || [];
 
-                console.log("matches:", matches)
                 const parts = parse(
                     option.structured_formatting.main_text,
-                    matches.map((match) => [match.offset, match.offset + match.length]),
+                    matches
                 );
-
                 console.log("parts:", parts)
                 return (
                     <li {...props}>
