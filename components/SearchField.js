@@ -6,13 +6,18 @@ import { useState, useEffect, useMemo } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCity, faRoad } from '@fortawesome/free-solid-svg-icons';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import parse from 'autosuggest-highlight/parse';
 import { debounce } from '@mui/material/utils';
 
+import useMapStore from '/stores/mapStore';
+
 export default function SearchField({}) {
+    const year = useMapStore((s) => s.year)
+
     const [value, setValue] = useState(null);
     const [inputValue, setInputValue] = useState('');
     const [options, setOptions] = useState([]);
@@ -22,7 +27,8 @@ export default function SearchField({}) {
             debounce((request) => {
                 // autocompleteService.current.getPlacePredictions(request, callback);
                 fetch('/api/search?' + new URLSearchParams({
-                    q: request.input
+                    q: request.input,
+                    year: year
                 }))
             }, 400),
         [],
@@ -69,7 +75,8 @@ export default function SearchField({}) {
             console.log("call fetch API route")
 
             var results = await fetch('/api/search?' + new URLSearchParams({
-                q: inputValue
+                q: inputValue,
+                year: year
             }))
                 .then((res) => res.json())
                 .then((data) => {
@@ -90,7 +97,7 @@ export default function SearchField({}) {
 
     return (
         <Autocomplete
-            id="google-map-demo"
+            id="gannett-search"
             sx={{ width: 300 }}
             style={{ position: "relative", top: 15, left: 15, backgroundColor: "white" }}
             getOptionLabel={(option) =>
@@ -124,12 +131,21 @@ export default function SearchField({}) {
                     option.structured_formatting.main_text,
                     matches
                 );
-                console.log("parts:", parts)
+
+                var icon = null;
+                if (option.type == 'metro') {
+                    icon = faCity
+                } else if (option.type == 'road') {
+                    icon = faRoad
+                }
+                 
+                console.log('"""props', props)
+                const liProps = { ...props, key: option.key }
                 return (
-                    <li {...props}>
+                    <li {...liProps}>
                         <Grid container alignItems="center">
                             <Grid item sx={{ display: 'flex', width: 44 }}>
-                                <LocationOnIcon sx={{ color: 'text.secondary' }} />
+                                <FontAwesomeIcon icon={icon} />
                             </Grid>
                             <Grid item sx={{ width: 'calc(100% - 44px)', wordWrap: 'break-word' }}>
                                 {parts.map((part, index) => (

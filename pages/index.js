@@ -11,8 +11,9 @@ import EDMap from 'components/EDMap';
 import YearsPicker from 'components/YearsPicker';
 import InfoPanel from 'components/InfoPanel';
 import { zoomThreshold } from "@/constants";
-import useMapStore from '/stores/mapStore';
 import { supabase } from '@/supabase';
+
+import useMapStore from '/stores/mapStore';
 
 const all_years = [1880, 1900, 1910, 1920, 1930, 1940]
 
@@ -20,7 +21,6 @@ export default function Index() {
     // On first render, router.query is empty.
     const router = useRouter();
     const { year: queryYear } = router.query;
-    var [year, setYear] = useState();
     var [zoom, setZoom] = useState();
     var [allYears, setAllYears] = useState({});
 
@@ -29,13 +29,15 @@ export default function Index() {
     }, [queryYear, router.isReady]);
 
     // Map state
-    const resetMap = useMapStore((state) => state.resetMap);
-    const isInInitialViewState = useMapStore((state) => state.isInInitialViewState);
-    const mapRef = useMapStore((state) => state.mapRef);
-    const setMarkerCoords = useMapStore((state) => state.setMarkerCoords)
-    const selectedDistrict = useMapStore((state) => state.selectedDistrict)
-    const setSelectedDistrict = useMapStore((state) => state.setSelectedDistrict)
-
+    const localUse = (prop) => useMapStore(state => state[prop])
+    const isInInitialViewState = localUse('isInInitialViewState')
+    const mapRef = localUse('mapRef')
+    const resetMap = localUse('resetMap')
+    const setMarkerCoords = localUse('setMarkerCoords')
+    const selectedDistrict = localUse('selectedDistrict')
+    const setSelectedDistrict = localUse('setSelectedDistrict')
+    const year = localUse('year')
+    const setYear = localUse('setYear')
 
     var [metros, setMetros] = useState({});
     var [metroInfo, setMetroInfo] = useState({});

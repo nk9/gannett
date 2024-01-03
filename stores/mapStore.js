@@ -4,6 +4,8 @@ import { initialViewState, zoomDuration } from "@/constants";
 const useMapStore = create((set, get) => ({
     mapRef: null,
     setMapRef: (ref) => set({ mapRef: ref }),
+    year: "1940",
+    setYear: (year) => set({ year: year }),
     resetMap: () => {
         const mapRef = get().mapRef;
         if (mapRef) {
