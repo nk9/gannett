@@ -1,12 +1,11 @@
 import { supabase } from '@/supabase';
 import match from 'autosuggest-highlight/match';
 
-function preprocessQuery(query) {
+function toTSQueryFormat(query) {
     return query.split(' ').map((word) => word + ":*").join(" & ")
 }
 
 async function runMetroSearch(query) {
-    console.log(`Looking for '${query}'`)
     const { data, error } = await supabase.from('metros').select().ilike('name', `%${query}%`)
     const matches = (val) => match(val, query, { insideWords: true })
 
@@ -17,7 +16,7 @@ async function runMetroSearch(query) {
         structured_formatting: {
             main_text: res.name,
             main_text_matched_substrings: matches(res.name),
-            secondary_text: "somewhere"
+            secondary_text: `${res.county} County, ${res.state}`
         }
     }))
     return results
@@ -27,9 +26,8 @@ async function runRoadSearch(year, query) {
     var results = []
 
     if (query.length >= 3) {
-        const processedQuery = preprocessQuery(query)
-        const { data, error } = await supabase.rpc('search_roads_for_year', { _year: year, query: processedQuery })
-        console.log('#### search_roads_for_year', data)
+        const tsQuery = toTSQueryFormat(query)
+        const { data, error } = await supabase.rpc('search_roads_for_year', { _year: year, query: tsQuery })
         const matches = (val) => match(val, query)
 
         if (!error) {
@@ -47,6 +45,38 @@ async function runRoadSearch(year, query) {
     }
     return results
 }
+
+async function runDistrictSearch(year, query) {
+    var results = []
+
+    if (query.length >= 3) {
+        var edRegex = /^\s*(\d+\-\d+)\s*$/;
+        var edName = query.match(edRegex)
+
+        if (edName) {
+            const likeQuery = edName[0] + '%'
+            const { data, error } = await supabase.rpc('search_districts_for_year', { _year: year, query: likeQuery })
+            const matches = (val) => match(val, query)
+        
+            if (!error) {
+                results = data.map((res) => ({
+                    type: 'district',
+                    key: `district-${res.district_id}`,
+                    description: res.name,
+                    structured_formatting: {
+                        main_text: res.name,
+                        main_text_matched_substrings: matches(res.name),
+                        secondary_text: `${res.metro_name}, ${res.county} County, ${res.state}`
+                    }
+                }))
+            } else {
+                console.log(error)
+            }
+        }
+    }
+    return results
+}
+
 // [
 //             {
 //                 "description": "Test1",
@@ -73,10 +103,12 @@ export default async function handler(req, res) {
     }
 
     const { q: query, year } = req.query ?? {};
-    console.log("search handler running with query:", query)
     var tasks = [
         async () => {
             return await runMetroSearch(query)
+        },
+        async () => {
+            return await runDistrictSearch(year, query)
         },
         async () => {
             return await runRoadSearch(year, query)
@@ -85,7 +117,6 @@ export default async function handler(req, res) {
 
     var test = await Promise.all(tasks.map(p => p()))
     var flattened = test.flat()
-    console.log('$$$$', flattened)
     const result = {
         "results": flattened
     }

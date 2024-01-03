@@ -43,7 +43,7 @@ export default function InfoPanel({ metroInfo, districtDict }) {
     } else if (zoom() >= zoomThreshold) {
         return <>
             <h2>ED Finder</h2>
-            <p>Click within an Electoral District to learn more about it.</p>
+            <p>Click within an Enumeration District to learn more about it.</p>
         </>
     } else {
         return <>

@@ -13,6 +13,8 @@ import Typography from '@mui/material/Typography';
 import parse from 'autosuggest-highlight/parse';
 import { debounce } from '@mui/material/utils';
 
+import Image from 'next/image';
+
 import useMapStore from '/stores/mapStore';
 
 export default function SearchField({}) {
@@ -133,19 +135,20 @@ export default function SearchField({}) {
                 );
 
                 var icon = null;
-                if (option.type == 'metro') {
-                    icon = faCity
-                } else if (option.type == 'road') {
-                    icon = faRoad
+                if (option.type == 'road') {
+                    icon = <FontAwesomeIcon icon={faRoad} size='xl' />
+                } else if (option.type == 'metro') {
+                    icon = <FontAwesomeIcon icon={faCity} size='xl' />
+                } else if (option.type == 'district') {
+                    icon = <Image alt="ED" src="/ed-icon.svg" width={30} height={30} />
                 }
                  
-                console.log('"""props', props)
                 const liProps = { ...props, key: option.key }
                 return (
                     <li {...liProps}>
                         <Grid container alignItems="center">
                             <Grid item sx={{ display: 'flex', width: 44 }}>
-                                <FontAwesomeIcon icon={icon} />
+                                {icon}
                             </Grid>
                             <Grid item sx={{ width: 'calc(100% - 44px)', wordWrap: 'break-word' }}>
                                 {parts.map((part, index) => (
