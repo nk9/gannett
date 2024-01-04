@@ -1,18 +1,30 @@
 import create from 'zustand';
 import { initialViewState, zoomDuration } from "@/constants";
 
+// From https://stackoverflow.com/a/75403388/1749551
+// export function useMulti(useFunc, ...items) {
+//     return items.reduce((carry, item) => ({
+//         ...carry,
+//         [item]: useFunc(state => state[item]),
+//     }), {})
+// }
+
+const useMapState = (prop) => useMapStore(state => state[prop])
+
+
 const useMapStore = create((set, get) => ({
     mapRef: null,
     setMapRef: (ref) => set({ mapRef: ref }),
     year: "1940",
     setYear: (year) => set({ year: year }),
-    resetMap: () => {
+    setMapView: (view) => {
+        const newView = { ...initialViewState, ...view };
         const mapRef = get().mapRef;
         if (mapRef) {
             mapRef?.flyTo({
-                center: [initialViewState.longitude, initialViewState.latitude],
+                center: newView.center,
                 duration: zoomDuration,
-                zoom: initialViewState.zoom
+                zoom: newView.zoom
             })
         }
     },
@@ -22,8 +34,8 @@ const useMapStore = create((set, get) => ({
             const center = mapRef.getCenter();
             const zoom = mapRef.getZoom();
 
-            if (Math.round(center.lng) == initialViewState.longitude &&
-                Math.round(center.lat) == initialViewState.latitude &&
+            if (Math.round(center.lng) == initialViewState.center[0] &&
+                Math.round(center.lat) == initialViewState.center[1] &&
                 zoom == initialViewState.zoom) {
                 return true
             }
@@ -44,4 +56,4 @@ const useMapStore = create((set, get) => ({
     setSelectedDistrict: (newDistrict) => set({ selectedDistrict: newDistrict })
 }));
 
-export default useMapStore;
+export default useMapState;

@@ -15,10 +15,14 @@ import { debounce } from '@mui/material/utils';
 
 import Image from 'next/image';
 
-import useMapStore from '/stores/mapStore';
+import useMapState from '/stores/mapStore';
+import { zoomLevel } from '@/constants'
 
 export default function SearchField({}) {
-    const year = useMapStore((s) => s.year)
+    const year = useMapState('year')
+    const setSelectedDistrict = useMapState('setSelectedDistrict')
+    const setMapView = useMapState('setMapView')
+    const setMarkerCoords = useMapState('setMarkerCoords')
 
     const [value, setValue] = useState(null);
     const [inputValue, setInputValue] = useState('');
@@ -111,9 +115,19 @@ export default function SearchField({}) {
             includeInputInList
             filterSelectedOptions
             options={options}
-            onChange={(event, newValue) => {
-                setOptions(newValue ? [newValue, ...options] : options);
-                setValue(newValue);
+            onChange={(event, selectedOption) => {
+                setValue(selectedOption);
+                
+                if (selectedOption?.point) {
+                    setMapView({
+                        center: selectedOption.point.coordinates,
+                        zoom: zoomLevel[selectedOption.type]
+                    })
+                    setMarkerCoords({
+                        longitude: selectedOption.point.coordinates[0],
+                        latitude: selectedOption.point.coordinates[1]
+                    });
+                }
             }}
             onInputChange={(event, newInputValue) => {
                 setInputValue(newInputValue);

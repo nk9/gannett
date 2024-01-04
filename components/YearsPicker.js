@@ -29,7 +29,6 @@ export default function YearsPicker({ allYears, year, setYear }) {
         });
     };
 
-    console.log(allYears)
     let yearTabs = Object.entries(allYears).map(
         ([y, d]) => <Tab key={y} value={y} disabled={!d}>{y}</Tab>
     )

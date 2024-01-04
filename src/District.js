@@ -14,3 +14,7 @@ export default class District {
         return `${this.metro_code}-${this.district}`
     }
 }
+
+export function districtDict(props, long, lat) {
+    return ({ properties: props, coordinates: { longitude: long, latitude: lat } })
+}

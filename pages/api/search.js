@@ -13,6 +13,7 @@ async function runMetroSearch(query) {
         type: 'metro',
         key: `city-${res.id}`,
         description: res.name,
+        point: res.geom,
         structured_formatting: {
             main_text: res.name,
             main_text_matched_substrings: matches(res.name),
@@ -35,6 +36,7 @@ async function runRoadSearch(year, query) {
                 type: 'road',
                 key: `road-${res.road_id}`,
                 description: res.road_name,
+                point: res.point,
                 structured_formatting: {
                     main_text: res.road_name,
                     main_text_matched_substrings: matches(res.road_name),
@@ -63,6 +65,7 @@ async function runDistrictSearch(year, query) {
                     type: 'district',
                     key: `district-${res.district_id}`,
                     description: res.name,
+                    point: res.point,
                     structured_formatting: {
                         main_text: res.name,
                         main_text_matched_substrings: matches(res.name),

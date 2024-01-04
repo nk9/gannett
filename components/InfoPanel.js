@@ -1,14 +1,14 @@
 import District from '/src/District';
 import { USStates, zoomThreshold } from "@/constants";
-import useMapStore from '/stores/mapStore';
+import useMapState from '/stores/mapStore';
 
 
-export default function InfoPanel({ metroInfo, districtDict }) {
-    console.log(metroInfo, districtDict)
-    let dist = new District(districtDict)
-    const zoom = useMapStore((state) => state.zoom)
+export default function InfoPanel({ metroInfo }) {
+    const zoom = useMapState('zoom')
+    const selectedDistrict = useMapState('selectedDistrict')
 
-    if (Object.keys(metroInfo).length > 1 && Object.keys(districtDict).length > 1) {
+    if (Object.keys(metroInfo).length > 1 && Object.keys(selectedDistrict).length > 1) {
+        let dist = new District(selectedDistrict)
         const { nara_ed_maps_link, ancestry_ed_maps_link, state, county } = metroInfo[dist.metro_id]
 
         var query = new URLSearchParams({

@@ -5,18 +5,19 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import booleanPointInPolygon from "@turf/boolean-point-in-polygon";
 import { point, multiPolygon } from "@turf/helpers"
 import { zoomThreshold, initialViewState, zoomDuration } from "@/constants";
-import useMapStore from '/stores/mapStore';
+import useMapState from '/stores/mapStore';
 import SearchField from 'components/SearchField';
 
 
 export default function EDMap({ metros, districts, roads, setMapViewport, setZoom }) {
     const initialMapRef = useRef();
-    const setMapRef = useMapStore((state) => state.setMapRef);
-    const mapRef = useMapStore((state) => state.mapRef);
-    const markerCoords = useMapStore((state) => state.markerCoords)
-    const setMarkerCoords = useMapStore((state) => state.setMarkerCoords)
-    const selectedDistrict = useMapStore((state) => state.selectedDistrict)
-    const setSelectedDistrict = useMapStore((state) => state.setSelectedDistrict)
+
+    const setMapRef = useMapState('setMapRef');
+    const mapRef = useMapState('mapRef');
+    const markerCoords = useMapState('markerCoords')
+    const setMarkerCoords = useMapState('setMarkerCoords')
+    const selectedDistrict = useMapState('selectedDistrict')
+    const setSelectedDistrict = useMapState('setSelectedDistrict')
 
     useEffect(() => {
         // Set the initial map reference to the store when the component mounts

@@ -1,10 +1,10 @@
 export const zoomThreshold = 12;
 export const zoomDuration = 1200;
 export const initialViewState = {
-    longitude: -98,
-    latitude: 40,
+    center: [-98, 40], // long, lat
     zoom: 3.5
 }
+export const zoomLevel = { 'district': 14, 'road': 15, 'metro': 13 }
 
 
 export const USStates = {

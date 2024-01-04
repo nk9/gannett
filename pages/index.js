@@ -13,7 +13,7 @@ import InfoPanel from 'components/InfoPanel';
 import { zoomThreshold } from "@/constants";
 import { supabase } from '@/supabase';
 
-import useMapStore from '/stores/mapStore';
+import useMapState from '/stores/mapStore';
 
 const all_years = [1880, 1900, 1910, 1920, 1930, 1940]
 
@@ -29,15 +29,13 @@ export default function Index() {
     }, [queryYear, router.isReady]);
 
     // Map state
-    const localUse = (prop) => useMapStore(state => state[prop])
-    const isInInitialViewState = localUse('isInInitialViewState')
-    const mapRef = localUse('mapRef')
-    const resetMap = localUse('resetMap')
-    const setMarkerCoords = localUse('setMarkerCoords')
-    const selectedDistrict = localUse('selectedDistrict')
-    const setSelectedDistrict = localUse('setSelectedDistrict')
-    const year = localUse('year')
-    const setYear = localUse('setYear')
+    const isInInitialViewState = useMapState('isInInitialViewState')
+    const mapRef = useMapState('mapRef')
+    const setMapView = useMapState('setMapView')
+    const setMarkerCoords = useMapState('setMarkerCoords')
+    const setSelectedDistrict = useMapState('setSelectedDistrict')
+    const year = useMapState('year')
+    const setYear = useMapState('setYear')
 
     var [metros, setMetros] = useState({});
     var [metroInfo, setMetroInfo] = useState({});
@@ -172,17 +170,17 @@ export default function Index() {
     const clickResetMap = () => {
         setMarkerCoords(null);
         setSelectedDistrict({});
-        resetMap();
+        setMapView({});
     }
 
     return (
         <Container maxWidth="lg">
             <Grid container>
                 <Grid xs={2}>
-                    <InfoPanel metroInfo={metroInfo} districtDict={selectedDistrict} />
+                    <InfoPanel metroInfo={metroInfo} />
                 </Grid>
                 <Grid xs={10}>
-                    <div style={{ position: "sticky" }}>
+                    <div style={{ height: 60, position: "sticky" }}>
                         <YearsPicker allYears={allYears} year={year} setYear={setYear} />
                         <Button
                             variant="contained"
