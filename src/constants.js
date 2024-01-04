@@ -2,6 +2,8 @@ export const zoomThreshold = 12;
 export const zoomDuration = 1200;
 export const initialViewState = {
     center: [-98, 40], // long, lat
+    longitude: -98,
+    latitude: 40,
     zoom: 3.5
 }
 export const zoomLevel = { 'district': 14, 'road': 15, 'metro': 13 }
