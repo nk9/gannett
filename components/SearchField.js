@@ -23,9 +23,11 @@ export default function SearchField({}) {
     const setSelectedDistrict = useMapState('setSelectedDistrict')
     const setMapView = useMapState('setMapView')
     const setMarkerCoords = useMapState('setMarkerCoords')
+    const searchInputValue = useMapState('searchInputValue')
+    const setSearchInputValue = useMapState('setSearchInputValue')
+    const searchValue = useMapState('searchValue')
+    const setSearchValue = useMapState('setSearchValue')
 
-    const [value, setValue] = useState(null);
-    const [inputValue, setInputValue] = useState('');
     const [options, setOptions] = useState([]);
 
     const doSearch = useMemo(
@@ -53,8 +55,8 @@ export default function SearchField({}) {
             // }
             console.log("fetchData in SearchField")
 
-            if (inputValue === '') {
-                setOptions(value ? [value] : []);
+            if (searchInputValue === '') {
+                setOptions(searchValue ? [searchValue] : []);
                 return undefined;
             }
 
@@ -73,7 +75,7 @@ export default function SearchField({}) {
             //         setOptions(newOptions);
             //     }
             // });
-            doSearch({ input: inputValue }, (results) => {
+            doSearch({ input: searchInputValue }, (results) => {
                 if (active) {
                     setOptions(results)
                 }
@@ -81,7 +83,7 @@ export default function SearchField({}) {
             console.log("call fetch API route")
 
             var results = await fetch('/api/search?' + new URLSearchParams({
-                q: inputValue,
+                q: searchInputValue,
                 year: year
             }))
                 .then((res) => res.json())
@@ -99,13 +101,13 @@ export default function SearchField({}) {
             // return result
         }
         fetchData();
-    }, [value, inputValue]);
+    }, [searchValue, searchInputValue]);
 
     return (
         <Autocomplete
             id="gannett-search"
             sx={{ width: 300 }}
-            style={{ position: "relative", top: 15, left: 15, backgroundColor: "white" }}
+            style={{ position: "relative", top: 15, left: 15, backgroundColor: "white", borderRadius: 5 }}
             getOptionLabel={(option) =>
                 typeof option === 'string' ? option : option.description
             }
@@ -116,7 +118,7 @@ export default function SearchField({}) {
             filterSelectedOptions
             options={options}
             onChange={(event, selectedOption) => {
-                setValue(selectedOption);
+                setSearchValue(selectedOption);
                 
                 if (selectedOption?.point) {
                     setMapView({
@@ -129,13 +131,14 @@ export default function SearchField({}) {
                     });
                 }
             }}
+            inputValue={searchInputValue}
             onInputChange={(event, newInputValue) => {
-                setInputValue(newInputValue);
+                setSearchInputValue(newInputValue);
             }}
             noOptionsText="No results"
             renderInput={(params) => (
                 <TextField {...params}
-                    label={inputValue ? "" : "Search"}
+                    label={searchInputValue ? "" : "Search"}
                     InputLabelProps={{ shrink: false }}
                     fullWidth />
             )}

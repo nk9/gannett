@@ -36,6 +36,7 @@ export default function Index() {
     const setSelectedDistrict = useMapState('setSelectedDistrict')
     const year = useMapState('year')
     const setYear = useMapState('setYear')
+    const clearSearch = useMapState('clearSearch')
 
     var [metros, setMetros] = useState({});
     var [metroInfo, setMetroInfo] = useState({});
@@ -171,6 +172,7 @@ export default function Index() {
         setMarkerCoords(null);
         setSelectedDistrict({});
         setMapView({});
+        clearSearch();
     }
 
     return (
