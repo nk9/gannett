@@ -136,7 +136,11 @@ export default function EDMap({ metros, districts, roads, setMapViewport, setZoo
                             'text-offset': [0, 1]
                         },
                         paint: {
-                            'text-color': 'black'
+                            'text-color': 'black',
+                            'text-halo-color': 'white',
+                            'text-halo-width': 2,
+                            'text-halo-blur': 1
+
                         }
                     }
 
