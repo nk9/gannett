@@ -107,7 +107,7 @@ export default function SearchField({}) {
         <Autocomplete
             id="gannett-search"
             sx={{ width: 300 }}
-            style={{ position: "relative", top: 15, left: 15, backgroundColor: "white", borderRadius: 5 }}
+            style={{ position: "relative", backgroundColor: "white", borderRadius: 5 }}
             getOptionLabel={(option) =>
                 typeof option === 'string' ? option : option.description
             }

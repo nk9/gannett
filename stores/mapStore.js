@@ -55,15 +55,17 @@ const useMapStore = create((set, get) => ({
     selectedDistrict: {},
     setSelectedDistrict: (newDistrict) => set({ selectedDistrict: newDistrict }),
     searchInputValue: '',
-    setSearchInputValue: (newValue) => set({searchInputValue: newValue}),
+    setSearchInputValue: (newValue) => set({ searchInputValue: newValue }),
     searchValue: null,
-    setSearchValue: (newValue) => set({searchValue: newValue}),
+    setSearchValue: (newValue) => set({ searchValue: newValue }),
     clearSearch: () => {
         set({
             searchValue: null,
             searchInputValue: ''
         })
-    }
+    },
+    mapOptions: [],
+    setMapOptions: (newValue) => set({ mapOptions: newValue })
 }));
 
 export default useMapState;

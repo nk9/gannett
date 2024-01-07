@@ -7,6 +7,8 @@ import { point, multiPolygon } from "@turf/helpers"
 import { zoomThreshold, initialViewState, zoomDuration } from "@/constants";
 import useMapState from '/stores/mapStore';
 import SearchField from 'components/SearchField';
+import MapControls from 'components/MapControls';
+import Grid from '@mui/material/Grid'
 
 
 export default function EDMap({ metros, districts, roads, setMapViewport, setZoom }) {
@@ -250,7 +252,20 @@ export default function EDMap({ metros, districts, roads, setMapViewport, setZoo
             />}
 
             <ScaleControl />
-            <SearchField />
+            <Grid
+                container
+                style={{
+                  padding: "15px",
+                  width: "100%",
+                  justifyContent: "space-between",
+                }}>
+                <Grid item>
+                    <SearchField />
+                </Grid>
+                <Grid item>
+                    <MapControls />
+                </Grid>
+        </Grid>
         </Map>
     )
 }
