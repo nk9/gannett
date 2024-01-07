@@ -42,12 +42,7 @@ export default function Index() {
     var [metroInfo, setMetroInfo] = useState({});
     var [districts, setDistricts] = useState({});
     var [roads, setRoads] = useState({});
-    var [mapViewport, setMapViewport] = useState({
-        min_lat: 40.34839,
-        min_long: -79.99880,
-        max_lat: 40.47536,
-        max_long: -79.90963
-    })
+    var [mapViewport, setMapViewport] = useState({})
 
     const [resetButtonDisabled, setResetButtonDisabled] = useState(false)
     useEffect(() => {
@@ -100,25 +95,25 @@ export default function Index() {
                             // console.log(districts)
                         }
                     },
-                    // async () => {
-                    //     let { data: roads_data, error } = await supabase.rpc('roads_in_view', args);
-                    //     console.log("roads_in_view response:", roads_data, error)
+                    async () => {
+                        let { data: roads_data, error } = await supabase.rpc('roads_in_view', args);
+                        // console.log("roads_in_view response:", roads_data, error)
 
-                    //     if (roads_data) {
-                    //         setRoads({
-                    //             type: "FeatureCollection",
-                    //             features: roads_data.map((f) => ({
-                    //                 type: "Feature",
-                    //                 properties: {
-                    //                     name: f.name,
-                    //                     city: f.city,
-                    //                     year: f.year
-                    //                 },
-                    //                 geometry: JSON.parse(f.geom)
-                    //             }))
-                    //         });
-                    //     }
-                    // },
+                        if (roads_data) {
+                            setRoads({
+                                type: "FeatureCollection",
+                                features: roads_data.map((f) => ({
+                                    type: "Feature",
+                                    properties: {
+                                        name: f.name,
+                                        city: f.city,
+                                        year: f.year
+                                    },
+                                    geometry: JSON.parse(f.geom)
+                                }))
+                            });
+                        }
+                    },
                 )
             }
             await Promise.all(tasks.map(p => p()))

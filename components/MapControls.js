@@ -38,7 +38,6 @@ export default function MapControls({}) {
   
   const handleClick = (event, newOptions) => {
     setMapOptions(newOptions);
-    console.log('options:', newOptions)
   };
 
   return (

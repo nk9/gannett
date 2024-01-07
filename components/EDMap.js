@@ -20,46 +20,51 @@ export default function EDMap({ metros, districts, roads, setMapViewport, setZoo
     const setMarkerCoords = useMapState('setMarkerCoords')
     const selectedDistrict = useMapState('selectedDistrict')
     const setSelectedDistrict = useMapState('setSelectedDistrict')
+    const mapOptions = useMapState('mapOptions')
 
     useEffect(() => {
         // Set the initial map reference to the store when the component mounts
         setMapRef(initialMapRef.current);
     }, [setMapRef, initialMapRef.current]);
 
-    const ed_color = "#009";
-    const road_color = "#f00";
+    const edColor = "#009";
+    const roadColor = "#f00"
+    const showRoads = mapOptions.includes('showRoads')
 
     const layers = [
-        // {
-        //     id: 'roads',
-        //     data: roads,
-        //     source_layers: [
-        //         {
-        //             interactive: false,
-        //             style: {
-        //                 id: 'roads',
-        //                 type: 'line',
-        //                 minzoom: zoomThreshold,
-        //                 paint: {
-        //                     'line-color': road_color,
-        //                     'line-opacity': 1
-        //                 }
-        //             }
-        //         },
-        //         // {
-        //         //     interactive: false,
-        //         //     style: {
-        //         //         id: 'road_names',
-        //         //         type: 'symbol',
-        //         //         minzoom: zoomThreshold,
-        //         //         layout: {
-        //         //             'text-field': ["get", "name"],
-        //         //             'symbole-placement': "line"
-        //         //         }
-        //         //     }
-        //         // }
-        //     ]
-        // },
+        {
+            id: 'roads',
+            data: roads,
+            source_layers: [
+                {
+                    interactive: false,
+                    style: {
+                        id: 'roads',
+                        type: 'line',
+                        minzoom: zoomThreshold,
+                        paint: {
+                            'line-color': roadColor,
+                            'line-opacity': 1
+                        },
+                        layout: {
+                            visibility: showRoads ? "visible" : "none"
+                        }
+                    }
+                },
+                // {
+                //     interactive: false,
+                //     style: {
+                //         id: 'road_names',
+                //         type: 'symbol',
+                //         minzoom: zoomThreshold,
+                //         layout: {
+                //             'text-field': ["get", "name"],
+                //             'symbole-placement': "line"
+                //         }
+                //     }
+                // }
+            ]
+        },
         {
             id: 'districts',
             data: districts,
@@ -87,9 +92,10 @@ export default function EDMap({ metros, districts, roads, setMapViewport, setZoo
                         type: 'line',
                         minzoom: zoomThreshold,
                         paint: {
-                            'line-color': ed_color,
+                            'line-color': edColor,
                             'line-opacity': 0.7,
-                            'line-dasharray': [5, 5]
+                            'line-dasharray': [5, 5],
+                            'line-width': showRoads ? 3 : 1
                         }
                     }
                 },
@@ -103,7 +109,7 @@ export default function EDMap({ metros, districts, roads, setMapViewport, setZoo
                             'text-field': ["get", "district"]
                         },
                         paint: {
-                            'text-color': ed_color
+                            'text-color': edColor
                         }
                     }
                 }
@@ -255,9 +261,9 @@ export default function EDMap({ metros, districts, roads, setMapViewport, setZoo
             <Grid
                 container
                 style={{
-                  padding: "15px",
-                  width: "100%",
-                  justifyContent: "space-between",
+                    padding: "15px",
+                    width: "100%",
+                    justifyContent: "space-between",
                 }}>
                 <Grid item>
                     <SearchField />
@@ -265,7 +271,7 @@ export default function EDMap({ metros, districts, roads, setMapViewport, setZoo
                 <Grid item>
                     <MapControls />
                 </Grid>
-        </Grid>
+            </Grid>
         </Map>
     )
 }
