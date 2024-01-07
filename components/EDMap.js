@@ -30,6 +30,7 @@ export default function EDMap({ metros, districts, roads, setMapViewport, setZoo
     const edColor = "#009";
     const roadColor = "#f00"
     const showRoads = mapOptions.includes('showRoads')
+    const showSatellite = mapOptions.includes('showSatellite')
 
     const layers = [
         {
@@ -109,7 +110,10 @@ export default function EDMap({ metros, districts, roads, setMapViewport, setZoo
                             'text-field': ["get", "district"]
                         },
                         paint: {
-                            'text-color': edColor
+                            'text-color': edColor,
+                            'text-halo-color': 'white',
+                            'text-halo-width': 2,
+                            'text-halo-blur': 1
                         }
                     }
                 }
@@ -148,7 +152,6 @@ export default function EDMap({ metros, districts, roads, setMapViewport, setZoo
                             'text-halo-color': 'white',
                             'text-halo-width': 2,
                             'text-halo-blur': 1
-
                         }
                     }
 
@@ -231,13 +234,14 @@ export default function EDMap({ metros, districts, roads, setMapViewport, setZoo
         }
     }, [markerCoords, districts])
 
+    const mapStyle = showSatellite ? 'mapbox://styles/mapbox/satellite-streets-v12' : process.env.NEXT_PUBLIC_MAPBOX_STYLE_URL
 
     return (
         <Map
             ref={initialMapRef}
             initialViewState={initialViewState}
             style={{ width: "100%", height: 600 }}
-            mapStyle={process.env.NEXT_PUBLIC_MAPBOX_STYLE_URL}
+            mapStyle={mapStyle}
             styleDiffing
             mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
             interactiveLayerIds={interactiveLayerIds}
