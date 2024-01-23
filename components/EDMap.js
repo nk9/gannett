@@ -201,6 +201,8 @@ export default function EDMap({ metros, districts, roads, setMapViewport, setZoo
 
     const onViewportChange = (event) => {
         if (mapRef) {
+            setZoom(mapRef.getZoom());
+
             const bounds = mapRef.getBounds();
             setMapViewport({
                 min_lat: bounds._ne.lat,
@@ -208,7 +210,6 @@ export default function EDMap({ metros, districts, roads, setMapViewport, setZoo
                 max_lat: bounds._sw.lat,
                 max_long: bounds._sw.lng
             });
-            setZoom(event.viewState.zoom);
         }
     }
 
@@ -250,6 +251,7 @@ export default function EDMap({ metros, districts, roads, setMapViewport, setZoo
             onMouseLeave={onMouseLeave}
             onDragEnd={onViewportChange}
             onZoomEnd={onViewportChange}
+            onLoad={onViewportChange}
             cursor={cursor}
         >
             {sources}

@@ -56,16 +56,18 @@ export default function Index() {
         async function fetchData() {
             var tasks = [
                 async () => {
-                    let { data: year_data, error } = await supabase.rpc('years_in_view', mapViewport)
-                    // console.log("years_in_view response:", year_data, error)
-
-                    if (year_data) {
-                        const available_years = new Set(year_data.map(item => item.year));
-                        setAllYears(all_years.reduce((result, year) => {
-                            result[year] = available_years.has(year)
-                            return result
-                        }, {}))
-                        // console.log("allYears:", allYears)
+                    if (Object.keys(mapViewport).length == 4) {
+                        let { data: year_data, error } = await supabase.rpc('years_in_view', mapViewport)
+                        console.log("years_in_view response:", year_data, error)
+                    
+                        if (year_data) {
+                            const available_years = new Set(year_data.map(item => item.year));
+                            setAllYears(all_years.reduce((result, year) => {
+                                result[year] = available_years.has(year)
+                                return result
+                            }, {}))
+                            // console.log("allYears:", allYears)
+                        }
                     }
                 }]
 
