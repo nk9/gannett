@@ -6,6 +6,7 @@ export default class District {
         this.metro_code = props.metro_code ?? "00"
         this.metro = props.city ?? "No city";
         this.metro_id = props.metro_id ?? 0;
+        this.state = props.state ?? "UN";
         this.year = props.year ?? "year unknown";
         this.coordinates = coordinates;
     }

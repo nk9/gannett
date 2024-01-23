@@ -11,7 +11,7 @@ import MapControls from 'components/MapControls';
 import Grid from '@mui/material/Grid'
 
 
-export default function EDMap({ metros, districts, roads, setMapViewport, setZoom }) {
+export default function EDMap({ metros, districts, roads, setMapViewport }) {
     const initialMapRef = useRef();
 
     const setMapRef = useMapState('setMapRef');
@@ -201,8 +201,6 @@ export default function EDMap({ metros, districts, roads, setMapViewport, setZoo
 
     const onViewportChange = (event) => {
         if (mapRef) {
-            setZoom(mapRef.getZoom());
-
             const bounds = mapRef.getBounds();
             setMapViewport({
                 min_lat: bounds._ne.lat,

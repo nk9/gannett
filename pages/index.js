@@ -10,7 +10,7 @@ import { Button } from '@mui/material';
 import EDMap from 'components/EDMap';
 import YearsPicker from 'components/YearsPicker';
 import InfoPanel from 'components/InfoPanel';
-import { zoomThreshold } from "@/constants";
+import { zoomThreshold, zoomLevel } from "@/constants";
 import { supabase } from '@/supabase';
 
 import useMapState from '/stores/mapStore';
@@ -20,13 +20,8 @@ const all_years = [1880, 1900, 1910, 1920, 1930, 1940]
 export default function Index() {
     // On first render, router.query is empty.
     const router = useRouter();
-    const { year: queryYear } = router.query;
-    var [zoom, setZoom] = useState();
+    const { year: queryYear, state: queryState, ed: queryED } = router.query;
     var [allYears, setAllYears] = useState({});
-
-    useEffect(() => {
-        router.isReady && setYear(queryYear || "1940");
-    }, [queryYear, router.isReady]);
 
     // Map state
     const isInInitialViewState = useMapState('isInInitialViewState')
@@ -39,6 +34,7 @@ export default function Index() {
     const year = useMapState('year')
     const setYear = useMapState('setYear')
     const clearSearch = useMapState('clearSearch')
+    const currentZoomLevel = useMapState('currentZoomLevel')
 
     var [metros, setMetros] = useState({});
     var [metroInfo, setMetroInfo] = useState({});
@@ -52,8 +48,46 @@ export default function Index() {
     }, [mapViewport, mapRef])
 
     
-    const [districtName, setDistrictName] = useState("Select a point")
-    
+    useEffect(() => {
+        if (router.isReady) {
+            setYear(queryYear || "1940");
+            
+            if (queryYear && queryState && queryED) {
+                async function fetchDistrict() {
+                    let components = queryED.split("-")
+                    if (components.length == 2) {
+                        let args = {
+                            _year: parseInt(queryYear),
+                            _state: queryState,
+                            _county_code: components[0],
+                            _district_name: components[1]
+                        };
+                        let { data, error } = await supabase.rpc('lookup_district', args);
+
+                        if (!error && data[0]) {
+                            let dist = data[0];
+                            setMarkerCoords({
+                                longitude: dist.point.coordinates[0],
+                                latitude: dist.point.coordinates[1]
+                            })
+                            setMapView({
+                                center: dist.point.coordinates,
+                                zoom: zoomLevel.district
+                            })
+                        }
+                    }
+
+                    // We don't want the state and ED to stick around after load, or they
+                    // will cause all sorts of UX weirdness and corner cases. So remove
+                    // them from the URL's query params.
+                    const { state, ed, ...routerQuery } = router.query
+                    router.replace({ query: { ...routerQuery } });
+                }
+                fetchDistrict();
+            }
+        }
+    }, [queryYear, queryED, queryState, router.isReady]);
+
     useEffect(() => {
         async function fetchData() {
             var tasks = [
@@ -73,7 +107,7 @@ export default function Index() {
                     }
                 }]
 
-            if (year && zoom >= zoomThreshold) {
+            if (year && currentZoomLevel() >= zoomThreshold) {
                 let args = { _year: parseInt(year), ...mapViewport };
 
                 tasks.push(
@@ -92,6 +126,7 @@ export default function Index() {
                                         district: f.district_name,
                                         metro_code: f.metro_code,
                                         metro: f.metro_name,
+                                        state: f.state,
                                         year: f.year
                                     },
                                     geometry: JSON.parse(f.geom)
@@ -124,7 +159,7 @@ export default function Index() {
             await Promise.all(tasks.map(p => p()))
         }
         fetchData();
-    }, [mapViewport, year, queryYear, zoom]);
+    }, [mapViewport, year, queryYear, currentZoomLevel]);
 
     // Only when the selected ED changes
     useEffect(() => {
@@ -215,8 +250,7 @@ export default function Index() {
                         metros={metros}
                         districts={districts}
                         roads={roads}
-                        setMapViewport={setMapViewport}
-                        setZoom={setZoom} />
+                        setMapViewport={setMapViewport} />
                 </Grid>
             </Grid>
         </Container>

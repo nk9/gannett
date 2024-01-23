@@ -45,7 +45,7 @@ const useMapStore = create((set, get) => ({
     },
     markerCoords: null,
     setMarkerCoords: (coords) => set({ markerCoords: coords }),
-    zoom: () => {
+    currentZoomLevel: () => {
         const mapRef = get().mapRef;
         if (mapRef) {
             return mapRef.getZoom();
@@ -55,7 +55,7 @@ const useMapStore = create((set, get) => ({
     selectedDistrict: {},
     setSelectedDistrict: (newDistrict) => set({ selectedDistrict: newDistrict }),
     selectedDistrictResources: [],
-    setSelectedDistrictResources: (newResources) => set({selectedDistrictResources: newResources}),
+    setSelectedDistrictResources: (newResources) => set({ selectedDistrictResources: newResources }),
     searchInputValue: '',
     setSearchInputValue: (newValue) => set({ searchInputValue: newValue }),
     searchValue: null,
