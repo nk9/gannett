@@ -33,7 +33,9 @@ export default function Index() {
     const mapRef = useMapState('mapRef')
     const setMapView = useMapState('setMapView')
     const setMarkerCoords = useMapState('setMarkerCoords')
+    const selectedDistrict = useMapState('selectedDistrict')
     const setSelectedDistrict = useMapState('setSelectedDistrict')
+    const setSelectedDistrictResources = useMapState('setSelectedDistrictResources')
     const year = useMapState('year')
     const setYear = useMapState('setYear')
     const clearSearch = useMapState('clearSearch')
@@ -86,6 +88,7 @@ export default function Index() {
                                     type: "Feature",
                                     properties: {
                                         metro_id: f.metro_id,
+                                        district_id: f.id,
                                         district: f.district_name,
                                         metro_code: f.metro_code,
                                         metro: f.metro_name,
@@ -122,6 +125,26 @@ export default function Index() {
         }
         fetchData();
     }, [mapViewport, year, queryYear, zoom]);
+
+    // Only when the selected ED changes
+    useEffect(() => {
+        async function fetchResources() {
+            if (selectedDistrict && selectedDistrict.props) {
+                let { data, error } = await supabase.from('district_resources')
+                    .select()
+                    .eq('district_id', selectedDistrict.props.district_id);
+
+    
+                if (!error) {
+                    setSelectedDistrictResources(data);
+                } else {
+                    console.log("Error fetching district resources:", error);
+                    setSelectedDistrictResources([]);
+                }
+            }
+        }
+        fetchResources();
+    }, [selectedDistrict])
 
     // Only load when the year changes
     useEffect(() => {

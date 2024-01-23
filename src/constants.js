@@ -62,3 +62,18 @@ export const USStates = {
     'WI': 'Wisconsin',
     'WY': 'Wyoming'
 }
+
+export const resourceFormats = {
+    ANC: {
+        CENSUS: {
+            title: "Ancestry ($)",
+            format: "https://www.ancestry.com/imageviewer/collections/%(dbid)i/images/%(iid)s"
+        }
+    },
+    FS: {
+        CENSUS: {
+            title: "Family Search",
+            format: "https://www.familysearch.org/%(ark)s"
+        }
+    }
+}

@@ -54,6 +54,8 @@ const useMapStore = create((set, get) => ({
     },
     selectedDistrict: {},
     setSelectedDistrict: (newDistrict) => set({ selectedDistrict: newDistrict }),
+    selectedDistrictResources: [],
+    setSelectedDistrictResources: (newResources) => set({selectedDistrictResources: newResources}),
     searchInputValue: '',
     setSearchInputValue: (newValue) => set({ searchInputValue: newValue }),
     searchValue: null,
