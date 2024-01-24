@@ -1,8 +1,11 @@
+import { useState } from 'react';
+
 import District from '/src/District';
 import { USStates, zoomThreshold, resourceFormats } from "@/constants";
 import useMapState from '/stores/mapStore';
 import { sprintf } from 'sprintf-js';
 import LinkIcon from '@mui/icons-material/Link';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import IconButton from '@mui/material/IconButton';
 
 
@@ -10,6 +13,8 @@ export default function InfoPanel({ metroInfo }) {
     const currentZoomLevel = useMapState('currentZoomLevel')
     const selectedDistrict = useMapState('selectedDistrict')
     const selectedDistrictResources = useMapState('selectedDistrictResources')
+
+    const [isHoveringLinkButton, setIsHoveringLinkButton] = useState(false);
 
     const clickLinkButton = () => {
         const props = selectedDistrict.props
@@ -55,8 +60,14 @@ export default function InfoPanel({ metroInfo }) {
                 <p>{dist.name}
                     <IconButton aria-label="link" size="small" color="primary"
                         sx={{ position: "relative", bottom: "2px", left: "2px" }}
-                        onClick={clickLinkButton}>
-                        <LinkIcon fontSize="inherit" />
+                        onClick={clickLinkButton}
+                        onMouseEnter={() => setIsHoveringLinkButton(true)}
+                        onMouseLeave={() => setIsHoveringLinkButton(false)}
+                    >
+                        {isHoveringLinkButton ?
+                            <ContentCopyIcon fontSize="small" /> :
+                            <LinkIcon fontSize="small" />
+                        }
                     </IconButton>
                 </p>
                 <h3>Census pages</h3>
