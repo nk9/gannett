@@ -20,7 +20,7 @@ const all_years = [1880, 1900, 1910, 1920, 1930, 1940]
 export default function Index() {
     // On first render, router.query is empty.
     const router = useRouter();
-    const { year: queryYear, state: queryState, ed: queryED } = router.query;
+    const { year: queryYear, state: queryState, ed: queryED, metro: queryMetro } = router.query;
     var [allYears, setAllYears] = useState({});
 
     // Map state
@@ -85,8 +85,30 @@ export default function Index() {
                 }
                 fetchDistrict();
             }
+            else if (queryYear && queryState && queryMetro) {
+                async function fetchMetro() {
+                    let { data, error } = await supabase.from('metro_year_info')
+                        .select('census_years!inner (year), metros!inner (name, state, geom)')
+                        .eq('census_years.year', parseInt(queryYear))
+                        .eq('metros.state', queryState)
+                        .eq('metros.name', queryMetro);
+
+                    if (!error && data.length) {
+                        let metro = data[0];
+                        setMapView({
+                            center: metro.metros.geom.coordinates,
+                            zoom: zoomLevel.metro
+                        })
+                    }
+
+                    // As above, remove the query components to avoid UX problems.
+                    const { state, metro, ...routerQuery } = router.query
+                    router.replace({ query: { ...routerQuery } });
+                }
+                fetchMetro();
+            }
         }
-    }, [queryYear, queryED, queryState, router.isReady]);
+    }, [queryYear, queryED, queryState, queryMetro, router.isReady]);
 
     useEffect(() => {
         async function fetchData() {
