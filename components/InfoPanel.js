@@ -31,20 +31,6 @@ export default function InfoPanel({ metroInfo }) {
         if (dist && dist.metro_id in metroInfo) {
             const { nara_ed_maps_link, ancestry_ed_maps_link, state, county } = metroInfo[dist.metro_id]
     
-            var query = new URLSearchParams({
-                fullstate: USStates[state],
-                state: state,
-                year: dist.year,
-                county: county,
-                ed: dist.district,
-                image: 1,
-                countyNumber: dist.metro_code
-            })
-            var fs_census = new URL('https://stevemorse.org/census/familysearch/dynamicfs.php')
-            fs_census.search = query
-            // var ancestry_census = new URL('https://stevemorse.org/census/ancestry/dynamic.php')
-            // ancestry_census.search = query
-
             var census_links = []
             // console.log("selectedDistrictResources:", selectedDistrictResources)
             if (selectedDistrictResources) {
@@ -72,7 +58,6 @@ export default function InfoPanel({ metroInfo }) {
                 </p>
                 <h3>Census pages</h3>
                 <ul>
-                    <li><a href={fs_census} target="_blank">Family Search</a></li>
                     {census_links}
                 </ul>
                 <h3>Maps</h3>
