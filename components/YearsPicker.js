@@ -16,16 +16,9 @@ export default function YearsPicker({ allYears, year, setYear }) {
 
     const handleChangeTab = (e, tab) => {
         setYear(tab);
-        const updatedSearchParams = new URLSearchParams(searchParams);
-
-        if (tab) {
-            updatedSearchParams.set("year", tab);
-        } else {
-            updatedSearchParams.delete("year");
-        }
 
         startTransition(() => {
-            router.replace(`${pathname}?${updatedSearchParams.toString()}`);
+            router.replace({ query: { ...router.query, year: tab } });
         });
     };
 
