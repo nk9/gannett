@@ -1,4 +1,4 @@
-import create from 'zustand';
+import { create } from 'zustand';
 import { initialViewState, zoomDuration } from "@/constants";
 
 // From https://stackoverflow.com/a/75403388/1749551
