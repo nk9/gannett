@@ -5,13 +5,15 @@ function toTSQueryFormat(query) {
     return query.split(' ').map((word) => word + ":*").join(" & ")
 }
 
-async function runMetroSearch(query) {
-    const { data, error } = await supabase.from('metros').select().ilike('name', `%${query}%`)
+async function runMetroSearch(year, query) {
+    const likeQuery = query + '%';
+    const { data, error } = await supabase.rpc('search_metros_for_year', { _year: year, query: likeQuery })
+    // const { data, error } = await supabase.from('metros').select().ilike('name', `%${query}%`)
     const matches = (val) => match(val, query, { insideWords: true })
 
     const results = data.map((res) => ({
         type: 'metro',
-        key: `city-${res.id}`,
+        key: `city-${res.metro_id}`,
         description: res.name,
         point: res.geom,
         structured_formatting: {
@@ -108,7 +110,7 @@ export default async function handler(req, res) {
     const { q: query, year } = req.query ?? {};
     var tasks = [
         async () => {
-            return await runMetroSearch(query)
+            return await runMetroSearch(year, query)
         },
         async () => {
             return await runDistrictSearch(year, query)

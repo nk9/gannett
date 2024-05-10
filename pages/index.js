@@ -226,7 +226,7 @@ export default function Index() {
                             geometry: JSON.parse(f.geom)
                         }))
                     }
-                    console.log(metros_for_year)
+                    console.log("metros_for_year:", metros_for_year)
                     setMetros(metros_for_year);
 
                     var metro_info = metros_data.reduce((result, dict) => {

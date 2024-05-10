@@ -228,8 +228,16 @@ export default function EDMap({ metros, districts, roads, setMapViewport }) {
                     }
                     break;
                 }
-            }            
+            }
+            console.log("newDistrict:", newDistrict)
             setSelectedDistrict(newDistrict)
+
+            // Sometimes, the selected district is changing but the map won't update the
+            // hilighted polygon(s).
+            // https://stackoverflow.com/a/77025960/1749551
+            if (mapRef?.current) {
+                mapRef.current.zoomTo(mapRef.current.getZoom());
+            }
         }
     }, [markerCoords, districts])
 
