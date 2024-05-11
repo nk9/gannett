@@ -55,6 +55,8 @@ export default function InfoPanel({ metroInfo }) {
                             <LinkIcon fontSize="small" />
                         }
                     </IconButton>
+                    <br/>
+                    {dist.metro}, {dist.state}
                 </p>
                 <h3>Census pages</h3>
                 <ul>
