@@ -2,11 +2,15 @@ import { useState, useTransition } from 'react';
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 import { Tabs } from '@mui/base/Tabs';
 import { Tab as BaseTab, tabClasses } from '@mui/base/Tab';
 import { TabsList as BaseTabsList } from '@mui/base/TabsList';
+import { useTheme } from '@mui/material/styles';
 import { styled } from '@mui/system';
 import styles from "./YearsPicker.module.scss";
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 export default function YearsPicker({ allYears, year, setYear }) {
     const router = useRouter();
@@ -14,7 +18,7 @@ export default function YearsPicker({ allYears, year, setYear }) {
     const searchParams = useSearchParams();
     const [isPending, startTransition] = useTransition(); 
 
-    const handleChangeTab = (e, tab) => {
+    const handleChangeTab = (event, tab) => {
         setYear(tab);
 
         startTransition(() => {
@@ -22,19 +26,48 @@ export default function YearsPicker({ allYears, year, setYear }) {
         });
     };
 
-    let yearTabs = Object.entries(allYears).map(
-        ([y, d]) => <Tab key={y} value={y} disabled={!d}>{y}</Tab>
-    )
+    const handleChangeSelect = (event) => {
+        let newYear = event.target.value;
+        setYear(newYear);
 
-    return (
-        <div className={styles["years-container"]}>
-            <Tabs className={styles["years"]} value={(year || "")} onChange={handleChangeTab}>
-                <TabsList>
-                    {yearTabs}
-                </TabsList>
-            </Tabs>
-        </div>
-    )
+        startTransition(() => {
+            router.replace({ query: { ...router.query, year: newYear } });
+        });
+    };
+
+    const theme = useTheme();
+    const desktop = useMediaQuery('(min-width:720px)');
+
+    var ui;
+    if (desktop) {
+        let yearTabs = Object.entries(allYears).map(
+            ([y, d]) => <Tab key={y} value={y} disabled={!d}>{y}</Tab>
+        );
+
+        ui = (
+            <div className={styles["years-tabs-container"]}>
+                <Tabs className={styles["years"]} value={(year || "")} onChange={handleChangeTab}>
+                    <TabsList>
+                        {yearTabs}
+                    </TabsList>
+                </Tabs>
+            </div>
+        );
+    } else {
+        let yearItems = Object.entries(allYears).map(
+            ([y, d]) => <MenuItem key={y} value={y} disabled={!d}>{y}</MenuItem>
+        );
+
+        ui = (
+            <div className={styles["years-select-container"]}>
+                <Select value={year} onChange={handleChangeSelect}>
+                    {yearItems}
+                </Select>
+            </div>
+        );
+    }
+
+    return ui;
 }
 
 const blue = {
