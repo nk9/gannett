@@ -2,6 +2,7 @@ import { useState, useTransition } from 'react';
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
+import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { Tabs } from '@mui/base/Tabs';
@@ -60,9 +61,11 @@ export default function YearsPicker({ allYears, year, setYear }) {
 
         ui = (
             <div className={styles["years-select-container"]}>
-                <Select value={year} onChange={handleChangeSelect}>
-                    {yearItems}
-                </Select>
+                <FormControl size="small">
+                    <Select value={year} onChange={handleChangeSelect}>
+                        {yearItems}
+                    </Select>
+                </FormControl>
             </div>
         );
     }
