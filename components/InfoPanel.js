@@ -112,11 +112,6 @@ export default function InfoPanel({ metroInfo, bottom }) {
                     <ul>
                         {census_links}
                     </ul>
-                    <h3>Maps</h3>
-                    <ul>
-                        {nara_ed_maps_link && <li><a href={nara_ed_maps_link} target="_blank">NARA</a></li>}
-                        {ancestry_ed_maps_link && <li><a href={ancestry_ed_maps_link} target="_blank">Ancestry ($)</a></li>}
-                    </ul>
                     {alert}
                 </>);
                 
