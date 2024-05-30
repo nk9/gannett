@@ -8,6 +8,8 @@ export const initialViewState = {
 }
 export const zoomLevel = { 'district': 14, 'road': 15, 'metro': 13 }
 
+export const ALL_YEARS = [1880, 1900, 1910, 1920, 1930, 1940];
+
 
 export const USStates = {
     'AL': 'Alabama',

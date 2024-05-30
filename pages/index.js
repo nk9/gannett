@@ -10,12 +10,11 @@ import EDMap from 'components/EDMap';
 import YearsPicker from 'components/YearsPicker';
 import InfoPanel from 'components/InfoPanel';
 import BottomDrawer from 'components/BottomDrawer';
-import { zoomThreshold, zoomLevel } from "@/constants";
+import { zoomThreshold, zoomLevel, ALL_YEARS } from "@/constants";
 import { supabase } from '@/supabase';
 
 import useMapState from '/stores/mapStore';
 
-const all_years = [1880, 1900, 1910, 1920, 1930, 1940]
 
 export default function Index() {
     // On first render, router.query is empty.
@@ -120,7 +119,7 @@ export default function Index() {
                     
                         if (year_data) {
                             const available_years = new Set(year_data.map(item => item.year));
-                            setAllYears(all_years.reduce((result, year) => {
+                            setAllYears(ALL_YEARS.reduce((result, year) => {
                                 result[year] = available_years.has(year)
                                 return result
                             }, {}))
