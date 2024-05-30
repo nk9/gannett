@@ -37,7 +37,7 @@ export default function YearsPicker({ allYears, year, setYear }) {
     };
 
     const theme = useTheme();
-    const desktop = useMediaQuery('(min-width:720px)');
+    const desktop = useMediaQuery('(min-width:630px)');
 
     var ui;
     if (desktop) {
