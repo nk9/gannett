@@ -55,7 +55,7 @@ function SwipeableEdgeDrawer(props) {
         swipeAreaWidth={drawerBleeding}
         disableSwipeToOpen={false}
         sx={{
-          display: { xs: 'block', sm: 'none' },
+          display: props.display,
           '& .MuiDrawer-paper': { boxSizing: 'border-box', width: '100%' }
         }}
         ModalProps={{

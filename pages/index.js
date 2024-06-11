@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router'
 
 import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 import { Button, Drawer, SwipeableDrawer } from '@mui/material';
 
@@ -254,7 +255,14 @@ export default function Index() {
     return (
         <Container maxWidth="lg">
             <Grid container>
-                <Grid xs={12}>
+                <Box
+                component={Grid}
+                item xs={0} sm={0} md={3}
+                display={{xs: "none", sm: "none", md: "block"}}
+                >
+                    <InfoPanel metroInfo={metroInfo} bottom={false} />
+                </Box>
+                <Grid item xs={12} sm={12} md={9}>
                     <div style={{ height: 60, position: "sticky" }}>
                         <YearsPicker allYears={allYears} year={year} setYear={setYear} />
                         <Button
@@ -271,17 +279,8 @@ export default function Index() {
                         setMapViewport={setMapViewport} />
                 </Grid>
             </Grid>
-            
-            <Drawer
-                variant="permanent"
-                anchor="left"
-                sx={{
-                    display: { xs: 'none', sm: 'block' },
-                    '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth }
-                }}>
-                <InfoPanel metroInfo={metroInfo} bottom={false} />
-            </Drawer>
-            <BottomDrawer>
+            <BottomDrawer
+            display={{xs: "block", sm: "block", md: "none", lg: "none"}}>
                 <InfoPanel metroInfo={metroInfo} bottom={true} />
             </BottomDrawer>
         </Container>
