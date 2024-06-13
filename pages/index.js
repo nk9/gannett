@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router'
+import Image from 'next/image';
 
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
@@ -252,41 +253,43 @@ export default function Index() {
     }
 
     return (
-        <Container maxWidth="lg">
-            <Grid container>
+        <>
+            <Container maxWidth="lg">
+                <Grid container>
+                    <Box
+                        component={Grid}
+                        xs={0} sm={0} md={3} lg={2}
+                        display={{ xs: "none", sm: "none", md: "block" }}
+                    >
+                        <InfoPanel metroInfo={metroInfo} bottom={false} />
+                    </Box>
+                    <Grid xs={12} sm={12} md={9} lg={10}>
+                        <div style={{ height: 60, position: "sticky" }}>
+                            <YearsPicker allYears={allYears} year={year} setYear={setYear} />
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                style={{ position: "absolute", bottom: 18 }}
+                                onClick={clickResetMap}
+                                disabled={resetButtonDisabled}>Reset</Button>
+                        </div>
+                        <EDMap
+                            metros={metros}
+                            districts={districts}
+                            roads={roads}
+                            setMapViewport={setMapViewport} />
+                    </Grid>
+                </Grid>
                 <Box
-                component={Grid}
-                xs={0} sm={0} md={3} lg={2}
-                display={{xs: "none", sm: "none", md: "block"}}
+                    display={{ xs: "none", sm: "block", md: "none" }}
                 >
                     <InfoPanel metroInfo={metroInfo} bottom={false} />
                 </Box>
-                <Grid xs={12} sm={12} md={9} lg={10}>
-                    <div style={{ height: 60, position: "sticky" }}>
-                        <YearsPicker allYears={allYears} year={year} setYear={setYear} />
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            style={{ position: "absolute", bottom: 18 }}
-                            onClick={clickResetMap}
-                            disabled={resetButtonDisabled}>Reset</Button>
-                    </div>
-                    <EDMap
-                        metros={metros}
-                        districts={districts}
-                        roads={roads}
-                        setMapViewport={setMapViewport} />
-                </Grid>
-            </Grid>
-            <Box
-            display={{xs: "none", sm: "block", md: "none"}}
-            >
-                <InfoPanel metroInfo={metroInfo} bottom={false} />
-            </Box>
-            <BottomDrawer
-            display={{xs: "block", sm: "none", md: "none", lg: "none"}}>
-                <InfoPanel metroInfo={metroInfo} bottom={true} />
-            </BottomDrawer>
-        </Container>
+                <BottomDrawer
+                    display={{ xs: "block", sm: "none", md: "none", lg: "none" }}>
+                    <InfoPanel metroInfo={metroInfo} bottom={true} />
+                </BottomDrawer>
+            </Container>
+        </>
     );
 }
