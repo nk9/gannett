@@ -61,7 +61,7 @@ export default function YearsPicker({ allYears, year, setYear }) {
 
         ui = (
             <div className={styles["years-select-container"]}>
-                <FormControl size="small">
+                <FormControl size="small" title="Census year">
                     <Select value={year} onChange={handleChangeSelect}>
                         {yearItems}
                     </Select>
