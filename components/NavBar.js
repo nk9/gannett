@@ -104,7 +104,7 @@ export default function NavBar() {
                 >
                     <List>
                         {makeItem("Home", <HomeIcon />)}
-                        {makeItem("FAQ", <HelpIcon />)}
+                        {makeItem("Docs", <HelpIcon />)}
                         {makeItem("About", <InfoIcon />)}
                         <Divider />
                         {makeItem("GitHub", <GitHubIcon />)}
