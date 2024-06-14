@@ -9,7 +9,8 @@
     };
     font-size: 16pt;
     font-family: "Garamond", serif;
-    border-left: solid #F5C402 3px;
+    border-left-style: solid;
+    border-left-width: 7px;
     padding-left: 1rem;
     position: relative;
 }

@@ -2,16 +2,16 @@ import { useState, useTransition } from 'react';
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import { Tabs } from '@mui/base/Tabs';
 import { Tab as BaseTab, tabClasses } from '@mui/base/Tab';
+import { Tabs } from '@mui/base/Tabs';
 import { TabsList as BaseTabsList } from '@mui/base/TabsList';
+import FormControl from '@mui/material/FormControl';
+import MenuItem from '@mui/material/MenuItem';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { styled } from '@mui/system';
 import styles from "./YearsPicker.module.scss";
-import useMediaQuery from '@mui/material/useMediaQuery';
 
 export default function YearsPicker({ allYears, year, setYear }) {
     const router = useRouter();
@@ -73,19 +73,6 @@ export default function YearsPicker({ allYears, year, setYear }) {
     return ui;
 }
 
-const blue = {
-    50: '#F0F7FF',
-    100: '#C2E0FF',
-    200: '#80BFFF',
-    300: '#66B2FF',
-    400: '#3399FF',
-    500: '#007FFF',
-    600: '#0072E5',
-    700: '#0059B2',
-    800: '#004C99',
-    900: '#003A75',
-};
-
 const grey = {
     50: '#F3F6F9',
     100: '#E5EAF2',
@@ -99,7 +86,8 @@ const grey = {
     900: '#1C2025',
 };
 
-const Tab = styled(BaseTab)`
+const Tab = styled(BaseTab)(
+    ({ theme }) => `
   font-family: 'IBM Plex Sans', sans-serif;
   color: #fff;
   cursor: pointer;
@@ -116,7 +104,7 @@ const Tab = styled(BaseTab)`
   justify-content: center;
 
   &:hover {
-    background-color: ${blue[400]};
+    background-color: ${theme.palette.primary.light};
 
       &.${tabClasses.disabled} {
         background-color: transparent;
@@ -126,24 +114,24 @@ const Tab = styled(BaseTab)`
 
   &:focus {
     color: #fff;
-    outline: 3px solid ${blue[200]};
+    outline: 3px solid ${theme.palette.primary.light};
   }
 
   &.${tabClasses.selected} {
     background-color: #fff;
-    color: ${blue[600]};
+    color: ${theme.palette.primary.main};
   }
 
   &.${tabClasses.disabled} {
     color: rgba(255, 255, 255, 0.6);
   }
-`;
+`);
 
 const TabsList = styled(BaseTabsList)(
     ({ theme }) => `
   min-width: 400px;
   max-width: 600px;
-  background-color: ${blue[500]};
+  background-color: ${theme.palette.primary.main};
   border-radius: 12px;
   margin-bottom: 16px;
   display: flex;

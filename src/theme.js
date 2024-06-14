@@ -1,6 +1,6 @@
-import { Roboto } from 'next/font/google';
-import { createTheme } from '@mui/material/styles';
 import { red } from '@mui/material/colors';
+import { createTheme } from '@mui/material/styles';
+import { Roboto } from 'next/font/google';
 
 const roboto = Roboto({
   weight: ['300', '400', '500', '700'],
@@ -12,13 +12,13 @@ const roboto = Roboto({
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#007FFF',
+      main: '#267365',
     },
     secondary: {
-      main: '#19857b',
+      main: '#EEC805',
     },
     error: {
-      main: red.A400,
+      main: "#F23030",
     },
   },
   typography: {
