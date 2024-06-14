@@ -6,9 +6,10 @@ import Typography from '@mui/material/Typography';
 import NestedList from 'components/NestedList';
 import Para from 'components/Para';
 import Quote from 'components/Quote';
+import Section from 'components/Section';
 import Image from 'next/image';
 import * as React from 'react';
-import Link from '../src/Link';
+import Link from 'src/Link';
 
 export default function Docs() {
     return (
@@ -29,14 +30,14 @@ export default function Docs() {
                     — <Link href="https://www.archives.gov/research/census/1950/ed-maps">National Archives</Link>
                 </Quote>
                 <Para>
-                    Every genealogist who has family in the United States after the mid-19th Century will have encountered <Link href="https://www.familysearch.org/en/wiki/United_States_Federal_Census#Enumeration_Districts">Enumeration Districts</Link> (EDs), even if they don’t realize it. This is how counties are split up into smaller regions of a few hundred people, and the exact shape of each ED determines which one you need to look in to find records for people living at a certain address.
+                    Every genealogist who has family in the United States after the mid-19th Century will have encountered <Link href="https://www.familysearch.org/en/wiki/United_States_Federal_Census#Enumeration_Districts">Enumeration Districts</Link> (EDs), even if they don’t realize it. This is how counties and cities are split up into smaller regions of a few hundred people, and the exact shape of each ED determines which one you need to look in to find records for people living at a certain address.
                 </Para>
                 <Para>
-                    Gannett is a tool to go from a neighbourhood or street name in a large metro area, directly to the census Population Schedule for the correct ED on Ancestry or FamilySearch. Please note that, unfortunately, <em>most cities are not available in most census years.</em> To learn more about where the data for this tool came from, please read the <Link href="/about">About page</Link>.
+                    Gannett is a tool to go from a neighbourhood or street name in a large metro area, directly to the census Population Schedule for the correct ED on Ancestry or FamilySearch. Please note that, unfortunately, <em>most cities are not available in most census years.</em> To learn more about where the data for this tool comes from, please read the <Link href="/about">About page</Link>.
                 </Para>
-                <Typography variant="h5" sx={{ mt: 2 }}>
+                <Section anchor="finding">
                     Finding the right ED
-                </Typography>
+                </Section>
                 <NestedList>
                     <ol>
                         <li>Select the census year. Note that the cities available for that year will update on the map. Of course, <Link href="https://www.familysearch.org/en/wiki/United_States_Census_1890#1890_Surviving_Population_Schedules">1890 is missing</Link>.</li>
@@ -47,20 +48,26 @@ export default function Docs() {
                             </ol>
                         </li>
                         <li>Find the neighborhood you’re interested in and click on the correct enumeration district.</li>
-                        <li>In the info panel, select the service you want to see the Population Scheudle on.</li>
+                        <li>In the info panel, click the link for the service you want to see the Population Scheudle on.</li>
                     </ol>
                 </NestedList>
-                <Typography variant="h5" sx={{ mt: 2 }}>
+                <Section>
                     Searching
-                </Typography>
+                </Section>
                 <Para>
-                    You can search for 
+                    You can search for city names, street names, 2-letter state abbreviations, and ED numbers (full numbers, including the county prefix).
                 </Para>
-                <Typography variant="h5" sx={{ mt: 2 }}>
-                    Searching
-                </Typography>
+                <ul>Examples:
+                    <li>howard san (will find <strong>Howard St, San Francisco</strong>)</li>
+                    <li>Pittsburgh PA</li>
+                    <li>cin (will find <strong>Cincinnatti, OH</strong>)</li>
+                    <li>41-19 (will find ED 19 in county 41, e.g. <strong>Spokane, WA</strong> in 1940)</li>
+                </ul>
+                <Section>
+                    Linking
+                </Section>
                 <Para>
-                    You can search for 
+                    Once you’ve found an ED, you can link to it by clicking the link button next to the ED number in the info panel. You can then share that link with anyone else. They will be taken directly to the ED when they enter the link in their browser.
                 </Para>
             </Box>
         </Container >);
