@@ -5,14 +5,18 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Tab as BaseTab, tabClasses } from '@mui/base/Tab';
 import { Tabs } from '@mui/base/Tabs';
 import { TabsList as BaseTabsList } from '@mui/base/TabsList';
+import ArrowDropDown from '@mui/icons-material/ArrowDropDown';
+import { Box } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
+import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { styled } from '@mui/system';
 import styles from "./YearsPicker.module.scss";
 
 export default function YearsPicker({ allYears, year, setYear }) {
+    const theme = useTheme();
     const router = useRouter();
     const [isPending, startTransition] = useTransition(); 
 
@@ -42,13 +46,13 @@ export default function YearsPicker({ allYears, year, setYear }) {
         );
 
         ui = (
-            <div className={styles["years-tabs-container"]}>
+            <Box className={styles["years-tabs-container"]}>
                 <Tabs className={styles["years"]} value={(year || "")} onChange={handleChangeTab}>
                     <TabsList>
                         {yearTabs}
                     </TabsList>
                 </Tabs>
-            </div>
+            </Box>
         );
     } else {
         let yearItems = Object.entries(allYears).map(
@@ -56,13 +60,26 @@ export default function YearsPicker({ allYears, year, setYear }) {
         );
 
         ui = (
-            <div className={styles["years-select-container"]}>
-                <FormControl size="small" title="Census year">
-                    <Select value={year} onChange={handleChangeSelect}>
-                        {yearItems}
-                    </Select>
-                </FormControl>
-            </div>
+            <Box className={styles["years-select-container"]} sx={{
+                display: "flex",
+                alignItems: "center"
+            }}>
+                <Select
+                    value={year}
+                    onChange={handleChangeSelect}
+                    title="Census year"
+                    sx={{
+                        backgroundColor: theme.palette.primary.main,
+                        color: "white",
+                        height: "36px",
+                        fontWeight: 500,
+                        ".MuiSelect-icon": {
+                            color: "white"
+                        },
+                    }}>
+                    {yearItems}
+                </Select>
+            </Box>
         );
     }
 
@@ -84,7 +101,7 @@ const grey = {
 
 const Tab = styled(BaseTab)(
     ({ theme }) => `
-  font-family: 'IBM Plex Sans', sans-serif;
+  font-family: 'Aleo', sans-serif;
   color: #fff;
   cursor: pointer;
   font-size: 0.875rem;
@@ -92,10 +109,10 @@ const Tab = styled(BaseTab)(
   text-decoration: none;
   background-color: transparent;
   width: 100%;
-  padding: 10px 12px;
-  margin: 6px;
+  padding: 5px 12px;
+  margin: 5px 6px;
   border: none;
-  border-radius: 7px;
+  border-radius: 6px;
   display: flex;
   justify-content: center;
 
@@ -128,8 +145,8 @@ const TabsList = styled(BaseTabsList)(
   min-width: 400px;
   max-width: 600px;
   background-color: ${theme.palette.primary.main};
-  border-radius: 12px;
-  margin-bottom: 16px;
+  border-radius: 6px;
+  // margin-bottom: 16px;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
@@ -6,6 +5,7 @@ import { Button, Drawer, SwipeableDrawer } from '@mui/material';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
+import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 import { ALL_YEARS, zoomLevel, zoomThreshold } from "@/constants";
@@ -23,7 +23,9 @@ export default function Index() {
     const router = useRouter();
     const { year: queryYear, state: queryState, ed: queryED, metro: queryMetro } = router.query;
     var [allYears, setAllYears] = useState({});
-    const isDesktop = useMediaQuery('(min-width:630px)');
+
+    const theme = useTheme();
+    const isDesktop = useMediaQuery(theme.breakpoints.up('sm'));
 
     // Map state
     const isInInitialViewState = useMapState('isInInitialViewState')
@@ -257,7 +259,7 @@ export default function Index() {
     return (
         <>
             <Container maxWidth="lg">
-                <Grid container sx={{ pt: isDesktop ? 3 : 0 }}>
+                <Grid container sx={{ pt: isDesktop ? 1 : 0 }}>
                     <Box
                         component={Grid}
                         xs={0} sm={0} md={3} lg={2}
@@ -266,15 +268,23 @@ export default function Index() {
                         <InfoPanel metroInfo={metroInfo} bottom={false} />
                     </Box>
                     <Grid xs={12} sm={12} md={9} lg={10}>
-                        <div style={{ height: 60, position: "sticky" }}>
+                        <Box sx={{
+                            position: "sticky",
+                            display: "flex",
+                            alignItems: "center",
+                            pb: isDesktop ? 2 : 1,
+                            pt: isDesktop ? 1 : 0
+                        }}>
                             <YearsPicker allYears={allYears} year={year} setYear={setYear} />
                             <Button
                                 variant="contained"
                                 color="primary"
-                                style={{ position: "absolute", bottom: 18 }}
+                                sx={{ position: "absolute", left: 0 }}
                                 onClick={clickResetMap}
-                                disabled={resetButtonDisabled}>Reset</Button>
-                        </div>
+                                disabled={resetButtonDisabled}>
+                                Reset
+                            </Button>
+                        </Box>
                         <EDMap
                             metros={metros}
                             districts={districts}
