@@ -1,5 +1,6 @@
 import { cloneElement, useState } from 'react';
 
+import "@fontsource/aleo/700.css";
 import CloseIcon from '@mui/icons-material/Close';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import HelpIcon from '@mui/icons-material/Help';
@@ -38,7 +39,7 @@ export default function NavBar() {
 
     const makeItem = (name, icon) => {
         const coloredIcon = cloneElement(icon, { color: 'primary' });
-        
+
         return (<ListItem key={name} disablePadding>
             <ListItemButton onClick={() => router.push(`/${name.replace(/ /g, '_').toLowerCase()}`)}>
                 <ListItemIcon>
@@ -62,14 +63,14 @@ export default function NavBar() {
                         display: 'flex',
                         alignItems: 'center'
                     }}>
-                        <Image alt="Diving Gannett logo" src={"/logo-dive.svg"} width={36} height={36} sizes='100vw' />
+                        <Image alt="Diving Gannet logo" src={"/logo-dive.svg"} width={36} height={36} sizes='100vw' />
                         <Typography variant="h6"
                             nowrap="true"
                             component="div"
                             sx={{
-                                fontFamily: ["American Typewriter"],
-                                fontWeight: 600,
-                                fontSize: "22pt",
+                                ml: "5px",
+                                fontFamily: ["Aleo"],
+                                fontSize: "26pt",
                                 display: 'inline',
                             }}>
                             Gannett

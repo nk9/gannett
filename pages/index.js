@@ -255,7 +255,7 @@ export default function Index() {
     return (
         <>
             <Container maxWidth="lg">
-                <Grid container>
+                <Grid container sx={{ pt: 3 }}>
                     <Box
                         component={Grid}
                         xs={0} sm={0} md={3} lg={2}

@@ -14,6 +14,7 @@
     "@emotion/react": "^11.11.4",
     "@emotion/server": "latest",
     "@emotion/styled": "^11.11.5",
+    "@fontsource/aleo": "^5.0.21",
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
