@@ -14,7 +14,7 @@ import Link from 'src/Link';
 export default function Docs() {
     return (
         <Container maxWidth="sm">
-            <Box sx={{ my: 4 }}>
+            <Box sx={{ py: 3 }}>
                 <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
                     <Image alt="Diving Gannet logo"
                         src={"/logo-dive.svg"}
@@ -68,6 +68,21 @@ export default function Docs() {
                 </Section>
                 <Para>
                     Once you’ve found an ED, you can link to it by clicking the link button next to the ED number in the info panel. You can then share that link with anyone else. They will be taken directly to the ED when they enter the link in their browser.
+                </Para>
+                <Section anchor="errors">
+                    Errors and Inconsistencies
+                </Section>
+                <Para>
+                    Turning literally thousands of pages of maps and textual descriptions into hundreds of Shapefiles has been an enormous amount of work, and I’m grateful to <Link href="/about">John and his team</Link> for the effort they’ve put in! In any project of this size, there will be some things that have slipped through the cracks. Some of these will have been added by me while processing the GIS files. Examples of issues include:
+                </Para>
+                <ul>
+                    <li>Duplicate EDs</li>
+                    <li>Overlapping EDs</li>
+                    <li>EDs with holes in them which shouldn’t be there</li>
+                    <li>EDs with incorrect borders</li>
+                </ul>
+                <Para>
+                    If you run into these or any other issues, please <Link href="/contact">get in touch</Link>!
                 </Para>
             </Box>
         </Container >);
