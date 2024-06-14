@@ -30,7 +30,7 @@ export default function Docs() {
                     — <Link href="https://www.archives.gov/research/census/1950/ed-maps">National Archives</Link>
                 </Quote>
                 <Para>
-                    Every genealogist who has family in the United States after the mid-19th Century will have encountered <Link href="https://www.familysearch.org/en/wiki/United_States_Federal_Census#Enumeration_Districts">Enumeration Districts</Link> (EDs), even if they don’t realize it. This is how counties and cities are split up into smaller regions of a few hundred people, and the exact shape of each ED determines which one you need to look in to find records for people living at a certain address.
+                    Every genealogist who has family in the United States after the mid-19th Century will have encountered <Link href="https://www.familysearch.org/en/wiki/United_States_Federal_Census#Enumeration_Districts">Enumeration Districts</Link> (EDs), even if they don’t realize it. This is how counties and cities are split up into smaller regions of a few hundred people. The exact shape of each ED determines which one you need to look in to find records for people living at a certain address.
                 </Para>
                 <Para>
                     Gannett is a tool to go from a neighbourhood or street name in a large metro area, directly to the census Population Schedule for the correct ED on Ancestry or FamilySearch. Please note that, unfortunately, <em>most cities are not available in most census years.</em> To learn more about where the data for this tool comes from, please read the <Link href="/about">About page</Link>.
@@ -80,15 +80,25 @@ export default function Docs() {
                     <li>Overlapping EDs</li>
                     <li>EDs with holes in them which shouldn’t be there</li>
                     <li>EDs with incorrect borders</li>
+                    <li>EDs which are missing names</li>
                 </ul>
                 <Para>
                     If you run into these or any other issues, please <Link href="/contact">get in touch</Link> and provide a link to the ED in question.
+                </Para>
+                <Section anchor="ed-details">
+                    Enumeration District details
+                </Section>
+                <Para>
+                    Between 1900 and 1950, EDs look like this: <Link href="/?year=1940&state=CA&ed=38-236">38-236</Link> or sometimes <Link href="/?year=1940&state=CA&ed=38-68a">38-68a</Link>. The piece before the hyphen is usually a county number. (However, as cities grew, they increasingly received their own numbers.) The second number, with or without a letter, is the district number. In order to uniquely refer to an ED, it's necessary to have both parts of the ED nubmer as well as the census year and the state.
+                </Para>
+                <Para>
+                    Districts in 1880 were not given county integers, and in many places you will see them referred to as e.g. “Alameda-15”. However, Steve Morse’s <Link href="https://stevemorse.org">One Step</Link> website assigned numbers to the 1880 counties largely based on the 1900 numbers. (This worked well as the numbers were generally assigned alphabetically. Most county names and borders were fixed by the late 1800s.) I have used these same county numbers to simplify referring and linking to 1880 EDs.
                 </Para>
                 <Section anchor="1960">
                     EDs in 1960 and beyond
                 </Section>
                 <Para>
-                    Dr. Joel Weintraub has done an excellent <Link href="https://youtu.be/u45LBnra1Ko">video deep dive</Link> into what we can expect from Enumeration Districts in the 1960 Census. Spoiler alert: it is far, far more complicated than it was in 1950 and before. Simple 1:1 associations between addresses and EDs may no longer be achievable.
+                    Dr. Joel Weintraub has done an excellent <Link href="https://youtu.be/u45LBnra1Ko">video deep dive</Link> into what we can expect from Enumeration Districts in the 1960 Census. Spoiler alert: it is far, far more complicated than it was in earlier years. Simple 1:1 associations between addresses and EDs may no longer be achievable.
                 </Para>
 
             </Box>

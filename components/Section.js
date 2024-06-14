@@ -6,7 +6,7 @@ export default function Section({ children, anchor }) {
     var id = anchor;
 
     if (anchor === undefined) {
-        id = children.replace(/ /g, "_").toLowerCase();
+        id = children.replace(/ /g, "-").toLowerCase();
     }
 
     return (
