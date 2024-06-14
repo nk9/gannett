@@ -1,16 +1,17 @@
 import { useState } from 'react';
 
-import District from '/src/District';
-import { USStates, zoomThreshold, resourceFormats } from "@/constants";
-import useMapState from '/stores/mapStore';
-import { sprintf } from 'sprintf-js';
-import LinkIcon from '@mui/icons-material/Link';
+import { resourceFormats, zoomThreshold } from "@/constants";
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import IconButton from '@mui/material/IconButton';
+import LinkIcon from '@mui/icons-material/Link';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { Tooltip } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
+import { sprintf } from 'sprintf-js';
+import District from 'src/District';
+import Link from 'src/Link';
 import styles from "./InfoPanel.module.scss";
+import useMapState from '/stores/mapStore';
 
 export default function InfoPanel({ metroInfo, bottom }) {
     const currentZoomLevel = useMapState('currentZoomLevel')
@@ -51,8 +52,13 @@ export default function InfoPanel({ metroInfo, bottom }) {
                 census_links = selectedDistrictResources.map((res, index) => {
                     let form = resourceFormats[res.source][res.type]
                     let href = sprintf(form.format, res.value);
+                    var pay = "";
+
+                    if (selectedDistrict.props.year != "1940" && res.source == "ANC") {
+                        pay = " ($)";
+                    }
                     return (
-                        <li key={index}><a href={href} target="_blank">{form.title}</a>
+                        <li key={index}><Link href={href} target="_blank">{form.title + pay}</Link>
                             <OpenInNewIcon fontSize="xsmall" sx={{ position: "relative", bottom: "-3px", left: "3px" }} />
                         </li>);
                 })
@@ -96,7 +102,7 @@ export default function InfoPanel({ metroInfo, bottom }) {
                     <p><strong>{dist.name}</strong> — {dist.metro}, {dist.state}
                         {pageLinkButton}
                     </p>
-                    <h3>Census pages</h3>
+                    <Typography variant='h6'>Census pages</Typography>
                     <ul>
                         {census_links}
                     </ul>
@@ -108,7 +114,7 @@ export default function InfoPanel({ metroInfo, bottom }) {
                         <br />
                         {dist.metro}, {dist.state}
                     </p>
-                    <h3>Census pages</h3>
+                    <Typography variant='h6'>Census pages</Typography>
                     <ul>
                         {census_links}
                     </ul>

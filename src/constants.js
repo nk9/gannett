@@ -68,7 +68,7 @@ export const USStates = {
 export const resourceFormats = {
     ANC: {
         CENSUS: {
-            title: "Ancestry ($)",
+            title: "Ancestry",
             format: "https://www.ancestry.com/imageviewer/collections/%(dbid)i/images/%(iid)s"
         }
     },
