@@ -1,18 +1,18 @@
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router'
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
-import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 import { Button, Drawer, SwipeableDrawer } from '@mui/material';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 
-import EDMap from 'components/EDMap';
-import YearsPicker from 'components/YearsPicker';
-import InfoPanel from 'components/InfoPanel';
-import BottomDrawer from 'components/BottomDrawer';
-import { zoomThreshold, zoomLevel, ALL_YEARS } from "@/constants";
+import { ALL_YEARS, zoomLevel, zoomThreshold } from "@/constants";
 import { supabase } from '@/supabase';
+import BottomDrawer from 'components/BottomDrawer';
+import EDMap from 'components/EDMap';
+import InfoPanel from 'components/InfoPanel';
+import YearsPicker from 'components/YearsPicker';
 
 import useMapState from '/stores/mapStore';
 

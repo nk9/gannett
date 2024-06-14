@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import CloseIcon from '@mui/icons-material/Close';
+import GitHubIcon from '@mui/icons-material/GitHub';
 import HelpIcon from '@mui/icons-material/Help';
 import HomeIcon from '@mui/icons-material/Home';
 import InfoIcon from '@mui/icons-material/Info';
@@ -19,13 +20,14 @@ import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import Link from '/src/Link';
 
 export default function NavBar() {
     const [menuIsOpen, setMenuIsOpen] = useState(false);
     const router = useRouter()
 
+    const drawerWidth = 240;
     const toggleDrawer = (isOpen) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
             return;
@@ -33,7 +35,18 @@ export default function NavBar() {
 
         setMenuIsOpen(isOpen);
     };
-    const drawerWidth = 240;
+
+    const makeItem = (name, icon) => {
+        return (<ListItem key={name} disablePadding>
+            <ListItemButton onClick={() => router.push(`/${name.replace(/ /g, '_').toLowerCase()}`)}>
+                <ListItemIcon>
+                    {icon}
+                </ListItemIcon>
+                <ListItemText primary={name} />
+            </ListItemButton>
+        </ListItem>
+        )
+    };
 
     return (
         <Box sx={{ display: 'flex' }}>
@@ -90,41 +103,12 @@ export default function NavBar() {
 
                 >
                     <List>
-                        <ListItem key="home" disablePadding>
-                            <ListItemButton onClick={() => router.push('/')}>
-                                <ListItemIcon>
-                                    <HomeIcon />
-                                </ListItemIcon>
-                                <ListItemText primary="Home" />
-                            </ListItemButton>
-                        </ListItem>
-                        <ListItem key="FAQ" disablePadding>
-                            <ListItemButton onClick={() => router.push('/faq')}>
-                                <ListItemIcon>
-                                    <HelpIcon />
-                                </ListItemIcon>
-                                <ListItemText primary="FAQ" />
-                            </ListItemButton>
-                        </ListItem>
-                        <ListItem key="about" disablePadding>
-                            <ListItemButton onClick={() => router.push('/about')}>
-                                <ListItemIcon>
-                                    <InfoIcon />
-                                </ListItemIcon>
-                                <ListItemText primary="About" />
-                            </ListItemButton>
-                        </ListItem>
-                    </List>
-                    <Divider />
-                    <List>
-                        <ListItem key="contact" disablePadding>
-                            <ListItemButton onClick={() => router.push('/contact')}>
-                                <ListItemIcon>
-                                    <MailIcon />
-                                </ListItemIcon>
-                                <ListItemText primary="Contact" />
-                            </ListItemButton>
-                        </ListItem>
+                        {makeItem("Home", <HomeIcon />)}
+                        {makeItem("FAQ", <HelpIcon />)}
+                        {makeItem("About", <InfoIcon />)}
+                        <Divider />
+                        {makeItem("GitHub", <GitHubIcon />)}
+                        {makeItem("Contact", <MailIcon />)}
                     </List>
                 </Box>
             </Drawer>
