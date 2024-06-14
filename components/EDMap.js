@@ -231,7 +231,7 @@ export default function EDMap({ metros, districts, roads, setMapViewport }) {
                     break;
                 }
             }
-            console.log("newDistrict:", newDistrict)
+            // console.log("newDistrict:", newDistrict)
             setSelectedDistrict(newDistrict)
 
             // Sometimes, the selected district is changing but the map won't update the

@@ -14,7 +14,7 @@ export default function About() {
                     Get in touch
                 </Typography>
                 <Para>
-                    I want this project to be a useful resource for the whole US genealogy community. If you have thoughts on how this data could be used better, please get in touch! If you have technical skills, I’d love to hear from you. And if you’ve found a bug, please open an issue on the project’s <Link href="https://github.com/nk9/gannett">GitHub page</Link>.
+                    I want this project to be a useful resource for the whole genealogy community. If you have thoughts on how this data could be used better, please get in touch! If you have technical skills, I’d love to hear from you. And if you’ve found a bug, please open an issue on the project’s <Link href="https://github.com/nk9/gannett">GitHub page</Link>.
                 </Para>
                 <Button variant="contained" component={Link} noLinkStyle href="mailto:quaver.drake.0s@icloud.com"
                     sx={{ mt: 3 }}>

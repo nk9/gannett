@@ -82,8 +82,15 @@ export default function Docs() {
                     <li>EDs with incorrect borders</li>
                 </ul>
                 <Para>
-                    If you run into these or any other issues, please <Link href="/contact">get in touch</Link>!
+                    If you run into these or any other issues, please <Link href="/contact">get in touch</Link> and provide a link to the ED in question.
                 </Para>
+                <Section anchor="1960">
+                    EDs in 1960 and beyond
+                </Section>
+                <Para>
+                    Dr. Joel Weintraub has done an excellent <Link href="https://youtu.be/u45LBnra1Ko">video deep dive</Link> into what we can expect from Enumeration Districts in the 1960 Census. Spoiler alert: it is far, far more complicated than it was in 1950 and before. Simple 1:1 associations between addresses and EDs may no longer be achievable.
+                </Para>
+
             </Box>
         </Container >);
 }

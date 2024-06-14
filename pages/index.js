@@ -116,7 +116,7 @@ export default function Index() {
                 async () => {
                     if (Object.keys(mapViewport).length == 4) {
                         let { data: year_data, error } = await supabase.rpc('years_in_view', mapViewport)
-                        console.log("years_in_view response:", year_data, error)
+                        // console.log("years_in_view response:", year_data, error)
                     
                         if (year_data) {
                             const available_years = new Set(year_data.map(item => item.year));
@@ -226,7 +226,7 @@ export default function Index() {
                             geometry: JSON.parse(f.geom)
                         }))
                     }
-                    console.log("metros_for_year:", metros_for_year)
+                    // console.log("metros_for_year:", metros_for_year)
                     setMetros(metros_for_year);
 
                     var metro_info = metros_data.reduce((result, dict) => {
