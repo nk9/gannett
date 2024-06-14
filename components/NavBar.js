@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { cloneElement, useState } from 'react';
 
 import CloseIcon from '@mui/icons-material/Close';
 import GitHubIcon from '@mui/icons-material/GitHub';
@@ -37,10 +37,12 @@ export default function NavBar() {
     };
 
     const makeItem = (name, icon) => {
+        const coloredIcon = cloneElement(icon, { color: 'primary' });
+        
         return (<ListItem key={name} disablePadding>
             <ListItemButton onClick={() => router.push(`/${name.replace(/ /g, '_').toLowerCase()}`)}>
                 <ListItemIcon>
-                    {icon}
+                    {coloredIcon}
                 </ListItemIcon>
                 <ListItemText primary={name} />
             </ListItemButton>
