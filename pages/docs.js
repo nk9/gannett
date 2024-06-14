@@ -1,6 +1,9 @@
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
+// import List from '@mui/material/List';
+// import ListItem from '@mui/material/ListItem';
 import Typography from '@mui/material/Typography';
+import NestedList from 'components/NestedList';
 import Para from 'components/Para';
 import Quote from 'components/Quote';
 import Image from 'next/image';
@@ -8,32 +11,57 @@ import * as React from 'react';
 import Link from '../src/Link';
 
 export default function Docs() {
-  return (
-    <Container maxWidth="sm">
-      <Box sx={{ my: 4 }}>
-        <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
-          <Image alt="Diving Gannett logo"
-            src={"/logo-dive.svg"}
-            width={100}
-            height={130}
-            sizes='100vw' />
-        </Box>
-        <Typography variant="h4" gutterBottom>
-          Gannett Documentation
-        </Typography>
-        <Quote>
-          An Enumeration District was an area that an enumerator (census taker) could completely cover within two weeks in cities and within four weeks in rural areas. <br />
-          — <Link href="https://www.archives.gov/research/census/1950/ed-maps">National Archives</Link>
-        </Quote>
-        <Para variant='body1'>
-          Every genealogist who has family in the United States after the mid-19th Century will have encountered <Link href="https://www.familysearch.org/en/wiki/United_States_Federal_Census#Enumeration_Districts">Enumeration Districts</Link> (EDs), even if they don't realize it. This is how counties are split up into smaller regions of a few hundred people, and the exact shape of each ED determines where you need to look to find records for people living at a certain address.
-        </Para>
-        <Typography variant="h5" sx={{ mt: 2 }}>
-          Using the website
-        </Typography>
-        <Para>
-          Blah
-        </Para>
-      </Box>
-    </Container >);
+    return (
+        <Container maxWidth="sm">
+            <Box sx={{ my: 4 }}>
+                <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
+                    <Image alt="Diving Gannet logo"
+                        src={"/logo-dive.svg"}
+                        width={100}
+                        height={130}
+                        sizes='100vw' />
+                </Box>
+                <Typography variant="h4" gutterBottom>
+                    Gannett Documentation
+                </Typography>
+                <Quote>
+                    An Enumeration District was an area that an enumerator (census taker) could completely cover within two weeks in cities and within four weeks in rural areas. <br />
+                    — <Link href="https://www.archives.gov/research/census/1950/ed-maps">National Archives</Link>
+                </Quote>
+                <Para>
+                    Every genealogist who has family in the United States after the mid-19th Century will have encountered <Link href="https://www.familysearch.org/en/wiki/United_States_Federal_Census#Enumeration_Districts">Enumeration Districts</Link> (EDs), even if they don’t realize it. This is how counties are split up into smaller regions of a few hundred people, and the exact shape of each ED determines which one you need to look in to find records for people living at a certain address.
+                </Para>
+                <Para>
+                    Gannett is a tool to go from a neighbourhood or street name in a large metro area, directly to the census Population Schedule for the correct ED on Ancestry or FamilySearch. Please note that, unfortunately, <em>most cities are not available in most census years.</em> To learn more about where the data for this tool came from, please read the <Link href="/about">About page</Link>.
+                </Para>
+                <Typography variant="h5" sx={{ mt: 2 }}>
+                    Finding the right ED
+                </Typography>
+                <NestedList>
+                    <ol>
+                        <li>Select the census year. Note that the cities available for that year will update on the map. Of course, <Link href="https://www.familysearch.org/en/wiki/United_States_Census_1890#1890_Surviving_Population_Schedules">1890 is missing</Link>.</li>
+                        <li>
+                            <ol>
+                                <li>Click one of the red dots to zoom into that city. Alternatively, you can use a mouse (on a desktop), scrolling (on a desktop or laptop) or double-tapping/pinch to zoom on mobile.</li>
+                                <li>Search for a street name, city, or ED number in the map’s search bar.</li>
+                            </ol>
+                        </li>
+                        <li>Find the neighborhood you’re interested in and click on the correct enumeration district.</li>
+                        <li>In the info panel, select the service you want to see the Population Scheudle on.</li>
+                    </ol>
+                </NestedList>
+                <Typography variant="h5" sx={{ mt: 2 }}>
+                    Searching
+                </Typography>
+                <Para>
+                    You can search for 
+                </Para>
+                <Typography variant="h5" sx={{ mt: 2 }}>
+                    Searching
+                </Typography>
+                <Para>
+                    You can search for 
+                </Para>
+            </Box>
+        </Container >);
 }
