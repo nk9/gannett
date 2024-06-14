@@ -6,6 +6,7 @@ import { Button, Drawer, SwipeableDrawer } from '@mui/material';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 import { ALL_YEARS, zoomLevel, zoomThreshold } from "@/constants";
 import { supabase } from '@/supabase';
@@ -22,6 +23,7 @@ export default function Index() {
     const router = useRouter();
     const { year: queryYear, state: queryState, ed: queryED, metro: queryMetro } = router.query;
     var [allYears, setAllYears] = useState({});
+    const isDesktop = useMediaQuery('(min-width:630px)');
 
     // Map state
     const isInInitialViewState = useMapState('isInInitialViewState')
@@ -255,7 +257,7 @@ export default function Index() {
     return (
         <>
             <Container maxWidth="lg">
-                <Grid container sx={{ pt: 3 }}>
+                <Grid container sx={{ pt: isDesktop ? 3 : 0 }}>
                     <Box
                         component={Grid}
                         xs={0} sm={0} md={3} lg={2}
