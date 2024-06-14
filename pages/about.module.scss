@@ -1,0 +1,21 @@
+.content {
+    blockquote {
+        &:before {
+            content: "“";
+            font-size: 100pt;
+            color: rgba(20, 20, 20, 0.1);
+            position: absolute;
+            top: -50px;
+            left: 0px;
+        };
+        font-size: 16pt;
+        font-family: serif;
+        border-left: solid #F5C402;
+        padding-left: 1rem;
+        position: relative;
+    };
+
+    p {
+        margin-top: 1rem;
+    }
+}
