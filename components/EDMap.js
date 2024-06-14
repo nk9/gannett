@@ -1,18 +1,20 @@
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
-import Map, { Popup, Source, Layer, ScaleControl, Marker } from 'react-map-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
+import { initialViewState, zoomDuration, zoomThreshold } from "@/constants";
+import Grid from '@mui/material/Grid';
+import { useTheme } from '@mui/material/styles';
 import booleanPointInPolygon from "@turf/boolean-point-in-polygon";
-import { point, multiPolygon } from "@turf/helpers"
-import { zoomThreshold, initialViewState, zoomDuration } from "@/constants";
-import useMapState from '/stores/mapStore';
-import SearchField from 'components/SearchField';
+import { multiPolygon, point } from "@turf/helpers";
 import MapControls from 'components/MapControls';
-import Grid from '@mui/material/Grid'
+import SearchField from 'components/SearchField';
+import 'mapbox-gl/dist/mapbox-gl.css';
+import Map, { Layer, Marker, Popup, ScaleControl, Source } from 'react-map-gl';
+import useMapState from '/stores/mapStore';
 
 
 export default function EDMap({ metros, districts, roads, setMapViewport }) {
     const initialMapRef = useRef();
+    const theme = useTheme();
 
     const setMapRef = useMapState('setMapRef');
     const mapRef = useMapState('mapRef');
@@ -132,8 +134,8 @@ export default function EDMap({ metros, districts, roads, setMapViewport }) {
                         paint: {
                             'circle-radius': 7,
                             'circle-stroke-width': 2,
-                            'circle-stroke-color': "#fff",
-                            'circle-color': 'rgba(227, 6, 19, 1.0)'
+                            'circle-stroke-color': "white",
+                            'circle-color': theme.palette.secondary.main
                         },
                     }
                 },
@@ -267,6 +269,7 @@ export default function EDMap({ metros, districts, roads, setMapViewport }) {
                 latitude={markerCoords.latitude}
                 anchor="bottom"
                 offset={[0, 0]}
+                color={theme.palette.primary.main}
             />}
 
             <ScaleControl />

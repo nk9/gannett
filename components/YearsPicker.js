@@ -1,4 +1,4 @@
-import { useState, useTransition } from 'react';
+import { useTransition } from 'react';
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
@@ -15,8 +15,6 @@ import styles from "./YearsPicker.module.scss";
 
 export default function YearsPicker({ allYears, year, setYear }) {
     const router = useRouter();
-    const pathname = usePathname();
-    const searchParams = useSearchParams();
     const [isPending, startTransition] = useTransition(); 
 
     const handleChangeTab = (event, tab) => {
@@ -36,7 +34,6 @@ export default function YearsPicker({ allYears, year, setYear }) {
         });
     };
 
-    const theme = useTheme();
     const desktop = useMediaQuery('(min-width:630px)');
 
     var ui;
