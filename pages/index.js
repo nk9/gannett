@@ -283,7 +283,7 @@ export default function Index() {
                                 Reset
                             </Button>
                         </Box>
-                        <Box sx={{ height: { xs: "80svh", sm: "80svh", md: "600px" } }}>
+                        <Box sx={{ height: { xs: "75svh", sm: "80svh", md: "600px" } }}>
                             <EDMap
                                 metros={metros}
                                 districts={districts}
