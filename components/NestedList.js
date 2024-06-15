@@ -23,7 +23,7 @@ export default function NestedList({ children, styles = DEFAULT_STYLES }) {
                 </List>)
         } else if (el.type == "li") {
             return (
-                <ListItem key={key++} sx={{ display: "list-item", pb: 1 }}>
+                <ListItem key={key++} sx={{ display: "list-item", pb: 0, pl: .5 }}>
                     {React.Children.map(el.props.children, (c) => list(c, depth))}
                 </ListItem>)
         }
