@@ -17,7 +17,9 @@ export default function Section({ children, anchor }) {
                 mt: 3,
             }} id={id}>
                 <Link href={`#${id}`} sx={{
+                    fontFamily: "Aleo",
                     textDecoration: "none",
+                    fontWeight: 600,
                     color: "black",
                     "&:hover:after": {
                         content: "'§'",

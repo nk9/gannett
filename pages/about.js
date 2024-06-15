@@ -1,25 +1,16 @@
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
+import LogoHeader from 'components/LogoHeader';
 import Para from 'components/Para';
 import Image from 'next/image';
 import Link from '/src/Link';
-
 
 export default function About() {
     return (
         <Container maxWidth="sm">
             <Box sx={{ py: 3 }}>
-                <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
-                    <Image alt="Diving Gannet logo"
-                        src={"/logo-dive.svg"}
-                        width={100}
-                        height={130}
-                        sizes='100vw' />
-                </Box>
-                <Typography variant="h4" component="h1" gutterBottom>
-                    About Gannett
-                </Typography>
+                <LogoHeader headline="About Gannett" />
                 <Para>
                     I first encountered Enumeration Districts in the 1990s, looking through Census pages at the National Archives in Washington, DC. Right from the beginning, I’ve been wanting a way to visualize them. It seemed crazy to me that such a fundamentally geospatial construct was publicly available almost exclusively as <Link href="https://www.archives.gov/research/census/1940/finding-aids#desc">textual descriptions</Link> and endless lists of names and addresses. I knew that <Link href="https://www.archives.gov/research/census/1950/ed-maps">ED maps existed</Link> for many census years, though not all places in all years. But only a few were availble online, and then only as images, <Link href="https://catalog.archives.gov/id/5836711?objectPage=37">usually black and white</Link>—even when the maps required color to be able to tell the various lines apart!
                 </Para>

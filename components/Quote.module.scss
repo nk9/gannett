@@ -1,17 +1,24 @@
 .blockquote {
     &:before {
+        font-family: "Garamond", serif;
+        font-style: normal;
         content: "“";
         font-size: 100pt;
-        color: rgba(20, 20, 20, 0.1);
+        color: rgba(0, 0, 0, 0.1);
         position: absolute;
         top: -50px;
-        left: 0px;
+        left: -15px;
+        z-index: -1;
     };
-    font-size: 16pt;
-    font-family: "Garamond", serif;
-    border-left-style: solid;
-    border-left-width: 7px;
-    padding-left: 1rem;
+    font-family: "Aleo", serif;
+    font-style: italic;
+    font-size: 14pt;
     position: relative;
 }
 
+.container {
+    border-left-style: solid;
+    border-left-width: 7px;
+    padding-left: 1rem;
+ 
+}

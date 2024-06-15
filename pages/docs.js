@@ -1,11 +1,11 @@
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
+import LogoHeader from 'components/LogoHeader';
 import NestedList from 'components/NestedList';
 import Para from 'components/Para';
 import Quote from 'components/Quote';
 import Section from 'components/Section';
-import Image from 'next/image';
 import * as React from 'react';
 import Link from 'src/Link';
 
@@ -13,19 +13,11 @@ export default function Docs() {
     return (
         <Container maxWidth="sm">
             <Box sx={{ py: 3 }}>
-                <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
-                    <Image alt="Diving Gannet logo"
-                        src={"/logo-dive.svg"}
-                        width={100}
-                        height={130}
-                        sizes='100vw' />
-                </Box>
-                <Typography variant="h4" gutterBottom>
-                    Gannett Documentation
-                </Typography>
-                <Quote>
-                    An Enumeration District was an area that an enumerator (census taker) could completely cover within two weeks in cities and within four weeks in rural areas. <br />
-                    — <Link href="https://www.archives.gov/research/census/1950/ed-maps">National Archives</Link>
+                <LogoHeader headline="Gannett Documentation" />
+                <Quote
+                    sourceTitle="National Archives"
+                    sourceHref="https://www.archives.gov/research/census/1950/ed-maps">
+                    An Enumeration District was an area that an enumerator (census taker) could completely cover within two weeks in cities and within four weeks in rural areas.
                 </Quote>
                 <Para>
                     Every genealogist who has family in the United States after the mid-19th Century will have encountered <Link href="https://www.familysearch.org/en/wiki/United_States_Federal_Census#Enumeration_Districts">Enumeration Districts</Link> (EDs), even if they don’t realize it. This is how counties and cities are split up into smaller regions of a few hundred people. The exact shape of each ED determines which one you need to look in to find records for people living at a certain address.
