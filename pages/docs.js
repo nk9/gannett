@@ -79,7 +79,7 @@ export default function Docs() {
                     Enumeration District details
                 </Section>
                 <Para>
-                    Between 1900 and 1950, EDs look like this: <Link href="/?year=1940&state=CA&ed=38-236">38-236</Link> or sometimes <Link href="/?year=1940&state=CA&ed=38-68a">38-68a</Link>. The piece before the hyphen is usually a county number. (However, as cities grew, they increasingly received their own numbers.) The second number, with or without a letter, is the district number. In order to uniquely refer to an ED, it's necessary to have both parts of the ED nubmer as well as the census year and the state.
+                    Between 1900 and 1950, EDs look like this: <Link href="/?year=1940&state=CA&ed=38-236">38-236</Link> or sometimes <Link href="/?year=1940&state=CA&ed=38-68a">38-68a</Link>. The piece before the hyphen is usually a county number. (However, as cities grew, they increasingly received their own numbers.) The second number, with or without a letter, is the district number. In order to uniquely refer to an ED, it's necessary to have both parts of the ED number as well as the census year and the state.
                 </Para>
                 <Para>
                     Districts in 1880 were not given county integers, and in many places you will see them referred to as e.g. “Alameda-15”. However, Steve Morse’s <Link href="https://stevemorse.org">One Step</Link> website assigned numbers to the 1880 counties largely based on the 1900 numbers. (This worked well as the numbers were generally assigned alphabetically. Most county names and borders were fixed by the late 1800s.) I have used these same county numbers to simplify referring and linking to 1880 EDs.

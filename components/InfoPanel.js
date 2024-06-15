@@ -13,6 +13,8 @@ import Link from 'src/Link';
 import styles from "./InfoPanel.module.scss";
 import useMapState from '/stores/mapStore';
 
+import Para from './Para';
+
 export default function InfoPanel({ metroInfo, bottom }) {
     const currentZoomLevel = useMapState('currentZoomLevel')
     const selectedDistrict = useMapState('selectedDistrict')
@@ -20,7 +22,6 @@ export default function InfoPanel({ metroInfo, bottom }) {
     const [tooltipIsOpen, setTooltipIsOpen] = useState(false);
 
     const [isHoveringLinkButton, setIsHoveringLinkButton] = useState(false);
-    var alert = (<></>);
 
     const clickLinkButton = () => {
         const props = selectedDistrict.props
@@ -97,31 +98,35 @@ export default function InfoPanel({ metroInfo, bottom }) {
                     </IconButton>
                 </Tooltip>);
             
+            var ed_name_link = (<>{dist.name} {pageLinkButton}
+                <br />
+                {dist.metro}, {dist.state}</>);
+
             if (bottom) {
-                panel = (<>
-                    <p><strong>{dist.name}</strong> — {dist.metro}, {dist.state}
-                        {pageLinkButton}
-                    </p>
-                    <Typography variant='h6'>Census pages</Typography>
-                    <ul>
-                        {census_links}
-                    </ul>
-                    {alert}
+                ed_name_link = (<>
+                    <strong>{dist.name}</strong> — {dist.metro}, {dist.state}
+                    {pageLinkButton}
                 </>);
-            } else {
-                panel = (<>
-                    <p>{dist.name} {pageLinkButton}
-                        <br />
-                        {dist.metro}, {dist.state}
-                    </p>
-                    <Typography variant='h6'>Census pages</Typography>
-                    <ul>
-                        {census_links}
-                    </ul>
-                    {alert}
-                </>);
-                
             }
+
+            panel = (<>
+                <Para sx={{
+                    ml: { xs: 2, sm: 0 },
+                    mt: { xs: 2, sm: 0 }
+                }}>{ed_name_link}</Para>
+                <Typography variant='h6' sx={{
+                    ml: { xs: 2, sm: 0 }
+                }}>Census pages</Typography>
+                <ul>
+                    {census_links}
+                </ul>
+                <Typography variant='h6' sx={{
+                    ml: { xs: 2, sm: 0 }
+                }}>Something wrong?</Typography>
+                <Para sx={{ ml: { xs: 1, sm: 0 } }}> If you see any problems with this Enumeration District, <Link href="/contact">please get in touch</Link>. Include a clear explanation of what's wrong and a link to the ED.
+                </Para>
+            </>);
+
         }
     } else if (currentZoomLevel() >= zoomThreshold) {
         panel = (<>

@@ -1,9 +1,15 @@
 import Typography from '@mui/material/Typography';
+import { styled } from "@mui/system";
  
-export default function Para({ children }) {
+function Para({ className, children }) {
     return (
-        <Typography variant='body1' sx={{ mt: 1 }}>
+        <Typography
+            variant='body1'
+            className={className}
+            sx={{ mt: 1 }}>
             {children}
         </Typography>
     )
 }
+const StyledPara = styled(Para)``;
+export default StyledPara;
