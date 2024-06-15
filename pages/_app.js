@@ -1,4 +1,5 @@
 import { CacheProvider } from '@emotion/react';
+import "@fontsource/aleo";
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 import Layout from 'components/Layout';

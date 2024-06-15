@@ -1,13 +1,11 @@
 import { useTransition } from 'react';
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 import { Tab as BaseTab, tabClasses } from '@mui/base/Tab';
 import { Tabs } from '@mui/base/Tabs';
 import { TabsList as BaseTabsList } from '@mui/base/TabsList';
-import ArrowDropDown from '@mui/icons-material/ArrowDropDown';
 import { Box } from '@mui/material';
-import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { useTheme } from '@mui/material/styles';
@@ -109,7 +107,7 @@ const Tab = styled(BaseTab)(
   text-decoration: none;
   background-color: transparent;
   width: 100%;
-  padding: 5px 12px;
+  padding: 6px 12px 4px;
   margin: 5px 6px;
   border: none;
   border-radius: 6px;

@@ -1,6 +1,5 @@
 import { cloneElement, useState } from 'react';
 
-import "@fontsource/aleo/700.css";
 import CloseIcon from '@mui/icons-material/Close';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import HelpIcon from '@mui/icons-material/Help';
@@ -70,6 +69,7 @@ export default function NavBar() {
                             sx={{
                                 ml: "5px",
                                 fontFamily: ["Aleo"],
+                                fontWeight: 700,
                                 fontSize: "26pt",
                                 display: 'inline',
                             }}>

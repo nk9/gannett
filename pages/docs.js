@@ -1,7 +1,5 @@
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-// import List from '@mui/material/List';
-// import ListItem from '@mui/material/ListItem';
 import Typography from '@mui/material/Typography';
 import NestedList from 'components/NestedList';
 import Para from 'components/Para';
