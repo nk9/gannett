@@ -277,7 +277,7 @@ export default function Index() {
                             <Button
                                 variant="contained"
                                 color="primary"
-                                sx={{ position: "absolute", left: 0 }}
+                                sx={{ position: "absolute", left: 0, fontFamily: "Aleo", fontWeight: 600 }}
                                 onClick={clickResetMap}
                                 disabled={resetButtonDisabled}>
                                 Reset

@@ -54,7 +54,15 @@ export default function YearsPicker({ allYears, year, setYear }) {
         );
     } else {
         let yearItems = Object.entries(allYears).map(
-            ([y, d]) => <MenuItem key={y} value={y} disabled={!d}>{y}</MenuItem>
+            ([y, d]) => <MenuItem
+                key={y}
+                value={y}
+                disabled={!d}
+                sx={{
+                    fontFamily: "Aleo, sans-serif",
+                    fontWeight: 600
+                }}
+            >{y}</MenuItem>
         );
 
         ui = (
@@ -71,7 +79,8 @@ export default function YearsPicker({ allYears, year, setYear }) {
                         backgroundColor: theme.palette.primary.main,
                         color: "white",
                         height: "36px",
-                        fontWeight: 500,
+                        fontWeight: 600,
+                        fontFamily: "Aleo, sans-serif",
                         ".MuiSelect-icon": {
                             color: "white"
                         },
