@@ -1,22 +1,22 @@
 // Based on the Google Maps example in MUI Autocomplete docs:
 // https://mui.com/material-ui/react-autocomplete/#google-maps-place
 
-import { useState, useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCity, faRoad } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Autocomplete from '@mui/material/Autocomplete';
+import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import parse from 'autosuggest-highlight/parse';
 import { debounce } from '@mui/material/utils';
+import parse from 'autosuggest-highlight/parse';
 
 import Image from 'next/image';
 
+import { zoomLevel } from '@/constants';
 import useMapState from '/stores/mapStore';
-import { zoomLevel } from '@/constants'
 
 export default function SearchField({}) {
     const year = useMapState('year')
@@ -106,7 +106,7 @@ export default function SearchField({}) {
     return (
         <Autocomplete
             id="gannett-search"
-            sx={{ width: 300 }}
+            sx={{ width: { xs: 250, sm: 300 } }}
             style={{ position: "relative", backgroundColor: "white", borderRadius: 5 }}
             getOptionLabel={(option) =>
                 typeof option === 'string' ? option : option.description

@@ -5,8 +5,6 @@ import { Button } from '@mui/material';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
-import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
 
 import { ALL_YEARS, zoomLevel, zoomThreshold } from "@/constants";
 import { supabase } from '@/supabase';
@@ -24,8 +22,6 @@ export default function Index() {
     const { year: queryYear, state: queryState, ed: queryED, metro: queryMetro } = router.query;
     var [allYears, setAllYears] = useState({});
 
-    const theme = useTheme();
-    const isDesktop = useMediaQuery(theme.breakpoints.up('sm'));
 
     // Map state
     const isInInitialViewState = useMapState('isInInitialViewState')
@@ -259,7 +255,7 @@ export default function Index() {
     return (
         <>
             <Container maxWidth="lg">
-                <Grid container sx={{ pt: isDesktop ? 1 : 0 }}>
+                <Grid container sx={{ pt: { md: 0, lg: 1 } }}>
                     <Box
                         component={Grid}
                         xs={0} sm={0} md={3} lg={2}
@@ -272,8 +268,8 @@ export default function Index() {
                             position: "sticky",
                             display: "flex",
                             alignItems: "center",
-                            pb: isDesktop ? 2 : 1,
-                            pt: isDesktop ? 1 : 0
+                            pb: { xs: 1, sm: 1, md: 1, lg: 2 },
+                            pt: { xs: 0, sm: 1, md: 1, lg: 1 }
                         }}>
                             <YearsPicker allYears={allYears} year={year} setYear={setYear} />
                             <Button
