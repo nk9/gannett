@@ -20,7 +20,10 @@ export default function Index() {
     // On first render, router.query is empty.
     const router = useRouter();
     const { year: queryYear, state: queryState, ed: queryED, metro: queryMetro } = router.query;
-    var [allYears, setAllYears] = useState({});
+
+    // Allow all years by default
+    var [allYears, setAllYears] =
+        useState(ALL_YEARS.reduce((acc, y) => ({ ...acc, [y]: true }), {}));
 
 
     // Map state
@@ -120,10 +123,9 @@ export default function Index() {
                     
                         if (year_data) {
                             const available_years = new Set(year_data.map(item => item.year));
-                            setAllYears(ALL_YEARS.reduce((result, year) => {
-                                result[year] = available_years.has(year)
-                                return result
-                            }, {}))
+                            setAllYears(ALL_YEARS.reduce((acc, year) => ({
+                                ...acc, [year]: available_years.has(year)
+                            }), {}))
                             // console.log("allYears:", allYears)
                         }
                     }
