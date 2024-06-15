@@ -46,7 +46,7 @@ export default function YearsPicker({ allYears, year, setYear }) {
         ui = (
             <Box className={styles["years-tabs-container"]}>
                 <Tabs className={styles["years"]} value={(year || "")} onChange={handleChangeTab}>
-                    <TabsList>
+                    <TabsList className="shadow">
                         {yearTabs}
                     </TabsList>
                 </Tabs>
@@ -66,6 +66,7 @@ export default function YearsPicker({ allYears, year, setYear }) {
                     value={year}
                     onChange={handleChangeSelect}
                     title="Census year"
+                    className="shadow"
                     sx={{
                         backgroundColor: theme.palette.primary.main,
                         color: "white",
@@ -149,6 +150,5 @@ const TabsList = styled(BaseTabsList)(
   align-items: center;
   justify-content: center;
   align-content: space-between;
-  box-shadow: 0px 4px 30px ${theme.palette.mode === 'dark' ? grey[900] : grey[200]};
   `,
 );
