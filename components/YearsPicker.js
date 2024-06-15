@@ -135,7 +135,8 @@ const Tab = styled(BaseTab)(
   }
 
   &.${tabClasses.disabled} {
-    color: rgba(255, 255, 255, 0.6);
+    color: white;
+    opacity: 60%;
   }
 `);
 
