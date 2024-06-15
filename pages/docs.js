@@ -63,7 +63,7 @@ export default function Docs() {
                     Errors and Inconsistencies
                 </Section>
                 <Para>
-                    Turning literally thousands of pages of maps and textual descriptions into hundreds of Shapefiles has been an enormous amount of work, and I’m grateful to <Link href="/about">John and his team</Link> for the effort they’ve put in! In any project of this size, there will be some things that have slipped through the cracks. Some of these will have been added by me while processing the GIS files. Examples of issues include:
+                    Turning literally thousands of pages of maps and textual descriptions into hundreds of Shapefiles has been an enormous amount of work, and I’m grateful to <Link href="/about">John and his team</Link> for the years of effort they’ve put in! In any project of this size, though, there will be some things that slip through the cracks. Some of these will have been added by me while processing the GIS files. Examples of issues include:
                 </Para>
                 <ul>
                     <li>Duplicate EDs</li>
@@ -73,7 +73,7 @@ export default function Docs() {
                     <li>EDs which are missing names</li>
                 </ul>
                 <Para>
-                    If you run into these or any other issues, please <Link href="/contact">get in touch</Link> and provide a link to the ED in question.
+                    If you run into these or any other issues, please <Link href="/contact">reach out</Link> and provide a link to the ED in question.
                 </Para>
                 <Section anchor="ed-details">
                     Enumeration District details
