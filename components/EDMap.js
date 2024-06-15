@@ -249,7 +249,7 @@ export default function EDMap({ metros, districts, roads, setMapViewport }) {
         <Map
             ref={initialMapRef}
             initialViewState={initialViewState}
-            style={{ width: "100%", height: 600 }}
+            style={{ width: "100%", height: "100%" }}
             mapStyle={mapStyle}
             styleDiffing
             mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}

@@ -133,11 +133,11 @@ export default function InfoPanel({ metroInfo, bottom }) {
         }
     } else if (currentZoomLevel() >= zoomThreshold) {
         panel = (<>
-            <p>Click within an Enumeration District to learn more about it.</p>
+            <Para sx={{ m: { xs: 2, sm: 0 } }}>Click within an Enumeration District to learn more about it.</Para>
         </>);
     } else {
         panel = (<>
-            <p>Click a city to zoom in.</p>
+            <Para sx={{ m: { xs: 2, sm: 0 } }}>Click a city to zoom in.</Para >
         </>);
     }
 

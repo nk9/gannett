@@ -1,12 +1,12 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
 import { Global } from '@emotion/react';
-import { styled } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { grey } from '@mui/material/colors';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import { grey } from '@mui/material/colors';
+import { styled } from '@mui/material/styles';
+import PropTypes from 'prop-types';
+import * as React from 'react';
 
-const drawerBleeding = 56;
+const drawerBleeding = 66;
 
 const Root = styled('div')(({ theme }) => ({
   height: '100%',

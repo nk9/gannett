@@ -283,11 +283,13 @@ export default function Index() {
                                 Reset
                             </Button>
                         </Box>
-                        <EDMap
-                            metros={metros}
-                            districts={districts}
-                            roads={roads}
-                            setMapViewport={setMapViewport} />
+                        <Box sx={{ height: { xs: "80svh", sm: "80svh", md: "600px" } }}>
+                            <EDMap
+                                metros={metros}
+                                districts={districts}
+                                roads={roads}
+                                setMapViewport={setMapViewport} />
+                        </Box>
                     </Grid>
                 </Grid>
                 <Box
