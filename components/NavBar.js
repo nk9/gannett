@@ -73,7 +73,7 @@ export default function NavBar() {
                                 fontSize: "26pt",
                                 display: 'inline',
                             }}>
-                            Gannett
+                            Gannett.cc
                         </Typography>
                     </Link>
                     <IconButton
