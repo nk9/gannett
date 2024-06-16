@@ -5,7 +5,7 @@ function Para({ className, children }) {
     return (
         <Typography
             variant='body1'
-            className={className}
+            className
             sx={{ mt: 1 }}>
             {children}
         </Typography>
