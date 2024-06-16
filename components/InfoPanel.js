@@ -118,15 +118,17 @@ export default function InfoPanel({ metroInfo, bottom }) {
                     mt: { xs: 2, sm: 0 }
                 }}>{ed_name_link}</Para>
                 <Typography variant='h6' sx={{
-                    ml: { xs: 2, sm: 0 }
+                    ml: { xs: 2, sm: 0 },
+                    mt: { xs: 1, sm: 2 }
                 }}>Census pages</Typography>
-                <List sx={{ listStyle: "disc", pl: { xs: 6, sm: 4 } }}>
+                <List sx={{ listStyle: "disc", pl: { xs: 6, sm: 4 }, mt: 0 }}>
                     {census_links}
                 </List>
                 <Typography variant='h6' sx={{
-                    ml: { xs: 2, sm: 0 }
+                    ml: { xs: 2, sm: 0 },
+                    mt: { xs: 1, sm: 2 }
                 }}>Something wrong?</Typography>
-                <Para sx={{ ml: { xs: 2, sm: 0 } }}> If you see any problems with this Enumeration District, <Link href="/contact">please get in touch</Link>. Include a clear explanation of what's wrong and a link to the ED.
+                <Para sx={{ ml: { xs: 2, sm: 0 }, mt: 0 }}> If you see any problems with this Enumeration District, <Link href="/contact">please get in touch</Link>. Include a clear explanation of what's wrong and a link to the ED.
                 </Para>
             </>);
 
