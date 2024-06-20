@@ -63,7 +63,9 @@ export default function NavBar() {
                         alignItems: 'center'
                     }}>
                         <Image alt="Diving Gannet logo" src={"/logo-dive.svg"} width={36} height={36} sizes='100vw' />
-                        <Typography variant="h6"
+                        <Typography
+                            key="1"
+                            variant="h6"
                             nowrap="true"
                             component="div"
                             sx={{
@@ -75,6 +77,18 @@ export default function NavBar() {
                             }}>
                             Gannett.cc
                         </Typography>
+                        <Box sx={{ display: "flex" }}>
+                            <Typography key="2"
+                                nowrap="true"
+                                color="secondary.light"
+                                sx={{
+                                    ml: 1,
+                                    paddingTop: "8px"
+                                }}
+                            >
+                                ED finder
+                            </Typography>
+                        </Box>
                     </Link>
                     <IconButton
                         size="large"
