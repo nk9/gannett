@@ -1,9 +1,7 @@
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
 import LogoHeader from 'components/LogoHeader';
 import Para from 'components/Para';
-import Image from 'next/image';
 import Link from '/src/Link';
 
 export default function About() {
