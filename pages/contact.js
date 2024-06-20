@@ -18,7 +18,7 @@ export default function About() {
                 </Para>
                 <Button variant="contained" component={Link} noLinkStyle href="mailto:quaver.drake.0s@icloud.com"
                     sx={{ mt: 3 }}>
-                    Send Email
+                    Send Nick an Email
                 </Button>
             </Box>
         </Container>

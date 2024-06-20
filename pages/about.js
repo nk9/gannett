@@ -24,6 +24,9 @@ export default function About() {
                 <Para>
                     This project has no connection to <Link href="https://en.wikipedia.org/wiki/Gannett">the newspaper company</Link>. It is named after <Link href="https://www.census.gov/history/www/census_then_now/notable_alumni/henry_gannett.html">Henry Gannett</Link>, a geographer for the US Census in the 19th Century, and Chairman of the <Link href="https://en.wikipedia.org/wiki/United_States_Board_on_Geographic_Names">US Board of Geographic Names</Link> for many years. I’m pleased to be able to pay homage to a geographer for this Census geography project!
                 </Para>
+                <Para>
+                    — Nick Kocharhook
+                </Para>
             </Box>
         </Container >
     );
