@@ -57,7 +57,8 @@ export default function InfoPanel({ metroInfo, bottom }) {
                     let href = sprintf(form.format, res.value);
                     var pay = "";
 
-                    if (selectedDistrict.props.year != "1940" && res.source == "ANC") {
+                    if (["1880", "1940"].includes(selectedDistrict.props.year)
+                        && res.source == "ANC") {
                         pay = " ($)";
                     }
                     return (
