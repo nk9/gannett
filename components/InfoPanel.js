@@ -142,6 +142,7 @@ export default function InfoPanel({ metroInfo, bottom }) {
     } else {
         panel = (<>
             <Para sx={{ m: { xs: 2, sm: 0 } }}>Click a city to zoom in.</Para >
+            <Para>This is a tool to find census population schedules by address. For more information, <Link href="/docs">see the docs</Link>.</Para>
         </>);
     }
 
