@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
+import ImageWithCaption from 'components/ImageWithCaption';
 import LogoHeader from 'components/LogoHeader';
 import NestedList from 'components/NestedList';
 import Para from 'components/Para';
@@ -22,6 +22,13 @@ export default function Docs() {
                 <Para>
                     Every genealogist who has family in the United States after the mid-19th Century will have encountered <Link href="https://www.familysearch.org/en/wiki/United_States_Federal_Census#Enumeration_Districts">Enumeration Districts</Link> (EDs), even if they don’t realize it. This is how counties and cities are split up into smaller regions of a few hundred people. The exact shape of each ED determines which one you need to look in to find records for people living at a certain address.
                 </Para>
+                <ImageWithCaption 
+                    src="/ed.jpg"
+                    href="https://catalog.archives.gov/id/286184794"
+                    alt='A close-up grid of streets with red and orange pencil lines dividing the grid into numbered districts'
+                >
+                    Enumeration District map, Palo Alto, CA (1930)
+                </ImageWithCaption>
                 <Para>
                     Gannett is a tool to go from a neighbourhood or street name in a large metro area, directly to the census Population Schedule for the correct ED on Ancestry or FamilySearch. Please note that, unfortunately, <em>most cities are not available in most census years.</em> To learn more about where the data for this tool comes from, please read the <Link href="/about">About page</Link>.
                 </Para>
