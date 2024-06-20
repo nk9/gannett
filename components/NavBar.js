@@ -1,6 +1,7 @@
 import { cloneElement, useState } from 'react';
 
 import CloseIcon from '@mui/icons-material/Close';
+import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import HelpIcon from '@mui/icons-material/Help';
 import HomeIcon from '@mui/icons-material/Home';
@@ -121,6 +122,7 @@ export default function NavBar() {
                 >
                     <List>
                         {makeItem("Home", <HomeIcon />)}
+                        {makeItem("Coverage", <FormatListNumberedIcon />)}
                         {makeItem("Docs", <HelpIcon />)}
                         {makeItem("About", <InfoIcon />)}
                         <Divider />
