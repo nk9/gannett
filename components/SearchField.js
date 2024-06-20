@@ -138,7 +138,7 @@ export default function SearchField({}) {
             noOptionsText="No results"
             renderInput={(params) => (
                 <TextField {...params}
-                    label={searchInputValue ? "" : "Search"}
+                    label={searchInputValue ? "" : "Search city or street name"}
                     InputLabelProps={{ shrink: false }}
                     fullWidth />
             )}
