@@ -30,7 +30,7 @@ export default function Docs() {
                     Enumeration District map, Palo Alto, CA (1930)
                 </ImageWithCaption>
                 <Para>
-                    Gannett is a tool to go from a neighbourhood or street name in a large metro area, directly to the census Population Schedule for the correct ED on Ancestry or FamilySearch. Please note that, unfortunately, <em>most cities are not available in most census years.</em> To learn more about where the data for this tool comes from, please read the <Link href="/about">About page</Link>.
+                    Gannett is a tool which shows the EDs for large metro areas. It allows you to reach the census Population Schedule for the correct ED on Ancestry or FamilySearch. Please note that, unfortunately, <em>most cities are not available in most census years.</em> Here is a list of <Link href="/coverage">which cities/year combinations are available</Link>. To learn more about where the data for this tool comes from, please read the <Link href="/about">About page</Link>.
                 </Para>
                 <Section anchor="finding">
                     Finding the right ED
@@ -40,7 +40,7 @@ export default function Docs() {
                         <li>Select the census year. Note that the cities available for that year will update on the map. Of course, <Link href="https://www.familysearch.org/en/wiki/United_States_Census_1890#1890_Surviving_Population_Schedules">1890 is missing</Link>.</li>
                         <li>
                             <ol>
-                                <li>Click one of the red dots to zoom into that city. Alternatively, you can use a mouse (on a desktop), scrolling (on a desktop or laptop) or double-tapping/pinch to zoom on mobile.</li>
+                                <li>Click one of the orange dots to zoom into that city. Alternatively, you can zoom and pan around the map, including pinch-to-zoom on mobile.</li>
                                 <li>Search for a street name, city, or ED number in the map’s search bar.</li>
                             </ol>
                         </li>
