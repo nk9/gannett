@@ -3,6 +3,7 @@ export default class District {
         const { props = {}, coordinates = {} } = districtDict;
 
         this.district = props.district ?? "Unnamed";
+        this.county = props.county ?? "Unknown"
         this.metro_code = props.metro_code ?? "00"
         this.metro = props.metro ?? "No city";
         this.metro_id = props.metro_id ?? 0;

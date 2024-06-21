@@ -15,6 +15,7 @@ import { resourceFormats, zoomThreshold } from "@/constants";
 import District from 'src/District';
 import Link from 'src/Link';
 import styles from "./InfoPanel.module.scss";
+import InfoPanelDescription from './InfoPanelDescription';
 import Para from './Para';
 import useMapState from '/stores/mapStore';
 
@@ -126,6 +127,11 @@ export default function InfoPanel({ metroInfo, bottom }) {
                 <List sx={{ listStyle: "disc", pl: { xs: 6, sm: 4 }, mt: 0 }}>
                     {census_links}
                 </List>
+                <Typography variant='h6' sx={{
+                    ml: { xs: 2, sm: 0 },
+                    mt: { xs: 1, sm: 2 }
+                }}>Description</Typography>
+                <InfoPanelDescription district={dist} />
                 <Typography variant='h6' sx={{
                     ml: { xs: 2, sm: 0 },
                     mt: { xs: 1, sm: 2 }

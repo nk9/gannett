@@ -149,6 +149,7 @@ export default function Index() {
                                         district_id: f.id,
                                         district: f.district_name,
                                         metro_code: f.metro_code,
+                                        county: f.county,
                                         metro: f.metro_name,
                                         state: f.state,
                                         year: f.year
