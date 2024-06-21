@@ -7,7 +7,7 @@ export default function InfoPanelDescription({ district: dist }) {
     if ([1930, 1940].includes(dist.year)) {
         ed_desc_url += dist.name.toUpperCase();
     } else if ([1880, 1900, 1910, 1920].includes(dist.year)) {
-        ed_desc_url += `${dist.county}-${dist.district}`;
+        ed_desc_url += `${dist.county}-${dist.district.toUpperCase()}`;
     }
 
     return (<>
