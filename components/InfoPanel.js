@@ -131,7 +131,7 @@ export default function InfoPanel({ metroInfo, bottom }) {
                     ml: { xs: 2, sm: 0 },
                     mt: { xs: 1, sm: 2 }
                 }}>Description</Typography>
-                <InfoPanelDescription district={dist} />
+                <InfoPanelDescription district={dist} sx={{ ml: { xs: 2, sm: 0 }, mt: 0 }} />
                 <Typography variant='h6' sx={{
                     ml: { xs: 2, sm: 0 },
                     mt: { xs: 1, sm: 2 }
