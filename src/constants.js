@@ -65,11 +65,15 @@ export const USStates = {
     'WY': 'Wyoming'
 }
 
+const ancestry_host = () => {
+    return process.env.NEXT_PUBLIC_ANCESTRY_HOST || "www.ancestry.com"
+}
+
 export const resourceFormats = {
     ANC: {
         CENSUS: {
             title: "Ancestry",
-            format: "https://www.ancestry.com/imageviewer/collections/%(dbid)i/images/%(iid)s"
+            format: `https://${ancestry_host()}/imageviewer/collections/%(dbid)i/images/%(iid)s`
         }
     },
     FS: {
