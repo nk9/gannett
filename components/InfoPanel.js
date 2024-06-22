@@ -124,7 +124,7 @@ export default function InfoPanel({ metroInfo, bottom }) {
                     ml: { xs: 2, sm: 0 },
                     mt: { xs: 1, sm: 2 }
                 }}>Census pages</Typography>
-                <List sx={{ listStyle: "disc", pl: { xs: 6, sm: 4 }, mt: 0 }}>
+                <List sx={{ listStyle: "disc", pl: { xs: 6, sm: 4 }, pt: 0, pb: 0 }}>
                     {census_links}
                 </List>
                 <Typography variant='h6' sx={{
