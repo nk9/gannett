@@ -65,7 +65,9 @@ export default function InfoPanel({ metroInfo, bottom }) {
                     }
                     return (
                         <ListItem key={index} sx={{ pl: .5, pb: 0, pt: 0, display: "list-item" }}>
-                            <Link href={href} target="_blank">{form.title + pay}</Link>
+                            <Tooltip title={res.name} placement='right'>
+                                <Link href={href} target="_blank">{form.title + pay}</Link>
+                            </Tooltip>
                             <OpenInNewIcon fontSize="xsmall" sx={{ position: "relative", bottom: "-3px", left: "3px" }} />
                         </ListItem>);
                 })
