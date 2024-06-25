@@ -44,8 +44,9 @@ export default function Docs() {
                                 <li>Search for a street name, city, or ED number in the map’s search bar.</li>
                             </ol>
                         </li>
-                        <li>Find the neighborhood you’re interested in and click on the correct enumeration district.</li>
+                        <li>Find the neighborhood you’re interested in and click to place a marker at the correct address.</li>
                         <li>In the info panel, click the link for the service you want to see the Population Schedule on.</li>
+                        <li>To see the ED for that address in a different year, just click the appropriate year at the top of the map. Note that most cities don't have data for all 6 census years. Learn more on the <Link href="/coverage">coverage page</Link>.</li>
                     </ol>
                 </NestedList>
                 <Section>
