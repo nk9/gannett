@@ -45,7 +45,7 @@ export default function Docs() {
                             </ol>
                         </li>
                         <li>Find the neighborhood you’re interested in and click on the correct enumeration district.</li>
-                        <li>In the info panel, click the link for the service you want to see the Population Scheudle on.</li>
+                        <li>In the info panel, click the link for the service you want to see the Population Schedule on.</li>
                     </ol>
                 </NestedList>
                 <Section>
