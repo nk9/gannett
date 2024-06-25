@@ -79,9 +79,11 @@ export default function Docs() {
                     <li>EDs with holes in them which shouldn’t be there</li>
                     <li>EDs with incorrect borders</li>
                     <li>EDs which are missing names</li>
+                    <li>EDs which are missing FamilySearch and/or Ancestry links</li>
+                    <li>EDs which are on the Gannett map but which have a different name in the population schedules</li>
                 </ul>
                 <Para>
-                    If you run into these or any other issues, please <Link href="/contact">reach out</Link> and provide a link to the ED in question.
+                    The more obvious of these are easy to search for in the data, and I'm slowly working on resolving the issues. However, if you find something obscure, or if one of these problems is blocking you, please <Link href="/contact">reach out</Link> and provide a link to the ED in question. I will help if I can.
                 </Para>
                 <Section anchor="ed-details">
                     Enumeration District details
