@@ -3,12 +3,16 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Para from 'components/Para';
+import Head from 'next/head';
 import * as React from 'react';
 import Link from '../src/Link';
 
 export default function About() {
     return (
         <Container maxWidth="sm">
+            <Head>
+                <title>Contact | Gannett.cc</title>
+            </Head>
             <Box sx={{ py: 3 }}>
                 <Typography variant="h4" component="h1" gutterBottom>
                     Get in touch

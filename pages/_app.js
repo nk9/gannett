@@ -19,6 +19,7 @@ export default function MyApp(props) {
   return (
     <CacheProvider value={emotionCache}>
       <Head>
+        <title>Gannett.cc</title>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
         <link rel="icon" type="image/png" href={`/logo-dive-icon.png`} />
       </Head>

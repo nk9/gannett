@@ -6,12 +6,16 @@ import NestedList from 'components/NestedList';
 import Para from 'components/Para';
 import Quote from 'components/Quote';
 import Section from 'components/Section';
+import Head from 'next/head';
 import * as React from 'react';
 import Link from 'src/Link';
 
 export default function Docs() {
     return (
         <Container maxWidth="sm">
+            <Head>
+                <title>Documentation | Gannett.cc</title>
+            </Head>
             <Box sx={{ py: 3 }}>
                 <LogoHeader headline="Gannett Documentation" />
                 <Quote

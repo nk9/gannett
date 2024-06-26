@@ -10,6 +10,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import { columnGroupsStateInitializer } from '@mui/x-data-grid/internals';
 import LogoHeader from 'components/LogoHeader';
 import Para from 'components/Para';
+import Head from 'next/head';
 import Link from '/src/Link';
 
 export default function Coverage() {
@@ -55,6 +56,9 @@ export default function Coverage() {
 
     return (
         <Container maxWidth="sm">
+            <Head>
+                <title>Coverage | Gannett.cc</title>
+            </Head>
             <Box sx={{ py: 3 }}>
                 <LogoHeader headline="ED City Coverage" />
                 <Para>

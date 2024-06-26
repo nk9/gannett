@@ -2,11 +2,15 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import LogoHeader from 'components/LogoHeader';
 import Para from 'components/Para';
+import Head from "next/head";
 import Link from '/src/Link';
 
 export default function About() {
     return (
         <Container maxWidth="sm">
+            <Head>
+                <title>About | Gannett.cc</title>
+            </Head>
             <Box sx={{ py: 3 }}>
                 <LogoHeader headline="About Gannett" />
                 <Para>
