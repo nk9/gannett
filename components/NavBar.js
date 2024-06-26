@@ -109,7 +109,11 @@ export default function NavBar() {
                 sx={{
                     width: drawerWidth,
                     flexShrink: 0,
-                    [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
+                    [`& .MuiDrawer-paper`]: {
+                        height: "100vh",
+                        width: drawerWidth,
+                        boxSizing: 'border-box'
+                    },
                 }}
             >
                 <Toolbar /> {/*Push the list down below the toolbar, LOL*/}
