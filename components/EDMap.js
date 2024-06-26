@@ -23,6 +23,7 @@ export default function EDMap({ metros, districts, roads, setMapViewport }) {
     const selectedDistrict = useMapState('selectedDistrict')
     const setSelectedDistrict = useMapState('setSelectedDistrict')
     const mapOptions = useMapState('mapOptions')
+    const currentZoomLevel = useMapState('currentZoomLevel')
 
     useEffect(() => {
         // Set the initial map reference to the store when the component mounts
@@ -193,7 +194,7 @@ export default function EDMap({ metros, districts, roads, setMapViewport }) {
                 zoom: zoomThreshold
             })
         }
-        else {
+        else if (currentZoomLevel() >= zoomThreshold) {
             setMarkerCoords({
                 longitude: e.lngLat.lng,
                 latitude: e.lngLat.lat
