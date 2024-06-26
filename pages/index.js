@@ -57,11 +57,11 @@ export default function Index() {
             
             if (queryYear && queryState && queryED) {
                 async function fetchDistrict() {
-                    let components = queryED.split("-")
+                    let components = queryED.toUpperCase().split("-")
                     if (components.length == 2) {
                         let args = {
                             _year: parseInt(queryYear),
-                            _state: queryState,
+                            _state: queryState.toUpperCase(),
                             _county_code: components[0],
                             _district_name: components[1]
                         };
@@ -93,8 +93,8 @@ export default function Index() {
                     let { data, error } = await supabase.from('metro_year_info')
                         .select('census_years!inner (year), metros!inner (name, state, geom)')
                         .eq('census_years.year', parseInt(queryYear))
-                        .eq('metros.state', queryState)
-                        .eq('metros.name', queryMetro);
+                        .ilike('metros.state', queryState)
+                        .ilike('metros.name', queryMetro);
 
                     if (!error && data.length) {
                         let metro = data[0];
