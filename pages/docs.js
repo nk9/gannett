@@ -102,7 +102,7 @@ export default function Docs() {
                     Enumeration District descriptions
                 </Section>
                 <Para>
-                    EDs are displayed in Gannett as boundaries on a web map. Sometimes, this is based on maps produced by the Census Department. However, not every ED has a map. From 1830–1950, a more consistent source for the boundaries is the textual descriptions written out longhand and available in <Link href="https://www.archives.gov/files/research/microfilm/t1224.pdf">NARA microfilm series T1224</Link>. In cities, these tended to use city blocks, described by the bounding streets and then numbered.
+                    EDs are displayed in Gannett as boundaries on a web map. Sometimes, this is based on maps produced by the Census Department. However, not every ED has a map. From 1830–1950, a more consistent source for the boundaries is the textual descriptions available in <Link href="https://www.archives.gov/files/research/microfilm/t1224.pdf">NARA microfilm series T1224</Link>. In cities, these tend to use city blocks, described by the bounding streets and then numbered.
                 </Para>
                 <Para>
                     Images of T1224 through 1930 are available for free <Link href="https://www.familysearch.org/search/catalog/results?query=%2Btitle%3AT1224">on FamilySearch</Link>, broken up by census year. For 1940 and 1950, <Link href="https://stevemorse.org/census/eddef1224.html">SteveMorse.org has a tool</Link> to show the images. Where possible, Gannett provides direct links to images of these textual descriptions to aid in determining an ED’s correct boundary.
