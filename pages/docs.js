@@ -29,12 +29,12 @@ export default function Docs() {
                 <ImageWithCaption 
                     src="/ed.jpg"
                     href="https://catalog.archives.gov/id/286184794"
-                    alt='A close-up grid of streets with red and orange pencil lines dividing the grid into numbered districts'
+                    alt="A close-up grid of streets with red and orange pencil lines dividing the grid into numbered districts"
                 >
                     Enumeration District map, Palo Alto, CA (1930)
                 </ImageWithCaption>
                 <Para>
-                    Gannett is a tool which shows the EDs for large metro areas. It allows you to reach the census Population Schedule for the correct ED on Ancestry or FamilySearch. Please note that, unfortunately, <em>most cities are not available in most census years.</em> Here is a list of <Link href="/coverage">which cities/year combinations are available</Link>. To learn more about where the data for this tool comes from, please read the <Link href="/about">About page</Link>.
+                    Gannett is a tool which shows the EDs for large metro areas. It allows you to reach the census population schedule for the correct ED on Ancestry or FamilySearch. Please note that, unfortunately, <em>most cities are not available in most census years.</em> Here is a list of <Link href="/coverage">which cities/year combinations are available</Link>. To learn more about where the data for this tool comes from, please read the <Link href="/about">About page</Link>.
                 </Para>
                 <Section anchor="finding">
                     Finding the right ED
@@ -49,8 +49,8 @@ export default function Docs() {
                             </ol>
                         </li>
                         <li>Find the neighborhood you’re interested in and click to place a marker at the correct address.</li>
-                        <li>In the info panel, click the link for the service you want to see the Population Schedule on.</li>
-                        <li>To see the ED for that address in a different year, just click the appropriate year at the top of the map. Note that most cities don't have data for all 6 census years. Learn more on the <Link href="/coverage">coverage page</Link>.</li>
+                        <li>In the info panel, click the link for the service you want to see the population schedule on.</li>
+                        <li>To see the ED for that address in a different year, just click the appropriate year at the top of the map. Note that most cities don’t have data for all 6 census years. Learn more on the <Link href="/coverage">coverage page</Link>.</li>
                     </ol>
                 </NestedList>
                 <Section>
@@ -87,7 +87,7 @@ export default function Docs() {
                     <li>EDs which are on the Gannett map but which have a different name in the population schedules</li>
                 </ul>
                 <Para>
-                    The more obvious of these are easy to search for in the data, and I'm slowly working on resolving the issues. However, if you find something obscure, or if one of these problems is blocking you, please <Link href="/contact">reach out</Link> and provide a link to the ED in question. I will help if I can.
+                    The more obvious of these are easy to search for in the data, and I’m slowly working on resolving the issues. However, if you find something obscure, or if one of these problems is blocking you, please <Link href="/contact">reach out</Link> and provide a link to the ED in question. I will help if I can.
                 </Para>
                 <Section anchor="ed-names">
                     Enumeration District names
