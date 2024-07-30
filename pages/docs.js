@@ -89,14 +89,29 @@ export default function Docs() {
                 <Para>
                     The more obvious of these are easy to search for in the data, and I'm slowly working on resolving the issues. However, if you find something obscure, or if one of these problems is blocking you, please <Link href="/contact">reach out</Link> and provide a link to the ED in question. I will help if I can.
                 </Para>
-                <Section anchor="ed-details">
-                    Enumeration District details
+                <Section anchor="ed-names">
+                    Enumeration District names
                 </Section>
                 <Para>
                     Between 1900 and 1950, EDs look like this: <Link href="/?year=1940&state=CA&ed=38-236">38-236</Link> or sometimes <Link href="/?year=1940&state=CA&ed=38-68A">38-68A</Link>. The piece before the hyphen is usually a county number. (However, as cities grew, they increasingly received their own numbers.) The second number, with or without a letter, is the district number. In order to uniquely refer to an ED, it’s necessary to have both parts of the ED number as well as the census year and the state.
                 </Para>
                 <Para>
                     Districts in 1880 were not given county integers, and in many places you will see them referred to as e.g. “Alameda-15”. However, Steve Morse’s <Link href="https://stevemorse.org">One Step</Link> website assigned numbers to the 1880 counties based on the 1900 numbers. This worked well, as the numbers were assigned alphabetically. Most county names and borders were fixed by the late 1800s. I have used these same county numbers to simplify referring and linking to 1880 EDs.
+                </Para>
+                <Section anchor="ed-descriptions">
+                    Enumeration District descriptions
+                </Section>
+                <Para>
+                    EDs are displayed in Gannett as boundaries on a web map. Sometimes, this is based on maps produced by the Census Department. However, not every ED has a map. From 1830–1950, a more consistent source for the boundaries is the textual descriptions written out longhand and available in <Link href="https://www.archives.gov/files/research/microfilm/t1224.pdf">NARA microfilm series T1224</Link>. In cities, these tended to use city blocks, described by the bounding streets and then numbered.
+                </Para>
+                <Para>
+                    Images of T1224 through 1930 are available for free <Link href="https://www.familysearch.org/search/catalog/results?query=%2Btitle%3AT1224">on FamilySearch</Link>, broken up by census year. For 1940 and 1950, <Link href="https://stevemorse.org/census/eddef1224.html">SteveMorse.org has a tool</Link> to show the images. Where possible, Gannett provides direct links to images of these textual descriptions to aid in determining an ED’s correct boundary.
+                </Para>
+                <Para>
+                    NARA’s <Link href="https://www.archives.gov/publications/prologue/2016/spring/archivist.html">History Hub</Link> site has <Link href="https://historyhub.history.gov/genealogy/census-records/b/census-blog/posts/1950-census-how-to-read-written-enumeration-district-descriptions">a really helpful article by archivist Claire Kluskens</Link> which goes into plenty of detail about how to interpret these ED description records.
+                </Para>
+                <Para>
+                    Unfortunately, we do sometimes find that the textual description, the map, and the list of people actually enumerated on the population schedule do not agree. Given the hundreds of thousands of districts in a given census, this is hardly surprising! These cases are rare, but it’s important to keep this in mind. Check everything, and explore any inconsistencies to see if the person you’re looking for may be hiding in a slightly mis-filed location.
                 </Para>
                 <Section anchor="1960">
                     EDs in 1960 and beyond
