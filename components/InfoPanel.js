@@ -166,8 +166,11 @@ export default function InfoPanel({ metroInfo, bottom }) {
                     ml: { xs: 2, sm: 0 },
                     mt: { xs: 1, sm: 2 }
                 }}>Maps</Typography>
-                <Link href={street_view_link} target="_blank">Google Street View</Link>
-                <OpenInNewIcon />
+                <Para sx={{
+                    ml: { xs: 2, sm: 0 },
+                    mt: { xs: 2, sm: 0 }
+                }}><Link href={street_view_link} target="_blank">Google Street View</Link>
+                    <OpenInNewIcon /></Para>
 
                 <Typography variant='h6' sx={{
                     ml: { xs: 2, sm: 0 },
