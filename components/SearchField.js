@@ -1,7 +1,7 @@
 // Based on the Google Maps example in MUI Autocomplete docs:
 // https://mui.com/material-ui/react-autocomplete/#google-maps-place
 
-import { useEffect, useMemo, useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { faCity, faRoad } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,13 +10,27 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { debounce } from '@mui/material/utils';
 import parse from 'autosuggest-highlight/parse';
 
 import Image from 'next/image';
 
 import { zoomLevel } from '@/constants';
 import useMapState from '/stores/mapStore';
+
+function DebounceInput(props) {
+    const { handleDebounce, debounceTimeout, ...rest } = props;
+
+    const timerRef = useRef();
+
+    const handleChange = (event) => {
+        clearTimeout(timerRef.current);
+        timerRef.current = setTimeout(async () => {
+            await handleDebounce(event.target.value);
+        }, debounceTimeout);
+    };
+
+    return <TextField {...rest} onChange={handleChange} />;
+}
 
 export default function SearchField({}) {
     const year = useMapState('year')
@@ -30,78 +44,19 @@ export default function SearchField({}) {
 
     const [options, setOptions] = useState([]);
 
-    const doSearch = useMemo(
-        () =>
-            debounce((request) => {
-                // autocompleteService.current.getPlacePredictions(request, callback);
-                fetch('/api/search?' + new URLSearchParams({
-                    q: request.input,
-                    year: year
-                }))
-            }, 400),
-        [],
-    );
-
-    useEffect(() => {
-        async function fetchData() {
-            let active = true;
-
-            // if (!autocompleteService.current && window.google) {
-            //     autocompleteService.current =
-            //         new window.google.maps.places.AutocompleteService();
-            // }
-            // if (!autocompleteService.current) {
-            //     return undefined;
-            // }
-            console.log("fetchData in SearchField")
-
-            if (searchInputValue === '') {
-                setOptions(searchValue ? [searchValue] : []);
-                return undefined;
-            }
-
-            // fetch({ input: inputValue }, (results) => {
-            //     if (active) {
-            //         let newOptions = [];
-
-            //         if (value) {
-            //             newOptions = [value];
-            //         }
-
-            //         if (results) {
-            //             newOptions = [...newOptions, ...results];
-            //         }
-
-            //         setOptions(newOptions);
-            //     }
-            // });
-            doSearch({ input: searchInputValue }, (results) => {
-                if (active) {
-                    setOptions(results)
+    async function doSearch(query) {
+        await fetch('/api/search?' + new URLSearchParams({
+            q: query,
+            year: year
+        }))
+            .then((res) => res.json())
+            .then((data) => {
+                if (data) {
+                    console.log("results:", data.results)
+                    setOptions(data.results)
                 }
-            })
-            console.log("call fetch API route")
-
-            var results = await fetch('/api/search?' + new URLSearchParams({
-                q: searchInputValue,
-                year: year
-            }))
-                .then((res) => res.json())
-                .then((data) => {
-                    if (data) {
-                        console.log("results:", data.results)
-                        setOptions(data.results)
-                    }
-                });
-
-
-            return () => {
-                active = false;
-            };
-            // return result
-        }
-        fetchData();
-    }, [searchValue, searchInputValue]);
+            });
+    };
 
     return (
         <Autocomplete
@@ -137,7 +92,9 @@ export default function SearchField({}) {
             }}
             noOptionsText="No results"
             renderInput={(params) => (
-                <TextField {...params}
+                <DebounceInput {...params}
+                    debounceTimeout={500}
+                    handleDebounce={doSearch}
                     label={searchInputValue ? "" : "Search city, ED, or street name"}
                     InputLabelProps={{ shrink: false }}
                     fullWidth />
@@ -163,11 +120,11 @@ export default function SearchField({}) {
                 const liProps = { ...props, key: option.key }
                 return (
                     <li {...liProps}>
-                        <Grid container alignItems="center">
-                            <Grid item sx={{ display: 'flex', width: 44 }}>
+                        <Grid container columnSpacing={2} alignItems="center">
+                            <Grid item sx={{ display: 'flex', width: "50px" }}>
                                 {icon}
                             </Grid>
-                            <Grid item sx={{ width: 'calc(100% - 44px)', wordWrap: 'break-word' }}>
+                            <Grid item sx={{ wordWrap: 'break-word' }}>
                                 {parts.map((part, index) => (
                                     <Box
                                         key={index}
