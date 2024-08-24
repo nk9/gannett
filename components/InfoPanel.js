@@ -49,7 +49,7 @@ export default function InfoPanel({ metroInfo, bottom }) {
     if (Object.keys(metroInfo).length > 1 && Object.keys(selectedDistrict).length > 1) {
         let dist = new District(selectedDistrict)
         if (dist && dist.metro_id in metroInfo) {
-            const { nara_ed_maps_link, ancestry_ed_maps_link, state, county } = metroInfo[dist.metro_id]
+            const { state, county } = metroInfo[dist.metro_id]
     
             var census_links = [];
             var description_links = [];

@@ -234,8 +234,6 @@ export default function Index() {
 
                     var metro_info = metros_data.reduce((result, dict) => {
                         result[dict.metro_id] = {
-                            nara_ed_maps_link: dict.nara_ed_maps_link,
-                            ancestry_ed_maps_link: dict.ancestry_ed_maps_link,
                             state: dict.state,
                             county: dict.county
                         }
