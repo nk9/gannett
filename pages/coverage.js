@@ -1,7 +1,6 @@
 import { supabase } from '@/supabase';
 import { useEffect, useState } from 'react';
 
-import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { createTheme } from '@mui/material/styles';

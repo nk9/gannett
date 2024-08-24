@@ -1,10 +1,10 @@
 import { Fragment } from 'react';
 
-import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { styled } from "@mui/system";
 import Link from 'src/Link';
+import OpenInNewIcon from './OpenInNewIcon';
 
 function InfoPanelDescription({ className, district: dist, description_links: links }) {
     var ed_desc_url = `https://stevemorse.org/ed/ed2.php?year=${dist.year}&state=${dist.state}&ed=`;
@@ -26,7 +26,7 @@ function InfoPanelDescription({ className, district: dist, description_links: li
                 }
                 return acc;
             }, [])}</Typography>
-            <OpenInNewIcon fontSize="xsmall" sx={{ position: "relative", bottom: "-3px", left: "3px" }} />
+            <OpenInNewIcon />
         </>
     }
 
@@ -36,7 +36,7 @@ function InfoPanelDescription({ className, district: dist, description_links: li
         <Box>
             {ed_desc_url && <>
                 <Link href={ed_desc_url} target="_blank">Summary</Link>
-                <OpenInNewIcon fontSize="xsmall" sx={{ position: "relative", bottom: "-3px", left: "1px" }} /></>
+                <OpenInNewIcon /></>
             }
         </Box>
         <Box>

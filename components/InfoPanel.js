@@ -2,8 +2,6 @@ import { useState } from 'react';
 
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import LinkIcon from '@mui/icons-material/Link';
-import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -18,12 +16,14 @@ import District from 'src/District';
 import Link from 'src/Link';
 import styles from "./InfoPanel.module.scss";
 import InfoPanelDescription from './InfoPanelDescription';
+import OpenInNewIcon from './OpenInNewIcon';
 import Para from './Para';
 import useMapState from '/stores/mapStore';
 
 export default function InfoPanel({ metroInfo, bottom }) {
     const currentZoomLevel = useMapState('currentZoomLevel')
     const selectedDistrict = useMapState('selectedDistrict')
+    const markerCoords = useMapState('markerCoords')
     const selectedDistrictResources = useMapState('selectedDistrictResources')
     const [tooltipIsOpen, setTooltipIsOpen] = useState(false);
     const router = useRouter();
@@ -48,6 +48,7 @@ export default function InfoPanel({ metroInfo, bottom }) {
     }
 
     var panel = <></>;
+    var street_view_link = markerCoords && `https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${markerCoords.latitude},${markerCoords.longitude}`;
 
     if (Object.keys(metroInfo).length > 1 && Object.keys(selectedDistrict).length > 1) {
         let dist = new District(selectedDistrict)
@@ -74,7 +75,7 @@ export default function InfoPanel({ metroInfo, bottom }) {
                                 <Tooltip title={res.name} placement='right'>
                                     <Link href={href} target="_blank">{form.title + pay}</Link>
                                 </Tooltip>
-                                <OpenInNewIcon fontSize="xsmall" sx={{ position: "relative", bottom: "-3px", left: "3px" }} />
+                                <OpenInNewIcon />
                             </ListItem>);
                     } else if (res.type == "DESCR") {
                         let form = resourceFormats[res.source][res.type];
@@ -160,6 +161,13 @@ export default function InfoPanel({ metroInfo, bottom }) {
                         
                     </IconButton></Typography>
                 <InfoPanelDescription district={dist} description_links={description_links} sx={{ ml: { xs: 2, sm: 0 }, mt: 0 }} />
+
+                <Typography variant='h6' sx={{
+                    ml: { xs: 2, sm: 0 },
+                    mt: { xs: 1, sm: 2 }
+                }}>Maps</Typography>
+                <Link href={street_view_link} target="_blank">Google Street View</Link>
+                <OpenInNewIcon />
 
                 <Typography variant='h6' sx={{
                     ml: { xs: 2, sm: 0 },
