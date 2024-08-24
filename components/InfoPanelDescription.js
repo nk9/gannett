@@ -33,11 +33,15 @@ function InfoPanelDescription({ className, district: dist, description_links: li
 
 
     return (<Box className={className}>
-        {ed_desc_url && <>
-            <Link href={ed_desc_url} target="_blank">Text SteveMorse.org</Link>
-            <OpenInNewIcon fontSize="xsmall" sx={{ position: "relative", bottom: "-3px", left: "1px" }} /></>
-        }
-        {full_text_links}
+        <Box>
+            {ed_desc_url && <>
+                <Link href={ed_desc_url} target="_blank">Summary</Link>
+                <OpenInNewIcon fontSize="xsmall" sx={{ position: "relative", bottom: "-3px", left: "1px" }} /></>
+            }
+        </Box>
+        <Box>
+            {full_text_links}
+        </Box>
  
     </Box>)
 }

@@ -9,9 +9,11 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
+import { useRouter } from 'next/router';
 import { sprintf } from 'sprintf-js';
 
 import { resourceFormats, zoomThreshold } from "@/constants";
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import District from 'src/District';
 import Link from 'src/Link';
 import styles from "./InfoPanel.module.scss";
@@ -24,6 +26,7 @@ export default function InfoPanel({ metroInfo, bottom }) {
     const selectedDistrict = useMapState('selectedDistrict')
     const selectedDistrictResources = useMapState('selectedDistrictResources')
     const [tooltipIsOpen, setTooltipIsOpen] = useState(false);
+    const router = useRouter();
 
     const [isHoveringLinkButton, setIsHoveringLinkButton] = useState(false);
 
@@ -148,7 +151,14 @@ export default function InfoPanel({ metroInfo, bottom }) {
                 <Typography variant='h6' sx={{
                     ml: { xs: 2, sm: 0 },
                     mt: { xs: 1, sm: 2 }
-                }}>Description</Typography>
+                }}>Description<IconButton aria-label="link" size="small" color="primary"
+                    sx={{ position: "relative", bottom: "2px", left: "2px" }}
+                    onClick={() => router.push("/docs#ed-descriptions")}
+                >
+                        
+                        <HelpOutlineIcon fontSize='small' />
+                        
+                    </IconButton></Typography>
                 <InfoPanelDescription district={dist} description_links={description_links} sx={{ ml: { xs: 2, sm: 0 }, mt: 0 }} />
 
                 <Typography variant='h6' sx={{
