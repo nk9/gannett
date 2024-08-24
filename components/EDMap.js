@@ -83,7 +83,12 @@ export default function EDMap({ metros, districts, roads, setMapViewport }) {
                             'fill-color': '#009',
                             'fill-opacity': [
                                 'case',
-                                ['==', ['get', 'district'], selectedDistrict?.props?.district ?? "NO_ED_NAME"], // if case
+                                ['all', 
+                                    // Check district name
+                                    ['==', ['get', 'district'], selectedDistrict?.props?.district ?? "NO_ED_NAME"],
+                                    // Check metro code
+                                    ['==', ['get', 'metro_code'], selectedDistrict?.props?.metro_code ?? "NO_METRO_CODE"],
+                                ],  // if case
                                 0.2, // then do this
                                 0] // else
                         }
