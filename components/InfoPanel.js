@@ -172,7 +172,8 @@ export default function InfoPanel({ metroInfo, bottom }) {
         }
     } else if (currentZoomLevel() >= zoomThreshold) {
         panel = (<>
-            <Para sx={{ m: { xs: 2, sm: 0 } }}>Click within an Enumeration District to learn more about it.</Para>
+            <Para sx={{ m: { xs: 2, sm: 0 } }}>Click within an Enumeration District (blue dashed lines) to learn more about it.</Para>
+            <Para>No districts? Try a different year. Otherwise, have a look at <Link href="/coverage">the Coverage page</Link> to learn which city/year combinations are available at this time.</Para>
         </>);
     } else {
         panel = (<>
