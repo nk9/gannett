@@ -85,7 +85,7 @@ async function runDistrictSearch(year, query) {
 async function runAddressSearch(query) {
     var results = []
 
-    if (query.length >= 6) {
+    if (query.length >= 6 && query.includes(' ')) {
         results = await fetch('https://api.mapbox.com/search/geocode/v6/forward?' + new URLSearchParams({
             q: query,
             types: "address",
