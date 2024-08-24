@@ -75,7 +75,7 @@ export default function Docs() {
                     Errors and Inconsistencies
                 </Section>
                 <Para>
-                    Turning literally thousands of pages of maps and textual descriptions into hundreds of Shapefiles has been an enormous amount of work, and I’m grateful to <Link href="/about">John and his team</Link> for the years of effort they’ve put in! In any project of this size, though, there will be some things that slip through the cracks. Some of these will have been added by me while processing the GIS files. A surprising number are actually due to errors in the original data from the Census! Examples of issues include:
+                    Turning tens of thousands of pages of maps and textual descriptions into hundreds of Shapefiles has been an enormous amount of work, and I’m grateful to <Link href="/about">John and his team</Link> for the years of effort they’ve put in! In any project of this size, though, there will be some things that slip through the cracks. Some of these will have been added by me while processing the GIS files. A surprising number are actually due to errors in the original data from the Census! Examples of issues include:
                 </Para>
                 <ul>
                     <li>Duplicate EDs</li>

@@ -165,7 +165,7 @@ export default function InfoPanel({ metroInfo, bottom }) {
                     ml: { xs: 2, sm: 0 },
                     mt: { xs: 1, sm: 2 }
                 }}>Something wrong?</Typography>
-                <Para sx={{ ml: { xs: 2, sm: 0 }, mt: 0 }}> If you see any problems with this Enumeration District, <Link href="/contact">please get in touch</Link>. Include a clear explanation of what's wrong and a link to the ED.
+                <Para sx={{ ml: { xs: 2, sm: 0 }, mt: 0 }}> If you see any <Link href="/docs#errors">problems</Link> with this Enumeration District, <Link href="/contact">please get in touch</Link>. Include a clear explanation of what's wrong and a link to the ED.
                 </Para>
             </>);
 
