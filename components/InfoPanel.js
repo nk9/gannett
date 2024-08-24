@@ -51,26 +51,39 @@ export default function InfoPanel({ metroInfo, bottom }) {
         if (dist && dist.metro_id in metroInfo) {
             const { nara_ed_maps_link, ancestry_ed_maps_link, state, county } = metroInfo[dist.metro_id]
     
-            var census_links = []
+            var census_links = [];
+            var description_links = [];
             // console.log("selectedDistrictResources:", selectedDistrictResources)
             if (selectedDistrictResources) {
-                census_links = selectedDistrictResources.map((res, index) => {
-                    let form = resourceFormats[res.source][res.type]
-                    let href = sprintf(form.format, res.value);
-                    var pay = "";
+                var descr_count = 1;
+                selectedDistrictResources.map((res, index) => {
+                    if (res.type == "CENSUS") {
+                        let form = resourceFormats[res.source][res.type];
+                        let href = sprintf(form.format, res.value);
+                        var pay = "";
+                    
+                        if (["1880", "1940"].includes(selectedDistrict.props.year)
+                            && res.source == "ANC") {
+                            pay = " ($)";
+                        }
+                        census_links.push(
+                            <ListItem key={index} sx={{ pl: .5, pb: 0, pt: 0, display: "list-item" }}>
+                                <Tooltip title={res.name} placement='right'>
+                                    <Link href={href} target="_blank">{form.title + pay}</Link>
+                                </Tooltip>
+                                <OpenInNewIcon fontSize="xsmall" sx={{ position: "relative", bottom: "-3px", left: "3px" }} />
+                            </ListItem>);
+                    } else if (res.type == "DESCR") {
+                        let form = resourceFormats[res.source][res.type];
+                        let href = sprintf(form.format, res.value);
 
-                    if (["1880", "1940"].includes(selectedDistrict.props.year)
-                        && res.source == "ANC") {
-                        pay = " ($)";
+                        description_links.push(
+                            <Link href={href} target="_blank">{descr_count}</Link>
+                        )
+                        descr_count += 1;
                     }
-                    return (
-                        <ListItem key={index} sx={{ pl: .5, pb: 0, pt: 0, display: "list-item" }}>
-                            <Tooltip title={res.name} placement='right'>
-                                <Link href={href} target="_blank">{form.title + pay}</Link>
-                            </Tooltip>
-                            <OpenInNewIcon fontSize="xsmall" sx={{ position: "relative", bottom: "-3px", left: "3px" }} />
-                        </ListItem>);
                 })
+                // console.log("links:", census_links, description_links)
             }
 
             const pageLinkButton = (
@@ -117,11 +130,13 @@ export default function InfoPanel({ metroInfo, bottom }) {
                 </>);
             }
 
+
             panel = (<>
                 <Para sx={{
                     ml: { xs: 2, sm: 0 },
                     mt: { xs: 2, sm: 0 }
                 }}>{ed_name_link}</Para>
+
                 <Typography variant='h6' sx={{
                     ml: { xs: 2, sm: 0 },
                     mt: { xs: 1, sm: 2 }
@@ -129,11 +144,13 @@ export default function InfoPanel({ metroInfo, bottom }) {
                 <List sx={{ listStyle: "disc", pl: { xs: 6, sm: 4 }, pt: 0, pb: 0 }}>
                     {census_links}
                 </List>
+
                 <Typography variant='h6' sx={{
                     ml: { xs: 2, sm: 0 },
                     mt: { xs: 1, sm: 2 }
                 }}>Description</Typography>
-                <InfoPanelDescription district={dist} sx={{ ml: { xs: 2, sm: 0 }, mt: 0 }} />
+                <InfoPanelDescription district={dist} description_links={description_links} sx={{ ml: { xs: 2, sm: 0 }, mt: 0 }} />
+
                 <Typography variant='h6' sx={{
                     ml: { xs: 2, sm: 0 },
                     mt: { xs: 1, sm: 2 }

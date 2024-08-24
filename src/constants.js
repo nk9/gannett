@@ -80,6 +80,10 @@ export const resourceFormats = {
         CENSUS: {
             title: "FamilySearch",
             format: "https://www.familysearch.org/ark:/61903/%(ark)s"
+        },
+        DESCR: {
+            title: "FS",
+            format: "https://www.familysearch.org/ark:/61903/%(ark)s"
         }
     }
 }
