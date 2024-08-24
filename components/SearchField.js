@@ -114,7 +114,7 @@ export default function SearchField({}) {
                 } else if (option.type == 'metro') {
                     icon = <FontAwesomeIcon icon={faCity} size='xl' />
                 } else if (option.type == 'district') {
-                    icon = <Image alt="ED" src="/ed-icon.svg" width={30} height={30} />
+                    icon = <Image alt="ED" src="/ed-icon.svg" width={40} height={40} />
                 }
                  
                 const liProps = { ...props, key: option.key }
@@ -124,17 +124,19 @@ export default function SearchField({}) {
                             <Grid item sx={{ display: 'flex', width: "50px" }}>
                                 {icon}
                             </Grid>
-                            <Grid item sx={{ wordWrap: 'break-word' }}>
-                                {parts.map((part, index) => (
-                                    <Box
-                                        key={index}
-                                        component="span"
-                                        sx={{ fontWeight: part.highlight ? 'bold' : 'regular' }}
-                                    >
-                                        {part.text}
-                                    </Box>
-                                ))}
-                                <Typography variant="body2" color="text.secondary">
+                            <Grid item sx={{ width: 'calc(100% - 50px)', height: '45px' }}>
+                                <Box sx={{ overflow: 'hidden', whiteSpace: 'nowrap' }}>
+                                    {parts.map((part, index) => (
+                                        <Box
+                                            key={index}
+                                            component="span"
+                                            sx={{ fontWeight: part.highlight ? 'bold' : 'regular' }}
+                                        >
+                                            {part.text}
+                                        </Box>
+                                    ))}
+                                </Box>
+                                <Typography variant="body2" color="text.secondary" sx={{ overflow: 'hidden', whiteSpace: 'nowrap' }}>
                                     {option.structured_formatting.secondary_text}
                                 </Typography>
                             </Grid>
