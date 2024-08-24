@@ -71,13 +71,58 @@ async function runDistrictSearch(year, query) {
                     structured_formatting: {
                         main_text: res.name,
                         main_text_matched_substrings: matches(res.name),
-                        secondary_text: `${res.metro_name}, ${res.county} County, ${res.state}`
+                        secondary_text: `${res.metro_name}, ${res.state}, ${res.county} County`
                     }
                 }))
             } else {
                 console.log(error)
             }
         }
+    }
+    return results
+}
+
+async function runAddressSearch(query) {
+    var results = []
+
+    if (query.length >= 6) {
+        results = await fetch('https://api.mapbox.com/search/geocode/v6/forward?' + new URLSearchParams({
+            q: query,
+            types: "address",
+            country: "us",
+            limit: 1,
+            access_token: process.env.MAPBOX_PRIVATE_ACCESS_TOKEN,
+        }))
+            .then((res) => res.json())
+            .then((data) => {
+                if (data) {
+                    if ('error_code' in data) {
+                        console.log("Address search failed:", data);
+                        return []
+                    } else {
+                        return data.features.map((res) => {
+                            let prop = res.properties
+                            return {
+                                type: 'address',
+                                key: `address-1`,
+                                description: prop.full_address,
+                                point: { 
+                                    coordinates: res.geometry.coordinates
+                                },
+                                structured_formatting: {
+                                    main_text: prop.name,
+                                    // main_text_matched_substrings: matches(res.name),
+                                    secondary_text: [
+                                        prop.context.place.name,
+                                        prop.context.region.region_code,
+                                        prop.context.postcode.name
+                                    ].join(', ')
+                                }
+                            }
+                        })
+                    }
+                }
+            });
     }
     return results
 }
@@ -110,14 +155,17 @@ export default async function handler(req, res) {
     const { q: query, year } = req.query ?? {};
     var tasks = [
         async () => {
+            return await runAddressSearch(query)
+        },
+        async () => {
             return await runMetroSearch(year, query)
+        },
+        async () => {
+            return await runRoadSearch(year, query)
         },
         async () => {
             return await runDistrictSearch(year, query)
         },
-        async () => {
-            return await runRoadSearch(year, query)
-        }
     ]
 
     var test = await Promise.all(tasks.map(p => p()))

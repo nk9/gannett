@@ -6,7 +6,7 @@ export const initialViewState = {
     latitude: 40,
     zoom: 3.5
 }
-export const zoomLevel = { 'district': 14, 'road': 15, 'metro': 13 }
+export const zoomLevel = { 'district': 14, 'road': 15, 'metro': 13, 'address': 15 };
 
 export const ALL_YEARS = [1880, 1900, 1910, 1920, 1930, 1940];
 

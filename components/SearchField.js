@@ -3,7 +3,7 @@
 
 import { useRef, useState } from 'react';
 
-import { faCity, faRoad } from '@fortawesome/free-solid-svg-icons';
+import { faCity, faHouseChimney, faRoad } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Autocomplete from '@mui/material/Autocomplete';
 import Box from '@mui/material/Box';
@@ -95,7 +95,7 @@ export default function SearchField({}) {
                 <DebounceInput {...params}
                     debounceTimeout={500}
                     handleDebounce={doSearch}
-                    label={searchInputValue ? "" : "Search city, ED, or street name"}
+                    label={searchInputValue ? "" : "Search address, city, ED, or street"}
                     InputLabelProps={{ shrink: false }}
                     fullWidth />
             )}
@@ -115,6 +115,8 @@ export default function SearchField({}) {
                     icon = <FontAwesomeIcon icon={faCity} size='xl' />
                 } else if (option.type == 'district') {
                     icon = <Image alt="ED" src="/ed-icon.svg" width={40} height={40} />
+                } else if (option.type == 'address') {
+                    icon = <FontAwesomeIcon icon={faHouseChimney} size='xl' />
                 }
                  
                 const liProps = { ...props, key: option.key }
