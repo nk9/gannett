@@ -145,6 +145,8 @@ export default function InfoPanel({ metroInfo, bottom }) {
                     ml: { xs: 2, sm: 0 },
                     mt: { xs: 1, sm: 2 }
                 }}>Census pages</Typography>
+                <Para sx={{ ml: { xs: 2, sm: 0 }, mt: 0 }}>These links require creating free accounts.
+                </Para>
                 <List sx={{ listStyle: "disc", pl: { xs: 6, sm: 4 }, pt: 0, pb: 0 }}>
                     {census_links}
                 </List>
