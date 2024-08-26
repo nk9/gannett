@@ -11,7 +11,6 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import parse from 'autosuggest-highlight/parse';
-
 import Image from 'next/image';
 
 import { zoomLevel } from '@/constants';
@@ -34,12 +33,10 @@ function DebounceInput(props) {
 
 export default function SearchField({}) {
     const year = useMapState('year')
-    const setSelectedDistrict = useMapState('setSelectedDistrict')
     const setMapView = useMapState('setMapView')
     const setMarkerCoords = useMapState('setMarkerCoords')
     const searchInputValue = useMapState('searchInputValue')
     const setSearchInputValue = useMapState('setSearchInputValue')
-    const searchValue = useMapState('searchValue')
     const setSearchValue = useMapState('setSearchValue')
 
     const [options, setOptions] = useState([]);
@@ -52,7 +49,6 @@ export default function SearchField({}) {
             .then((res) => res.json())
             .then((data) => {
                 if (data) {
-                    console.log("results:", data.results)
                     setOptions(data.results)
                 }
             });
