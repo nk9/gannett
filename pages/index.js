@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
@@ -13,6 +14,7 @@ import EDMap from 'components/EDMap';
 import InfoPanel from 'components/InfoPanel';
 import YearsPicker from 'components/YearsPicker';
 
+import District from 'src/District';
 import useMapState from '/stores/mapStore';
 
 
@@ -253,8 +255,18 @@ export default function Index() {
         clearSearch();
     }
 
+    var pageTitle = "";
+
+    if (Object.keys(selectedDistrict).length > 0) {
+        let dist = new District(selectedDistrict);
+        pageTitle = `${dist.name} | `;
+    }
+
     return (
         <>
+            <Head>
+                <title>{pageTitle}Gannett.cc</title>
+            </Head>
             <Container maxWidth="lg">
                 <Grid container sx={{ pt: { md: 0, lg: 1 } }}>
                     <Box
