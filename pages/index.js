@@ -255,17 +255,17 @@ export default function Index() {
         clearSearch();
     }
 
-    var pageTitle = "";
+    var pageTitle = "Gannett.cc";
 
     if (Object.keys(selectedDistrict).length > 0) {
         let dist = new District(selectedDistrict);
-        pageTitle = `${dist.name} | `;
+        pageTitle = dist.name + ' | ' + pageTitle;
     }
 
     return (
         <>
             <Head>
-                <title>{pageTitle}Gannett.cc</title>
+                <title>{pageTitle}</title>
             </Head>
             <Container maxWidth="lg">
                 <Grid container sx={{ pt: { md: 0, lg: 1 } }}>
