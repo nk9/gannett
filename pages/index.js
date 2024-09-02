@@ -92,16 +92,18 @@ export default function Index() {
             }
             else if (queryYear && queryState && queryMetro) {
                 async function fetchMetro() {
-                    let { data, error } = await supabase.from('metro_year_info')
-                        .select('census_years!inner (year), metros!inner (name, state, geom)')
-                        .eq('census_years.year', parseInt(queryYear))
-                        .ilike('metros.state', queryState)
-                        .ilike('metros.name', queryMetro);
-
+                    let normalizedMetro = queryMetro.replaceAll(/[\s\.]/g, '');
+                    let { data, error } = await supabase.from('metro_years')
+                        .select('year, name, state, geom, utp_code')
+                        .eq('year', parseInt(queryYear))
+                        .ilike('utp_code', normalizedMetro + queryState);
+                    
+                    console.log(error, data)
+                        
                     if (!error && data.length) {
                         let metro = data[0];
                         setMapView({
-                            center: metro.metros.geom.coordinates,
+                            center: metro.geom.coordinates,
                             zoom: zoomLevel.metro
                         })
                     }
