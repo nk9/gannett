@@ -74,16 +74,16 @@ export default function API() {
             <Box py={3}>
                 <LogoHeader headline="URL API" />
                 <Para>
-                    Gannett supports a special URL syntax to launch the site zoomed in to a specific Enumeration District. This is also called deep linking. You have two formats to choose from when providing the information:
+                    Gannett supports a special URL syntax to launch the site zoomed in to a specific part of the United States. This is also called deep linking. You have two formats to choose from when providing the information:
                 </Para>
                 <Section anchor="ed-name">
-                    Enumeration District name
+                    Zoom to Enumeration District
                 </Section>
                 <Para>
                     <URI>gannett.cc/?year=<Param color="orange">year</Param>&state=<Param color="green">state</Param>&ed=<Param color="purple">ed-name</Param></URI>
                 </Para>
                 <Section anchor="metro-name">
-                    Metro name
+                    Zoom to City/Metro
                 </Section>
                 <Para>
                     <URI>gannett.cc/?year=<Param color="orange">year</Param>&state=<Param color="green">state</Param>&metro=<Param color="blue">metro_name</Param></URI>
