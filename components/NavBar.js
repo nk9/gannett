@@ -6,6 +6,7 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import HelpIcon from '@mui/icons-material/Help';
 import HomeIcon from '@mui/icons-material/Home';
 import InfoIcon from '@mui/icons-material/Info';
+import LinkIcon from '@mui/icons-material/Link';
 import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import AppBar from '@mui/material/AppBar';
@@ -128,6 +129,7 @@ export default function NavBar() {
                         {makeItem("Home", <HomeIcon />)}
                         {makeItem("Coverage", <FormatListNumberedIcon />)}
                         {makeItem("Docs", <HelpIcon />)}
+                        {makeItem("URL API", <LinkIcon />)}
                         {makeItem("About", <InfoIcon />)}
                         <Divider />
                         {makeItem("GitHub", <GitHubIcon />)}
