@@ -54,6 +54,7 @@ export default function Index() {
 
     
     useEffect(() => {
+        console.log("mapRef:", mapRef);
         if (router.isReady && mapRef) {
             setYear(queryYear || "1940");
             
