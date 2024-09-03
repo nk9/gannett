@@ -6,7 +6,6 @@ import Container from '@mui/material/Container';
 import { createTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { DataGrid } from '@mui/x-data-grid';
-import { columnGroupsStateInitializer } from '@mui/x-data-grid/internals';
 import LogoHeader from 'components/LogoHeader';
 import Para from 'components/Para';
 import Head from 'next/head';
@@ -24,10 +23,8 @@ export default function Coverage() {
                 .select('year, state, county, name')
                 .order('year')
                 .order('state')
-                .order('county')
                 .order('name')
                 ;
-            console.log(error, data);
 
             setRows(data.map((r) => ({
                 id: r.year + r.state + r.county + r.name,
@@ -44,13 +41,13 @@ export default function Coverage() {
     const columns = [
         { field: 'year', headerName: 'Year', width: 100 },
         { field: 'state', headerName: 'State', width: 110 },
-        { field: 'county', headerName: 'County', width: 150 },
         {
             field: 'name', headerName: 'City', width: 120, renderCell: (params) => (
                 <Link href={params.row.link} target="_blank">
                     {params.value}
                 </Link>)
         },
+        { field: 'county', headerName: 'County', width: 150 },
     ]
 
     return (
