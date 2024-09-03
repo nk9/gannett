@@ -54,7 +54,7 @@ export default function Index() {
 
     
     useEffect(() => {
-        if (router.isReady) {
+        if (router.isReady && mapRef) {
             setYear(queryYear || "1940");
             
             if (queryYear && queryState && queryED) {
@@ -121,7 +121,7 @@ export default function Index() {
                 fetchMetro();
             }
         }
-    }, [queryYear, queryED, queryState, queryMetro, router.isReady]);
+    }, [queryYear, queryED, queryState, queryMetro, router.isReady, mapRef]);
 
     useEffect(() => {
         async function fetchData() {
