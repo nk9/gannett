@@ -27,7 +27,11 @@ export default function EDMap({ metros, districts, roads, setMapViewport }) {
 
     useEffect(() => {
         // Set the initial map reference to the store when the component mounts
-        setMapRef(initialMapRef.current);
+        console.log("initialMapRef:", initialMapRef);
+        if (initialMapRef.current) {
+            console.log("setMapRef", initialMapRef);
+            setMapRef(initialMapRef.current);
+        }
     }, [setMapRef, initialMapRef.current]);
 
     const edColor = "#009";
