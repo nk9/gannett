@@ -59,6 +59,7 @@ export default function Index() {
             
             if (queryYear && queryState && queryED) {
                 async function fetchDistrict() {
+                    console.log("Fetching district from Supabase")
                     let components = queryED.toUpperCase().split("-")
                     if (components.length == 2) {
                         let args = {
@@ -68,6 +69,8 @@ export default function Index() {
                             _district_name: components[1]
                         };
                         let { data, error } = await supabase.rpc('lookup_district', args);
+
+                        console.log("supabase returned:", error, data)
 
                         if (!error && data[0]) {
                             let dist = data[0];
@@ -86,19 +89,21 @@ export default function Index() {
                     // will cause all sorts of UX weirdness and corner cases. So remove
                     // them from the URL's query params.
                     const { state, ed, ...routerQuery } = router.query
+                    console.log("replacing query in URL")
                     router.replace({ query: { ...routerQuery } });
                 }
                 fetchDistrict();
             }
             else if (queryYear && queryState && queryMetro) {
                 async function fetchMetro() {
+                    console.log("Fetching metro from Supabase")
                     let normalizedMetro = queryMetro.replaceAll(/[\s\.]/g, '');
                     let { data, error } = await supabase.from('metro_years')
                         .select('year, name, state, geom, utp_code')
                         .eq('year', parseInt(queryYear))
                         .ilike('utp_code', normalizedMetro + queryState);
                     
-                    console.log(error, data)
+                    console.log("supabase returned:", error, data)
                         
                     if (!error && data.length) {
                         let metro = data[0];
@@ -110,6 +115,7 @@ export default function Index() {
 
                     // As above, remove the query components to avoid UX problems.
                     const { state, metro, ...routerQuery } = router.query
+                    console.log("replacing query in URL")
                     router.replace({ query: { ...routerQuery } });
                 }
                 fetchMetro();
