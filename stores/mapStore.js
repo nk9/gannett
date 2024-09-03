@@ -1,5 +1,5 @@
-import { create } from 'zustand';
 import { initialViewState, zoomDuration } from "@/constants";
+import { create } from 'zustand';
 
 // From https://stackoverflow.com/a/75403388/1749551
 // export function useMulti(useFunc, ...items) {
@@ -18,14 +18,23 @@ const useMapStore = create((set, get) => ({
     year: "1940",
     setYear: (year) => set({ year: year }),
     setMapView: (view) => {
-        const newView = { ...initialViewState, ...view };
+        console.log("Setting map view", view);
+        const newView = {
+            ...initialViewState,
+            ...view,
+            // longitude: view.center[0],
+            // latitude: view.center[1]
+        };
+        console.log("New map view to set:", newView);
         const mapRef = get().mapRef;
         if (mapRef) {
-            mapRef?.flyTo({
+            let dest = {
                 center: newView.center,
                 duration: zoomDuration,
                 zoom: newView.zoom
-            })
+            };
+            console.log("Flying to:", dest)
+            mapRef?.flyTo(dest)
         }
     },
     isInInitialViewState: () => {

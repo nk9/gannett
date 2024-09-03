@@ -73,13 +73,13 @@ export default function Index() {
                         console.log("supabase returned:", error, data)
 
                         if (!error && data[0]) {
-                            let dist = data[0];
+                            let [long, lat] = data[0].point.coordinates;
                             setMarkerCoords({
-                                longitude: dist.point.coordinates[0],
-                                latitude: dist.point.coordinates[1]
+                                longitude: long,
+                                latitude: lat
                             })
                             setMapView({
-                                center: dist.point.coordinates,
+                                center: [long, lat],
                                 zoom: zoomLevel.district
                             })
                         }
