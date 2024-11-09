@@ -58,10 +58,10 @@ function createData(param, color, example, description) {
 }
 
 const rows = [
-    createData('YEAR', 'orange', '1940', "The census year to use. Must be all four digits."),
-    createData('STATE', 'green', 'CA', "The two-letter state abbreviation."),
-    createData('ED-NAME', 'purple', '38-460', "The full ED name, including county code. For the 1880 Census, use the SteveMorse.org county codes instead of the county names."),
-    createData('METRO_NAME', 'blue', 'SanFrancisco', 'Name of the city. Use "St" for Saint and either URL-encode or just remove any spaces.'),
+    createData('YEAR', 'orange', ['1940'], "The census year to use. Must be all four digits."),
+    createData('STATE', 'green', ['CA'], "The two-letter state abbreviation."),
+    createData('ED-NAME', 'purple', ['38-460', '2-7'], "The full ED name, including county code. For the 1880 Census, use the SteveMorse.org county codes instead of the county names."),
+    createData('METRO_NAME', 'blue', ['SanFrancisco'], 'Name of the city. Use "St" for Saint and either URL-encode or just remove any spaces.'),
 ];
 
 
@@ -109,7 +109,8 @@ export default function API() {
                                     <TableCell component="th" scope="row" sx={{ verticalAlign: "top" }}>
                                         <Param color={row.color}>{row.param}</Param>
                                     </TableCell>
-                                    <TableCell sx={{ fontFamily: "monospace", verticalAlign: "top" }}>{row.example}</TableCell>
+                                    <TableCell sx={{ verticalAlign: "top" }}>{row.example.map((ex) => (
+                                        <Typography key={ex} sx={{ fontFamily: "monospace" }}>{ex}</Typography>))}</TableCell>
                                     <TableCell>{row.description}</TableCell>
                                 </TableRow>
                             ))}
