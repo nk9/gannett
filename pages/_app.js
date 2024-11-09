@@ -29,6 +29,8 @@ export default function MyApp(props) {
         <Layout>
           <Component {...pageProps} />
         </Layout>
+        <script data-goatcounter="https://feast-manner.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
       </ThemeProvider>
     </CacheProvider>
   );
