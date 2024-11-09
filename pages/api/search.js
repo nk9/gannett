@@ -82,6 +82,37 @@ async function runDistrictSearch(year, query) {
     return results
 }
 
+async function parseCoordinates(query) {
+    var results = []
+
+    if (query.length >= 6) {
+        var coordRegex = /^\s*(\d{2,3}(\.\d*)?),\s*(\-\d{2,3}(\.\d*)?)\s*$/;
+        var coords = query.match(coordRegex)
+
+        if (coords && coords.length == 5) {
+            const [a, lat, b, long, c] = coords
+            const lat_short = parseFloat(lat).toLocaleString(undefined, { maximumFractionDigits: 6 })
+            const long_short = parseFloat(long).toLocaleString(undefined, { maximumFractionDigits: 6 })
+            const coordStr = `${lat_short}, ${long_short}`;
+
+            results = [{
+                type: 'coordinate',
+                key: 'coordinate',
+                description: coordStr,
+                point: { 
+                    coordinates: [long, lat]
+                },
+                structured_formatting: {
+                    main_text: coordStr
+                }
+
+            }]
+        }
+    }
+
+    return results
+}
+
 async function runAddressSearch(query) {
     var results = []
 
@@ -154,6 +185,9 @@ export default async function handler(req, res) {
 
     const { q: query, year } = req.query ?? {};
     var tasks = [
+        async () => {
+            return await parseCoordinates(query)
+        },
         async () => {
             return await runAddressSearch(query)
         },

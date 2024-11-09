@@ -3,7 +3,7 @@
 
 import { useRef, useState } from 'react';
 
-import { faCity, faHouseChimney, faRoad } from '@fortawesome/free-solid-svg-icons';
+import { faCity, faHouseChimney, faLocationDot, faRoad } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Autocomplete from '@mui/material/Autocomplete';
 import Box from '@mui/material/Box';
@@ -113,6 +113,8 @@ export default function SearchField({}) {
                     icon = <Image alt="ED" src="/ed-icon.svg" width={40} height={40} />
                 } else if (option.type == 'address') {
                     icon = <FontAwesomeIcon icon={faHouseChimney} size='xl' />
+                } else if (option.type == 'coordinate') {
+                    icon = <FontAwesomeIcon icon={faLocationDot} size='xl' />
                 }
                  
                 const liProps = { ...props, key: option.key }
