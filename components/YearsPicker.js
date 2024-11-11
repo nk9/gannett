@@ -144,6 +144,12 @@ const Tab = styled(BaseTab)(
   }
 
   &.${tabClasses.disabled} {
+    &.${tabClasses.selected} {
+        color: ${theme.palette.primary.main};
+        &:hover {
+            color: white;
+        }
+    }
     color: white;
     opacity: 60%;
   }
