@@ -8,7 +8,6 @@ function toTSQueryFormat(query) {
 async function runMetroSearch(year, query) {
     const likeQuery = query + '%';
     const { data, error } = await supabase.rpc('search_metros_for_year', { _year: year, query: likeQuery })
-    // const { data, error } = await supabase.from('metros').select().ilike('name', `%${query}%`)
     const matches = (val) => match(val, query, { insideWords: true })
 
     const results = data.map((res) => ({
@@ -95,18 +94,42 @@ async function parseCoordinates(query) {
             const long_short = parseFloat(long).toLocaleString(undefined, { maximumFractionDigits: 6 })
             const coordStr = `${lat_short}, ${long_short}`;
 
-            results = [{
-                type: 'coordinate',
-                key: 'coordinate',
-                description: coordStr,
-                point: { 
-                    coordinates: [long, lat]
-                },
-                structured_formatting: {
-                    main_text: coordStr
-                }
+            var geocoded = await fetch('https://api.mapbox.com/search/geocode/v6/reverse?' + new URLSearchParams({
+                latitude: lat,
+                longitude: long,
+                types: "place",
+                country: "us",
+                limit: 1,
+                access_token: process.env.MAPBOX_PRIVATE_ACCESS_TOKEN,
+            }))
+                .then((res) => res.json())
+                .then((data) => {
+                    if (data) {
+                        console.log("reverse geocoding result:", data)
+                        var secondary_text = ""
 
-            }]
+                        if (data.features.length > 0) {
+                            console.log(data.features)
+                            const info = data.features[0].properties.context
+                            secondary_text = `${info.place.name}, ${info.district.name}, ${info.region.region_code}`
+                        }
+
+                        results = [{
+                            type: 'coordinate',
+                            key: 'coordinate',
+                            description: coordStr,
+                            point: { 
+                                coordinates: [long, lat]
+                            },
+                            structured_formatting: {
+                                main_text: coordStr,
+                                secondary_text: secondary_text
+                            }
+
+                        }]
+                    }
+                });
+
         }
     }
 
@@ -177,37 +200,100 @@ async function runAddressSearch(query) {
 //             }]
 
 
-export default async function handler(req, res) {
-    if (req.method !== 'GET') {
-        res.status(405).send({ message: 'Only GET requests allowed' })
-        return
-    }
+// export default async function handler(req, res) {
+//     if (req.method !== 'GET') {
+//         res.status(405).send({ message: 'Only GET requests allowed' })
+//         return
+//     }
 
-    const { q: query, year } = req.query ?? {};
-    var tasks = [
-        async () => {
-            return await parseCoordinates(query)
-        },
-        async () => {
-            return await runAddressSearch(query)
-        },
-        async () => {
-            return await runMetroSearch(year, query)
-        },
-        async () => {
-            return await runRoadSearch(year, query)
-        },
-        async () => {
-            return await runDistrictSearch(year, query)
-        },
-    ]
+//     const { q: query, year } = req.query ?? {};
+//     var tasks = [
+//         async () => {
+//             return await parseCoordinates(query)
+//         },
+//         async () => {
+//             return await runAddressSearch(query)
+//         },
+//         async () => {
+//             return await runMetroSearch(year, query)
+//         },
+//         async () => {
+//             return await runRoadSearch(year, query)
+//         },
+//         async () => {
+//             return await runDistrictSearch(year, query)
+//         },
+//     ]
 
-    var test = await Promise.all(tasks.map(p => p()))
-    var flattened = test.flat()
-    const result = {
-        "results": flattened
-    }
+//     var test = await Promise.all(tasks.map(p => p()))
+//     var flattened = test.flat()
+//     const result = {
+//         "results": flattened
+//     }
 
-    var status_code = 200
-    res.status(status_code).json(result)
+//     var status_code = 200
+//     res.status(status_code).json(result)
+// }
+
+
+export async function GET(request) {
+    const searchParams = request.nextUrl.searchParams
+    const query = searchParams.get('q')
+    const year = searchParams.get('year')
+    console.log(query, year)
+
+    // Define the tasks to run concurrently
+    const tasks = [
+        async () => ({ type: 'coordinates', result: await parseCoordinates(query) }),
+        // async () => ({ type: 'address', result: await runAddressSearch(query) }),
+        // async () => ({ type: 'metro', result: await runMetroSearch(year, query) }),
+        // async () => ({ type: 'road', result: await runRoadSearch(year, query) }),
+        // async () => ({ type: 'district', result: await runDistrictSearch(year, query) }),
+    ];
+
+    var taskPromises;
+
+    // Set up a ReadableStream to respond incrementally
+    const stream = new ReadableStream({
+        async start(controller) {
+            console.log("starting ReadableStream with tasks:", tasks)
+            taskPromises = tasks.map((task, index) =>
+                task().then(
+                    (result) => ({ status: 'fulfilled', index, ...result }),
+                    (error) => ({ status: 'rejected', index, error })
+                )
+            );
+            console.log("taskPromises created")
+
+        }, async pull(controller) {
+            const encoder = new TextEncoder()
+
+            // Process each task as it finishes
+            for (const taskPromise of taskPromises) {
+                const result = await taskPromise;
+                console.log("promise result:", result)
+
+                if (result.status === 'fulfilled') {
+                    // if (result.result.length > 0) {
+                    controller.enqueue(encoder.encode(
+                        JSON.stringify({ type: result.type, result: result.result }) + '\n'
+                    ));
+                    // }
+                } else {
+                    controller.enqueue(encoder.encode(
+                        JSON.stringify({ type: result.type, error: result.error.toString() }) + '\n'));
+                }
+            }
+
+            controller.close();
+        },
+    }, {
+        highWaterMark: 1,
+        size(chunk) {
+            return 1;
+        },
+    });
+
+    return new Response(stream)
 }
+

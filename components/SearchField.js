@@ -42,16 +42,27 @@ export default function SearchField({}) {
     const [options, setOptions] = useState([]);
 
     async function doSearch(query) {
-        await fetch('/api/search?' + new URLSearchParams({
+        const response = await fetch('/api/search?' + new URLSearchParams({
             q: query,
             year: year
         }))
-            .then((res) => res.json())
-            .then((data) => {
-                if (data) {
-                    setOptions(data.results)
-                }
-            });
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder("utf-8");
+        let results = [];
+
+        while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+        
+            const chunk = decoder.decode(value, { stream: true });
+            console.log("chunk:", chunk)
+            const partialData = JSON.parse(chunk); // Parse each chunk
+            console.log("partialData:", partialData)
+
+            // Merge new results
+            results = [...results, ...partialData.result];
+            setOptions(results); // Update the UI incrementally
+        }
     };
 
     return (
