@@ -11,6 +11,7 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import parse from 'autosuggest-highlight/parse';
+import { parseJsonStream, streamToIterable } from "json-stream-es";
 import Image from 'next/image';
 
 import { zoomLevel } from '@/constants';
@@ -46,21 +47,18 @@ export default function SearchField({}) {
             q: query,
             year: year
         }))
-        const reader = response.body.getReader();
-        const decoder = new TextDecoder("utf-8");
+
+        const values = response.body
+            .pipeThrough(new TextDecoderStream())
+            .pipeThrough(parseJsonStream(undefined, { multi: true }));
+
         let results = [];
 
-        while (true) {
-            const { done, value } = await reader.read();
-            if (done) break;
-        
-            const chunk = decoder.decode(value, { stream: true });
-            console.log("chunk:", chunk)
-            const partialData = JSON.parse(chunk); // Parse each chunk
-            console.log("partialData:", partialData)
+        for await (const decodedValue of streamToIterable(values)) {
+            console.log(decodedValue);
 
             // Merge new results
-            results = [...results, ...partialData.result];
+            results = [...results, ...decodedValue.result];
             setOptions(results); // Update the UI incrementally
         }
     };

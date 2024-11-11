@@ -245,10 +245,10 @@ export async function GET(request) {
     // Define the tasks to run concurrently
     const tasks = [
         async () => ({ type: 'coordinates', result: await parseCoordinates(query) }),
-        // async () => ({ type: 'address', result: await runAddressSearch(query) }),
-        // async () => ({ type: 'metro', result: await runMetroSearch(year, query) }),
-        // async () => ({ type: 'road', result: await runRoadSearch(year, query) }),
-        // async () => ({ type: 'district', result: await runDistrictSearch(year, query) }),
+        async () => ({ type: 'address', result: await runAddressSearch(query) }),
+        async () => ({ type: 'metro', result: await runMetroSearch(year, query) }),
+        async () => ({ type: 'road', result: await runRoadSearch(year, query) }),
+        async () => ({ type: 'district', result: await runDistrictSearch(year, query) }),
     ];
 
     var taskPromises;
