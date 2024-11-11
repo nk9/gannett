@@ -181,60 +181,6 @@ async function runAddressSearch(query) {
     return results
 }
 
-// [
-//             {
-//                 "description": "Test1",
-//                 "structured_formatting": {
-//                     "main_text": "Hoboken",
-//                     "main_text_matched_substrings": [{ offset: 0, length: 2 }],
-//                     "secondary_text": "New Jersey"
-//                 }
-//             },
-//             {
-//                 "description": "Test2",
-//                 "structured_formatting": {
-//                     "main_text": "Holland Park",
-//                     "main_text_matched_substrings": [{ offset: 0, length: 2 }],
-//                     "secondary_text": "London, UK"
-//                 }
-//             }]
-
-
-// export default async function handler(req, res) {
-//     if (req.method !== 'GET') {
-//         res.status(405).send({ message: 'Only GET requests allowed' })
-//         return
-//     }
-
-//     const { q: query, year } = req.query ?? {};
-//     var tasks = [
-//         async () => {
-//             return await parseCoordinates(query)
-//         },
-//         async () => {
-//             return await runAddressSearch(query)
-//         },
-//         async () => {
-//             return await runMetroSearch(year, query)
-//         },
-//         async () => {
-//             return await runRoadSearch(year, query)
-//         },
-//         async () => {
-//             return await runDistrictSearch(year, query)
-//         },
-//     ]
-
-//     var test = await Promise.all(tasks.map(p => p()))
-//     var flattened = test.flat()
-//     const result = {
-//         "results": flattened
-//     }
-
-//     var status_code = 200
-//     res.status(status_code).json(result)
-// }
-
 
 export async function GET(request) {
     const searchParams = request.nextUrl.searchParams
