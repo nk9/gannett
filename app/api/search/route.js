@@ -139,7 +139,7 @@ async function parseCoordinates(query) {
 async function runAddressSearch(query) {
     var results = []
 
-    if (query.length >= 6 && query.includes(' ')) {
+    if (query.length >= 6 && query.includes(' ') && query.match(/[a-zA-Z]+/g)) {
         results = await fetch('https://api.mapbox.com/search/geocode/v6/forward?' + new URLSearchParams({
             q: query,
             types: "address",
