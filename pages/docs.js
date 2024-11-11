@@ -57,13 +57,14 @@ export default function Docs() {
                     Searching
                 </Section>
                 <Para>
-                    You can search for city names, street names, 2-letter state abbreviations, and ED numbers (full numbers, including the county prefix).
+                    You can search for city names, street names, 2-letter state abbreviations, lat/long coordinates, and ED numbers (full numbers, including the county prefix).
                 </Para>
                 <ul>Examples:
                     <li>howard san (will find <strong>Howard St, San Francisco, CA</strong>)</li>
                     <li>Pittsburgh PA</li>
                     <li>cin (will find <strong>Cincinnatti, OH</strong>)</li>
                     <li>41-19 (will find ED 19 in county 41, e.g. <strong>Spokane, WA</strong> in 1940)</li>
+                    <li>41.877564, -87.638806 (will find <strong>Chicago Union Station</strong>)</li>
                 </ul>
                 <Section>
                     Linking
