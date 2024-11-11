@@ -48,6 +48,8 @@ export default function SearchField({}) {
             year: year
         }))
 
+        console.log("response:", response.body)
+
         const values = response.body
             .pipeThrough(new TextDecoderStream())
             .pipeThrough(parseJsonStream(undefined, { multi: true }));
